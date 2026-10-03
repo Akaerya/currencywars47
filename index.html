@@ -1,0 +1,400 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Currency Wars Team Builder</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: holo board + trait readout side by side, unit pool docked underneath. Single dark look, taken from the in-game field. */
+:root{
+  color-scheme:dark;
+  --bg:#0a0f2e; --panel:#111949; --panel2:#18225e; --line:#2c3b8f; --line-soft:#1f2b6e;
+  --fg:#e7ecff; --muted:#93a0d8; --accent:#63e6e2; --warn:#ffb14a;
+  --bronze:#d2925f; --silver:#cbd4ec; --gold:#ffc857; --prism:#dcb4ff; --prism-g:linear-gradient(120deg,#7ef0e0,#8fb0ff,#e59bff,#ffc38a); --c7:#ff8fd0;
+  --c1:#a3aed0; --c2:#5fd08a; --c3:#5aa8ff; --c4:#c58bff; --c5:#ffc857;
+  --display:"Chakra Petch","Trebuchet MS",sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:14px;line-height:1.45;padding-inline:16px;padding-block:18px 32px;
+  background-image:radial-gradient(circle at 1px 1px,rgba(120,140,255,.10) 1px,transparent 0);background-size:22px 22px}
+/* tiles keep the 376x512 art ratio, 120px wide at most */
+.wrap{max-width:1640px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between}
+h1{font-family:var(--display);font-size:24px;font-weight:700;letter-spacing:.04em;margin:0;text-transform:uppercase}
+h1 span{color:var(--accent)}
+.sub{color:var(--muted);margin:2px 0 0;max-width:62ch}
+h2{font-family:var(--display);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:0;color:var(--accent);font-weight:600}
+button,select,input{font:inherit;color:inherit}
+.btn{background:var(--panel2);border:1px solid var(--line);padding:6px 12px;border-radius:4px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.side-panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);max-height:calc(100vh - 24px);display:flex;flex-direction:column}
+@media(max-width:920px){.top{grid-template-columns:minmax(0,1fr)}.col{display:contents}.side-panel{order:2;position:static;max-height:none}.units{order:3}.tlist{max-height:380px}}
+.panel{background:var(--panel);border:1px solid var(--line-soft);border-radius:6px;padding:14px;min-width:0}
+.phead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--muted)}
+.count{font-family:var(--display);font-variant-numeric:tabular-nums;color:var(--fg)}
+.step{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.step button{background:var(--panel2);border:0;padding:4px 10px;cursor:pointer}
+.step button[aria-pressed="true"]{background:var(--accent);color:#06203a;font-weight:600}
+
+/* board */
+.boardbox{container-type:inline-size}
+.scroll{overflow-x:auto;padding-bottom:6px}
+.board{--t:clamp(56px,calc((100cqw - 96px)/9),120px);--g:8px;display:flex;flex-direction:column;gap:22px;width:max-content;margin:0 auto}
+.row{display:flex;gap:24px;align-items:flex-end}
+.grp{display:flex;flex-direction:column;gap:8px}
+.grp.main{width:calc(var(--t)*6 + var(--g)*5)}
+.grp.side{width:calc(var(--t)*3 + var(--g)*2)}
+.lab{align-self:center;font-family:var(--display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:2px 12px;border-radius:2px;white-space:nowrap}
+.side .lab{color:var(--muted);border-color:var(--line)}
+.tiles{display:flex;gap:var(--g);justify-content:center}
+.tile{width:var(--t);aspect-ratio:376/512;border:1px solid var(--line);background:rgba(90,110,255,.10);border-radius:3px;position:relative;display:grid;place-items:center;flex:none}
+.tile::before{content:"";width:22%;height:46%;border:1px solid var(--line);clip-path:polygon(50% 0,100% 18%,100% 82%,50% 100%,0 82%,0 18%);background:var(--line-soft);opacity:.7}
+.tile.over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.tile.locked{border-style:dashed;opacity:.4}
+.tile.locked::before{display:none}
+.tile.locked::after{content:"locked";font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.tile.full::before{display:none}
+.u{position:absolute;inset:0;border-radius:2px;background:var(--panel2);border:2px solid var(--cc);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:4px 3px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden;text-align:center}
+.u .ini{font-family:var(--display);font-weight:700;font-size:calc(var(--t)*.3);color:var(--cc);line-height:1;margin-top:auto}
+.u .nm{font-size:clamp(9px,calc(var(--t)*.13),12px);line-height:1.15;margin:auto 0 0;overflow-wrap:anywhere;max-height:3.5em;overflow:hidden}
+button.flip{border:0;cursor:pointer;font-family:var(--display)}
+.u{background-size:cover;background-position:center top;background-repeat:no-repeat}
+.u.art .ini{display:none}
+.u.art .nm{align-self:stretch;margin:auto -3px -4px;padding:14px 3px 4px;background:linear-gradient(transparent,rgba(6,10,36,.92) 55%);max-height:none}
+.u .cost{align-self:flex-start;font-family:var(--display);font-size:10px;background:var(--cc);color:#0a0f2e;padding:0 5px;border-radius:2px;font-weight:700}
+.u .bad{position:absolute;top:2px;right:3px;color:var(--warn);font-weight:700;font-size:13px}
+.hint{color:var(--muted);font-size:12.5px;margin:12px 0 0}
+.hint b{color:var(--warn);font-weight:600}
+
+/* traits */
+.tlist{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0;overflow-y:auto}
+.empty{color:var(--muted);border:1px dashed var(--line);border-radius:4px;padding:16px;text-align:center}
+.tr{border:1px solid var(--line-soft);border-radius:4px;background:rgba(255,255,255,.02);flex:none}
+.tr.r0{--tc:var(--bronze)}.tr.r1{--tc:var(--silver)}.tr.r2{--tc:var(--gold)}.tr.r3{--tc:var(--prism)}
+.tr.on{border-color:var(--tc,var(--accent));background:color-mix(in srgb,var(--tc,var(--accent)) 9%,transparent)}
+.hd{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding-right:8px}
+.hd>button.tog{all:unset;box-sizing:border-box;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center;padding:7px 0 7px 10px;cursor:pointer}
+.hd>button.tog:focus-visible{outline:2px solid var(--accent)}
+.num{font-family:var(--display);font-weight:700;font-size:17px;text-align:center;border:1px solid var(--line);border-radius:3px;padding:2px 0;color:var(--muted);font-variant-numeric:tabular-nums}
+.tr.on .num{background:var(--tc,var(--accent));color:#06203a;border-color:transparent}
+.tr.on.r3 .num{background:var(--prism-g)}
+.tn{font-weight:600}
+.tr:not(.on) .tn{color:var(--muted)}
+.tr.on .rank{color:var(--tc,var(--accent))}
+.kind{font-size:10.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.pips{display:flex;flex-wrap:wrap;gap:4px;font-family:var(--display);font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.pips i{font-style:normal;opacity:.55}
+.pips i.hit{opacity:1;font-weight:700}
+.p0{color:var(--bronze)}.p1{color:var(--silver)}.p2{color:var(--gold)}.p3{color:var(--prism)}
+.note{font-size:11.5px;color:var(--warn);font-weight:600}
+.emb{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.emb span{display:inline-flex;align-items:center;gap:4px}
+.emb b{font-family:var(--display);font-size:13px;color:var(--fg);min-width:1ch;text-align:center}
+.emb button{background:var(--panel2);border:1px solid var(--line);border-radius:3px;width:22px;height:22px;line-height:1;cursor:pointer;padding:0}
+.emb button:hover:not(:disabled){border-color:var(--accent)}
+.emb button:disabled{opacity:.35;cursor:default}
+.addemb{margin-top:10px;width:100%;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 9px;flex:none}
+.det{padding:2px 10px 10px;font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.det p{margin:0}
+.det ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:3px}
+.det li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:6px}
+.det li b{font-family:var(--display);color:var(--fg)}
+.det li.hit{color:var(--fg)}
+.det li.hit b{color:var(--tc,var(--accent))}
+.det .who{color:var(--fg)}
+.link{all:unset;cursor:pointer;color:var(--accent);text-decoration:underline;align-self:flex-start}
+
+/* pool */
+.filters{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-bottom:12px}
+.filters input,.filters select{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 9px;min-width:0}
+.filters input{width:190px;max-width:100%}
+.chips{display:flex;gap:4px;flex-wrap:wrap}
+.chip{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px 11px;cursor:pointer;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#06203a;font-weight:600}
+.pool{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+/* square, same ratio as the 256x256 art. Text sits on solid dark plates so it reads over any picture. */
+.card{aspect-ratio:1;max-width:256px;background:var(--panel2) center/cover no-repeat;border:1px solid var(--line-soft);border-left:5px solid var(--cc);border-radius:4px;cursor:grab;user-select:none;-webkit-user-select:none;display:flex;flex-direction:column;justify-content:space-between;min-width:0;text-align:left;overflow:hidden;position:relative}
+.card:hover{border-color:var(--cc)}
+.card.used{opacity:.35;cursor:default}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:4px;padding:4px}
+.card .cs{font-family:var(--display);font-weight:700;background:var(--cc);color:#0a0f2e;padding:0 7px;border-radius:2px}
+.card .role{font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:rgba(6,10,36,.85);color:var(--fg);padding:2px 6px;border-radius:2px}
+.card .info{display:flex;flex-direction:column;gap:1px;padding:16px 7px 6px;background:linear-gradient(transparent,rgba(6,10,36,.9) 22px,rgba(6,10,36,.94))}
+.card .nm{font-weight:600;font-size:13px;line-height:1.2;overflow-wrap:anywhere;color:var(--fg)}
+.card .tg{font-size:11.5px;line-height:1.25;color:var(--cc)}
+.card .tg{color:color-mix(in srgb,var(--cc) 45%,var(--fg))}
+.ghost{position:fixed;z-index:50;pointer-events:none;width:74px;aspect-ratio:376/512;transform:translate(-50%,-50%);opacity:.9}
+.ghost .u{--t:74px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Currency Wars <span>Team Builder</span></h1>
+      <p class="sub">Drag units onto the board, or click one to drop it in the first open tile. Click a placed unit to send it back. Use + and − on a trait to count Emblems.</p>
+    </div>
+  </header>
+
+  <div class="top">
+   <div class="col">
+    <section class="panel">
+      <div class="phead">
+        <h2>Board</h2>
+        <div class="tools">
+          <span class="count" id="count"></span>
+          <span>Extra tiles</span>
+          <span class="step" id="extra"></span>
+          <button class="btn" id="clear">Clear board</button>
+        </div>
+      </div>
+      <div class="boardbox"><div class="scroll"><div class="board" id="board"></div></div></div>
+      <p class="hint" id="hint"></p>
+    </section>
+
+  <section class="panel units">
+    <div class="phead"><h2>Units</h2><span class="tools" id="psum"></span></div>
+    <div class="filters">
+      <input id="q" type="search" placeholder="Search by name" aria-label="Search units by name">
+      <div class="chips" id="fcost" role="group" aria-label="Cost"></div>
+      <div class="chips" id="frole" role="group" aria-label="Field role"></div>
+      <select id="ftrait" aria-label="Trait"></select>
+      <button class="btn" id="reset">Reset filters</button>
+    </div>
+    <div class="pool" id="pool"></div>
+  </section>
+   </div>
+    <aside class="panel side-panel">
+      <div class="phead"><h2>Bonds &amp; traits</h2><span class="tools" id="tsum"></span></div>
+      <div class="tlist" id="traits"></div>
+      <select class="addemb" id="addemb" aria-label="Add an Emblem for a trait"></select>
+    </aside>
+  </div>
+</div>
+
+<script>
+const R={B:'On/Off-Field',N:'On-Field',F:'Off-Field'};
+const U=[
+["Welt",1,"B","Trailblaze Silver Rail","AoE ATK"],["Topaz & Numby",1,"B","Astropolis Merchant Guild","Follow-Up ATK"],["Jing Yuan",1,"B","High-Cloud Quintet","Summon"],["Guinaifen",1,"B","Xianzhou Fleet","DoT"],["Lingsha",1,"B","Xianzhou Fleet","AoE ATK","Heal"],["March 7th Hunt",1,"F","Trailblaze Silver Rail","Follow-Up ATK"],["Fugue",1,"B","Galactic Voyager","Break"],["Black Swan",1,"F","Intertwined Dreamscapes","DoT"],["Boothill",1,"N","Galactic Voyager","Break"],["Anaxa",1,"N","Beast Garden","Combo"],["Cerydra",1,"F","Little Giant","Combo"],["Evernight",1,"B","Beast Garden","Intertwined Dreamscapes","Summon"],["Sparxie",1,"B","Phantasmoon Games","Girls Band","Elation"],["Pearl",1,"F","Phantasmoon Games","Astropolis Merchant Guild","Protection"],
+["Natasha",2,"F","Galactic Voyager","DoT","Heal"],["Bailu",2,"F","High-Cloud Quintet","Combo","Heal"],["Yunli",2,"B","Xianzhou Fleet","Counter"],["Sparkle",2,"N","Little Giant","Intertwined Dreamscapes","Elation"],["Robin",2,"N","Girls Band","Follow-Up ATK"],["Firefly",2,"N","Stellaron Hunters","Break"],["Sunday",2,"B","Phantasmoon Games","Trailblaze Silver Rail","Combo"],["The Herta",2,"N","Galactic Voyager","AoE ATK"],["Mydei",2,"B","Beast Garden","The Grand Restaurant","Counter"],["Hysilens",2,"B","Beast Garden","DoT"],["Evanescia",2,"B","Phantasmoon Games","Energy"],["Robin • Summeretto",2,"B","Astropolis Merchant Guild","Summon","Energy"],
+["Luocha",3,"B","Galactic Voyager","Heal"],["Fu Xuan",3,"F","Little Giant","Counter","Protection"],["Jingliu",3,"B","High-Cloud Quintet","Combo"],["Jiaoqiu",3,"N","Xianzhou Fleet","DoT"],["Feixiao",3,"N","Xianzhou Fleet","Follow-Up ATK"],["Rappa",3,"F","Girls Band","Break"],["The Dahlia",3,"B","Intertwined Dreamscapes","Break"],["Cipher",3,"F","Beast Garden","AoE ATK"],["Castorice",3,"B","The Grand Restaurant","Summon"],["Yao Guang",3,"F","Astropolis Merchant Guild","Elation"],["Silver Wolf LV.999",3,"N","Phantasmoon Games","Stellaron Hunters","Elation"],["Aeon ★ Aha",3,"N","Elation","Master of Phantasia"],["Trailblazer: Elation",3,"B","Trailblaze Silver Rail","Stellaron Hunters","Energy"],
+["Serval",4,"N","Girls Band","DoT"],["Blade",4,"B","High-Cloud Quintet","Counter"],["Hanya",4,"F","Xianzhou Fleet","Combo"],["Huohuo",4,"F","Little Giant","Energy","Heal"],["Aventurine",4,"B","Galactic Voyager","Follow-Up ATK","Protection"],["Acheron",4,"N","Intertwined Dreamscapes","AoE ATK"],["Tribbie",4,"B","Little Giant","Follow-Up ATK"],["Hyacine",4,"B","Beast Garden","Summon","Heal"],["Cyrene",4,"N","The Grand Restaurant","Summon"],["Mortenax Blade",4,"B","Phantasmoon Games","Stellaron Hunters","AoE ATK"],["Himeko • Nova",4,"N","Trailblaze Silver Rail","Energy"],["Aventurine • Waveflair",4,"N","Astropolis Merchant Guild","Elation"],
+["Kafka",5,"N","Stellaron Hunters","DoT"],["Clara",5,"B","Galactic Voyager","Counter","Ingenious Artificer"],["Dan Heng • Imbibitor Lunae",5,"N","Trailblaze Silver Rail","High-Cloud Quintet","Twin Dragons' Call"],["Xueyi",5,"N","Xianzhou Fleet","Break"],["Jade",5,"F","Astropolis Merchant Guild","AoE ATK","Black Market Manager"],["Aglaea",5,"N","Beast Garden","Combo"],["Phainon",5,"B","The Grand Restaurant","Flame Reaver"],["Dan Heng • Permansor Terrae",5,"F","Twin Dragons' Call"],["Ashveil",5,"F","Phantasmoon Games","Follow-Up ATK","Galaxy Ranger"]
+].map(a=>({name:a[0],cost:a[1],role:a[2],traits:a.slice(3)})).sort((a,b)=>a.name.localeCompare(b.name));
+const UB=Object.fromEntries(U.map(u=>[u.name,u]));
+
+// k: F faction, C class, S unique. t: [count, effect]. exact: only these exact counts activate.
+const T={
+"Xianzhou Fleet":{k:"F",d:"Before combat, basic equipment on members becomes random advanced equipment and boosts DMG Amplification.",t:[[2,"Converts 1 piece. +3% DMG Amp per piece."],[4,"Converts 2 pieces. +5% DMG Amp per piece. Summons a Starskiff (150 SPD)."],[6,"Converts all basic equipment to advanced. +7% DMG Amp per piece."],[9,"Converts all basic equipment to privileged. +10% DMG Amp per piece."]]},
+"Beast Garden":{k:"F",d:"Generates Chimera Energy each Node to recruit Chimeras. Grants On/Off-Field Strength.",t:[[3,"+30% On/Off-Field Strength. Recruit every 4 Chimera Energy."],[5,"+60% Strength. More Chimera types every 3 Energy, 1 free refresh."],[7,"+120% Strength. Recruit every 2 Energy. Each Chimera star adds +200% multiplier and +40 SPD."],[10,"+300% Strength. All Chimeras Assemble!"]]},
+"Phantasmoon Games":{k:"F",d:"Shows a custom game rule each match (Wishpower, Experience or Roll-Call) that gives team scaling bonuses. No unit-count tiers listed.",t:[]},
+"Galactic Voyager":{k:"F",d:"Boosts team stats by the number of Voyagers deployed. Voyager members get double. Each member adds its own passive.",t:[[1,"+100% bonus"],[2,"+120%"],[3,"+140%"],[4,"+170%"],[5,"+200%"],[6,"+240%"],[7,"+290%"],[8,"+350%"]]},
+"Trailblaze Silver Rail":{k:"F",d:"Accumulate Trailblaze Power after combat to spend in the Trailblaze Store.",t:[[2,"+20 Trailblaze Power"],[4,"+45 Trailblaze Power, better stock"],[6,"+75 Trailblaze Power, unlocks Bond-exclusive Components"],[8,"+125 Trailblaze Power"],[10,"+225 Trailblaze Power, Express Evolution!"]]},
+"Astropolis Merchant Guild":{k:"F",d:"Tiers unlock from deployed 3-star members, not unit count. Grants Lucky Strike Rate and DMG, scaled 1x/2x/4x/8x by star rating (+2% base per unit).",t:[]},
+"High-Cloud Quintet":{k:"F",d:"+20% DMG Amplification and summons Quintet Joint (200 SPD).",t:[[2,"Joint deals 300% base DMG, squad +10% DMG Amp (stackable)."],[3,"250 SPD, 600% DMG, +20% DMG Amp."],[4,"300 SPD, 900% DMG, +40% DMG Amp."],[5,"400 SPD, 1800% DMG, +60% DMG Amp. Members gain +120/+70/+50/+50% stats."]]},
+"Stellaron Hunters":{k:"F",d:"Elio reveals Script Equipment. Grants DMG Amplification, doubled on Stellaron Hunters.",t:[[2,"1 Equipment piece (+20% wearer / +8% squad DMG Amp)."],[3,"2 Equipment pieces."],[5,"3 Equipment pieces (+30% wearer / +12% squad)."],[7,"All Bond equipment becomes Privileged (+60% wearer / +24% squad)."]]},
+"Little Giant":{k:"F",d:"Enemies take more DMG and deal less. Accumulates Height to empower members.",t:[[2,"1 Height. +12% enemy DMG taken, -6% dealt."],[3,"2 Height. +24% taken, -12% dealt."],[4,"3 Height. +36% taken, -18% dealt."],[5,"4 Height. +48% taken, -24% dealt."],[6,"6 Height. +60% taken, -30% dealt."]]},
+"Intertwined Dreamscapes":{k:"F",d:"Pair 2 members. After 12 combined actions they trigger Dance of Two.",t:[[2,"Dance of Two every 12 total actions."],[3,"Dancers share the higher stat conversions (+40% / +20%)."],[4,"+80% / +40% conversion."],[5,"+120% / +60% conversion."]]},
+"Girls Band":{k:"F",exact:true,d:"Active only with exactly 1 or exactly 4 members deployed.",t:[[1,"Solo: grants that member's unique squad buff."],[4,"Full Ensemble: triples all members' unique squad buffs."]]},
+"The Grand Restaurant":{k:"F",d:"Yields Signature Meal Components from today's menu.",t:[[2,"1st Meal Component."],[3,"2nd Meal Component."],[4,"Extra meal bonuses and flavor upgrades."]]},
+"Follow-Up ATK":{k:"C",d:"Stores KO Value on enemies to trigger Execute. Increases On/Off-Field Strength.",t:[[3,"+20% Strength. 20% DMG stored as KO Value."],[5,"+50% Strength. 30% stored."],[7,"+80% Strength. 50% stored. Executions deal 800% Quantum DMG to adjacent targets."],[10,"+160% Strength. 100% stored. Executions deal 3000% Quantum DMG to all enemies."]]},
+"DoT":{k:"C",d:"Boosts DoT Amplification and summons Crimson Thorns (150 SPD).",t:[[3,"+15% DoT Amp."],[5,"+30% DoT Amp. Thorns SPD 300."],[7,"+60% DoT Amp. Thorns forces 1 extra DoT instance."],[9,"+100% DoT Amp. Thorns SPD 450, 1200% base DMG."]]},
+"AoE ATK":{k:"C",d:"Boosts DMG Amplification and creates a Soul on the highest-HP enemy.",t:[[2,"+10% DMG Amp. 15% Soul transfer."],[4,"+25% DMG Amp. 20% transfer."],[6,"+50% DMG Amp. 25% transfer. Spawns a 300-SPD Soul that erupts as True DMG."],[8,"+100% DMG Amp. 30% transfer. Recorded DMG rises to 50%."]]},
+"Combo":{k:"C",d:"Boosts Lucky Strike Rate and Combo Rate (chance for extra turns).",t:[[2,"+15% Lucky Strike Rate, +8% Combo Rate."],[4,"+30% / +16%. Off-field tile; extra-turn attacks deal 30% True DMG."],[6,"+45% / +24%. Combo True DMG 60%."],[8,"+60% / +32%. Combo True DMG 90%."]]},
+"Break":{k:"C",d:"Increases Break DMG and SPD Amplification. Adds Multi-Toughness Bars to enemies.",t:[[2,"+20% Break DMG Amp, +10% SPD Amp."],[4,"+40% Break DMG Amp, +20% SPD Amp."],[6,"+60% Break DMG Amp, +30% SPD Amp."],[8,"+100% Break DMG Amp, +50% SPD Amp."]]},
+"Summon":{k:"C",d:"Boosts On/Off-Field Strength, +20% HP Amplification, empowers summons.",t:[[2,"+25% Strength, 1 Summon Power."],[4,"+50% Strength, 2 Summon Power."],[6,"+100% Strength, 3 Summon Power."],[8,"+200% Strength, 4 Summon Power."]]},
+"Elation":{k:"C",d:"Boosts Lucky Strike Rate and SPD Amplification. Summons Aha during setup.",t:[[3,"+8% Lucky Strike Rate, +8% SPD Amp."],[4,"+16% / +16%. 2-Star Aha."],[6,"+24% / +24%. 3-Star Aha."],[8,"+32% / +32%. 4-Star Aha, Prismatic drop chances."]]},
+"Counter":{k:"C",d:"The most geared unit becomes Counter King. Off-field allies grant +30% DMG Amp and +10% HP Amp.",t:[[2,"400% base Counter DMG. Provoke: +20% enemy DMG taken."],[4,"800% base Counter DMG. Provoke: +40%."],[6,"1200% base Counter DMG. Provoke: +80%."]]},
+"Energy":{k:"C",d:"+10% DMG Amplification. Squad Ultimates charge Energy meters.",t:[[2,"Ultimates for 2 Energy members (+25% DMG Amp)."],[4,"Ultimates for all Energy members (+50%)."],[6,"Ultimates for all squad allies (+100%)."]]},
+"Heal":{k:"C",d:"Squad gains +12% DMG Mitigation. Boosts members' Healing Strength.",t:[[2,"+20% Healing Strength."],[4,"+40% Healing Strength."],[6,"+60% Healing Strength. Squad +60% DMG Amp."]]},
+"Protection":{k:"C",d:"Increases Shield Strength. Defender Ultimates heal on-field allies.",t:[[2,"+20% Shield Strength. Restores 50% Max HP + 100% DEF."],[3,"+40% Shield Strength. Restores 90% Max HP + 160% DEF."]]},
+"Twin Dragons' Call":{k:"S",d:"Imbibitor Lunae and Permansor Terrae fight as a pair.",t:[[1,"Summons an off-field Permansor Terrae of equal star rating, copying equipment."],[2,"Permansor Terrae can hold 1/2/3 equipment at 1/2/3 stars and joins combined attacks and shields."]]},
+"Flame Reaver":{k:"S",d:"",t:[[1,"Drag units to Phainon during prep to convert them into Torchflame. In combat he becomes Khaslana and summons a Flame Reaver (200 SPD)."]]},
+"Galaxy Ranger":{k:"S",d:"",t:[[1,"Designate 1 on-field unit as Galaxy Ranger: +30% DMG and SPD Amp, multiplied 3x/6x/12x at 2/3/4 stars."]]},
+"Black Market Manager":{k:"S",d:"",t:[[1,"Jade opens a Black Market selling 1/2/3 types of special items by her star rating."]]},
+"Ingenious Artificer":{k:"S",d:"",t:[[1,"Modifies Svarog every 2 Nodes (+6% DMG Amp per modification)."]]},
+"Master of Phantasia":{k:"S",d:"",t:[[1,"Accumulates Phantasmoon Power to raise Aha up to 5-Cost. Evolves to 7-Cost when Elation/Phantasmoon members reach 10/12 total stars."]]}
+};
+// Character art. Filename is the character ID; each one is either .png or .webp, so try png first, then webp.
+const ID={"Welt":1004,"Topaz & Numby":1112,"Jing Yuan":1204,"Guinaifen":1210,"Lingsha":1222,"March 7th Hunt":1224,"Fugue":1225,"Black Swan":1307,"Boothill":1315,"Anaxa":1405,"Cerydra":1412,"Evernight":1413,"Sparxie":1501,"Pearl":1503,"Natasha":1105,"Bailu":1211,"Yunli":1221,"Sparkle":1306,"Robin":1309,"Firefly":1310,"Sunday":1313,"The Herta":1401,"Mydei":1404,"Hysilens":1410,"Evanescia":1505,"Robin • Summeretto":1512,"Luocha":1203,"Fu Xuan":1208,"Jingliu":1212,"Jiaoqiu":1218,"Feixiao":1220,"Rappa":1317,"The Dahlia":1321,"Cipher":1406,"Castorice":1407,"Yao Guang":1502,"Silver Wolf LV.999":1506,"Aeon ★ Aha":1511,"Trailblazer: Elation":8008,"Serval":1103,"Blade":1205,"Hanya":1215,"Huohuo":1217,"Aventurine":1304,"Acheron":1308,"Tribbie":1403,"Hyacine":1409,"Cyrene":1415,"Mortenax Blade":1507,"Himeko • Nova":1510,"Aventurine • Waveflair":1513,"Kafka":1005,"Clara":1107,"Dan Heng • Imbibitor Lunae":1213,"Xueyi":1214,"Jade":1314,"Aglaea":1402,"Phainon":1408,"Dan Heng • Permansor Terrae":1414,"Ashveil":1504};
+const GH='https://raw.githubusercontent.com/Akaerya/currencywars47/refs/heads/main/';
+// Board tiles use character_preview/ (376x512), unit list tiles use character/ (256x256).
+// Copies published next to this page come first (the Artifact viewer blocks images from other sites); GitHub is used anywhere else.
+const BASES=['',GH];
+const ART={}; // "folder/id" -> url once found, false if neither file loads, 'wait' while checking
+function findArt(key){
+  if(ART[key]!==undefined)return;
+  ART[key]='wait';
+  const tries=BASES.flatMap(b=>[b+key+'.png',b+key+'.webp']);
+  const next=()=>{
+    const url=tries.shift();
+    if(!url){ART[key]=false;return}
+    const im=new Image();
+    im.onload=()=>{ART[key]=url;document.querySelectorAll(`[data-art="${key}"]`).forEach(el=>{el.classList.add('art');el.style.backgroundImage=`url("${url}")`})};
+    im.onerror=next;
+    im.src=url;
+  };
+  next();
+}
+const artOf=(dir,u)=>{const key=dir+'/'+ID[u.name];if(ART[key]===undefined)findArt(key);const url=typeof ART[key]==='string'?ART[key]:'';return{key,url}};
+const KIND={F:'Faction',C:'Class',S:'Unique'};
+const TN=Object.keys(T);
+
+const KEY='cw-team-v1';
+let S={board:Array(13).fill(null),extra:0,emb:{},aha:3};
+const AHA='Aeon ★ Aha',AHAC=[3,4,5,7];
+const costOf=u=>u.name===AHA?S.aha:u.cost;
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.board)&&s.board.length===13){S.board=s.board.map(n=>n==='March 7th'?'March 7th Hunt':n).map(n=>UB[n]?n:null);S.extra=Math.min(3,Math.max(0,s.extra|0));if(AHAC.includes(s.aha))S.aha=s.aha;if(s.emb)for(const k in s.emb)if(T[k]&&T[k].k!=='S'&&s.emb[k]>0)S.emb[k]=Math.min(9,s.emb[k]|0)}}catch(e){}
+const F={q:'',cost:new Set(),role:new Set(),trait:''};
+const open=new Set();
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ini=n=>n.replace(/[^A-Za-z0-9 ]/g,' ').trim().split(/\s+/).filter(w=>w!=='The').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const isFront=i=>i<4, usable=i=>i<10||i-10<S.extra;
+const misfit=(u,i)=>(u.role==='N'&&!isFront(i))||(u.role==='F'&&isFront(i));
+
+function unitEl(u,i){
+  const bad=misfit(u,i),{key,url}=artOf('character_preview',u);
+  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}" title="${esc(u.name)} · ${costOf(u)}-cost · ${R[u.role]}\n${esc(u.traits.join(', '))}${bad?'\nThis unit is '+R[u.role]+' only':''}">${u.name===AHA?`<button class="cost flip" data-aha title="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}<span class="ini">${ini(u.name)}</span><span class="nm">${esc(u.name)}</span></div>`;
+}
+function tileEl(i){
+  const n=S.board[i],lock=!usable(i);
+  return `<div class="tile${n?' full':''}${lock?' locked':''}" data-tile="${i}">${n&&!lock?unitEl(UB[n],i):''}</div>`;
+}
+function renderBoard(){
+  const r=(a)=>a.map(tileEl).join('');
+  $('board').innerHTML=
+   `<div class="row"><div class="grp main"><span class="lab">On-Field</span><div class="tiles">${r([0,1,2,3])}</div></div></div>
+    <div class="row"><div class="grp main"><span class="lab">Off-Field</span><div class="tiles">${r([4,5,6,7,8,9])}</div></div>
+    <div class="grp side"><span class="lab">Extra tiles</span><div class="tiles">${r([10,11,12])}</div></div></div>`;
+  const placed=S.board.filter(Boolean);
+  $('count').textContent=`${placed.length} / ${10+S.extra} units`;
+  $('extra').innerHTML=[0,1,2,3].map(n=>`<button aria-pressed="${S.extra===n}" data-x="${n}">${n}</button>`).join('');
+  const bad=S.board.map((n,i)=>n&&misfit(UB[n],i)?n:null).filter(Boolean);
+  $('hint').innerHTML=bad.length?`<b>! Wrong row:</b> ${bad.map(esc).join(', ')}. On-Field units belong in the front four tiles, Off-Field units in the back.`:'Front row is On-Field, back row is Off-Field. Extra tiles come from board-size items, traits or augments.';
+}
+function counts(){
+  const c={};
+  S.board.forEach((n,i)=>{if(n&&usable(i))UB[n].traits.forEach(t=>(c[t]=c[t]||[]).push(n))});
+  return c;
+}
+function tierOf(def,n){
+  if(!def.t.length)return n>0?0:-1;
+  let x=-1;def.t.forEach(([k],i)=>{if(def.exact?n===k:n>=k)x=i});return x;
+}
+// bronze, silver, gold, prismatic. Traits with more than 5 intervals (Galactic Voyager) step every two.
+const rankOf=(def,i)=>Math.min(3,def.t.length>5?Math.floor(i/2):i);
+const RANK=['Bronze','Silver','Gold','Prismatic'];
+function renderTraits(){
+  const c=counts();
+  const names=[...new Set([...Object.keys(c),...Object.keys(S.emb).filter(k=>S.emb[k]>0)])];
+  const rows=names.map(name=>{const def=T[name],who=c[name]||[],e=S.emb[name]||0,n=who.length+e;return{name,def,n,e,who,ti:tierOf(def,n),base:tierOf(def,who.length)}})
+    .sort((a,b)=>(b.ti>=0)-(a.ti>=0)||(b.def.t.length?rankOf(b.def,b.ti):0)*(b.ti>=0)-(a.def.t.length?rankOf(a.def,a.ti):0)*(a.ti>=0)||b.n-a.n||a.name.localeCompare(b.name));
+  $('tsum').textContent=rows.length?`${rows.filter(r=>r.ti>=0).length} active of ${rows.length}`:'';
+  if(!rows.length){$('traits').innerHTML='<div class="empty">Place a unit to see its bonds and traits here. Inactive ones are listed too.</div>';return}
+  $('traits').innerHTML=rows.map(r=>{
+    const d=r.def,on=r.ti>=0,tiered=d.t.length>0,rk=on&&tiered?rankOf(d,r.ti):-1;
+    const pips=tiered?d.t.map(([k],i)=>{const hit=d.exact?i===r.ti:i<=r.ti;return `<i class="${hit?'hit p'+rankOf(d,i):''}">${k}</i>`}).join('<span>›</span>'):'<i>scales with stars</i>';
+    let note='';
+    if(r.e>0){
+      if(on&&tiered&&r.ti!==r.base){const need=d.exact?r.e:d.t[r.ti][0]-r.who.length;note=`${need} Emblem${need>1?'s':''} required`}
+      else note=`${r.e} Emblem${r.e>1?'s':''} added, no new interval`;
+    }
+    const emb=d.k==='S'?'':`<span class="emb">Emblem<span><button data-em="-1" data-t="${esc(r.name)}" aria-label="Remove an Emblem from ${esc(r.name)}"${r.e?'':' disabled'}>−</button><b>${r.e}</b><button data-em="1" data-t="${esc(r.name)}" aria-label="Add an Emblem to ${esc(r.name)}"${r.e>=9?' disabled':''}>+</button></span></span>`;
+    const det=open.has(r.name)?`<div class="det">${d.d?`<p>${esc(d.d)}</p>`:''}${tiered?`<ul>${d.t.map(([k,x],i)=>`<li class="${i===r.ti?'hit':''}"><b>(${k})</b><span>${esc(x)}</span></li>`).join('')}</ul>`:''}<p>On board: <span class="who">${r.who.length?r.who.map(esc).join(', '):'none'}</span>${r.e?` + ${r.e} Emblem${r.e>1?'s':''}`:''}</p><button class="link" data-find="${esc(r.name)}">Show all ${esc(r.name)} units</button></div>`:'';
+    return `<div class="tr${on?' on':''}${rk>=0?' r'+rk:''}"><div class="hd"><button class="tog" data-tr="${esc(r.name)}" aria-expanded="${open.has(r.name)}"><span class="num">${r.n}</span><span><span class="tn">${esc(r.name)}</span><br><span class="kind">${KIND[d.k]} · <span class="rank">${on?(rk>=0?RANK[rk]:'active'):'inactive'}</span></span><span class="pips">${pips}</span>${note?`<span class="note">${note}</span>`:''}</span></button>${emb}</div>${det}</div>`;
+  }).join('');
+}
+function renderPool(){
+  const used=new Set(S.board.filter((n,i)=>n&&usable(i)));
+  const q=F.q.trim().toLowerCase();
+  const list=U.filter(u=>(!q||u.name.toLowerCase().includes(q))&&(!F.cost.size||F.cost.has(costOf(u)))&&(!F.role.size||[...F.role].every(r=>u.role==='B'||u.role===r))&&(!F.trait||u.traits.includes(F.trait)));
+  $('psum').textContent=`${list.length} of ${U.length} shown, A to Z`;
+  $('pool').innerHTML=list.length?list.map(u=>{
+    const {key,url}=artOf('character',u),on=used.has(u.name);
+    return `<div class="card${on?' used':''}${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}" tabindex="0" role="button" title="${esc(u.name)} · ${costOf(u)}-cost · ${R[u.role]}\n${esc(u.traits.join(', '))}"><span class="top"><span class="cs">${costOf(u)}</span><span class="role">${on?'On board':R[u.role]}</span></span><span class="info"><span class="nm">${esc(u.name)}</span>${u.traits.map(t=>`<span class="tg">${esc(t)}</span>`).join('')}</span></div>`}).join(''):'<div class="empty" style="grid-column:1/-1">No units match these filters.</div>';
+  $('fcost').innerHTML=[1,2,3,4,5,7].map(c=>`<button class="chip" data-c="${c}" aria-pressed="${F.cost.has(c)}">${c}-cost</button>`).join('');
+  $('frole').innerHTML=['N','F'].map(r=>`<button class="chip" data-r="${r}" aria-pressed="${F.role.has(r)}">${R[r]}</button>`).join('');
+}
+function all(){renderBoard();renderTraits();renderPool();save()}
+
+function place(name,idx,from){
+  if(!usable(idx))return;
+  const occ=S.board[idx];
+  if(from!=null){S.board[from]=occ}
+  else{const j=S.board.indexOf(name);if(j>=0)S.board[j]=null}
+  S.board[idx]=name;all();
+}
+function autoPlace(name){
+  if(S.board.some((n,i)=>n===name&&usable(i)))return;
+  const u=UB[name],front=[0,1,2,3],back=[4,5,6,7,8,9,10,11,12];
+  const order=u.role==='F'?[...back,...front]:[...front,...back];
+  const i=order.find(i=>usable(i)&&!S.board[i]);
+  if(i!=null)place(name,i,null);
+  else{$('hint').innerHTML='<b>Board is full.</b> Remove a unit or unlock an extra tile.'}
+}
+
+// pointer drag (mouse and touch) with click fallback
+let D=null;
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('[data-unit]');if(!el||el.classList.contains('used')||e.button>0)return;
+  const from=el.dataset.from!=null?+el.dataset.from:null;
+  if(from==null&&e.pointerType!=='mouse'){return} // pool on touch: tap to add, keeps scrolling free
+  D={name:el.dataset.unit,from,x:e.clientX,y:e.clientY,ghost:null};
+});
+document.addEventListener('pointermove',e=>{
+  if(!D)return;
+  if(!D.ghost){
+    if(Math.hypot(e.clientX-D.x,e.clientY-D.y)<6)return;
+    D.ghost=document.createElement('div');D.ghost.className='ghost';D.ghost.innerHTML=unitEl(UB[D.name],D.from??0).replace('<span class="bad">!</span>','');
+    document.body.appendChild(D.ghost);
+  }
+  D.ghost.style.left=e.clientX+'px';D.ghost.style.top=e.clientY+'px';
+  document.querySelectorAll('.tile.over').forEach(t=>t.classList.remove('over'));
+  const t=document.elementFromPoint(e.clientX,e.clientY)?.closest('.tile:not(.locked)');
+  if(t)t.classList.add('over');
+});
+function endDrag(e,cancel){
+  if(!D)return;const d=D;D=null;
+  if(d.ghost){
+    d.ghost.remove();justDragged=true;setTimeout(()=>justDragged=false,0);
+    if(cancel)return all();
+    const t=document.elementFromPoint(e.clientX,e.clientY)?.closest('.tile:not(.locked)');
+    if(t){const i=+t.dataset.tile;if(i!==d.from)place(d.name,i,d.from);else all()}
+    else if(d.from!=null){S.board[d.from]=null;all()}
+    else all();
+  }
+}
+let justDragged=false;
+document.addEventListener('pointerup',e=>endDrag(e,false));
+document.addEventListener('pointercancel',e=>endDrag(e,true));
+
+document.addEventListener('click',e=>{
+  if(justDragged)return;
+  const t=e.target;let el;
+  if(el=t.closest('[data-aha]')){S.aha=AHAC[(AHAC.indexOf(S.aha)+1)%4];return all()}
+  if(el=t.closest('[data-em]')){const k=el.dataset.t;S.emb[k]=Math.min(9,Math.max(0,(S.emb[k]||0)+ +el.dataset.em));if(!S.emb[k])delete S.emb[k];return all()}
+  if(el=t.closest('.u[data-from]')){S.board[+el.dataset.from]=null;return all()}
+  if(el=t.closest('.card')){if(!el.classList.contains('used')&&el.dataset.unit)autoPlace(el.dataset.unit);return}
+  if(el=t.closest('[data-x]')){S.extra=+el.dataset.x;for(let i=10+S.extra;i<13;i++)S.board[i]=null;return all()}
+  if(el=t.closest('[data-find]')){F.trait=el.dataset.find;$('ftrait').value=F.trait;renderPool();$('pool').scrollIntoView({behavior:'smooth',block:'nearest'});return}
+  if(el=t.closest('[data-tr]')){const n=el.dataset.tr;open.has(n)?open.delete(n):open.add(n);return renderTraits()}
+  if(el=t.closest('[data-c]')){const c=+el.dataset.c;F.cost.has(c)?F.cost.delete(c):F.cost.add(c);return renderPool()}
+  if(el=t.closest('[data-r]')){const r=el.dataset.r;F.role.has(r)?F.role.delete(r):F.role.add(r);return renderPool()}
+});
+document.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList?.contains('card')){e.preventDefault();e.target.click()}
+});
+$('clear').onclick=()=>{S.board.fill(null);S.emb={};S.aha=3;all()};
+$('addemb').innerHTML='<option value="">Add an Emblem for a trait not listed…</option>'+['F','C'].map(k=>`<optgroup label="${KIND[k]}">${TN.filter(n=>T[n].k===k).map(n=>`<option>${esc(n)}</option>`).join('')}</optgroup>`).join('');
+$('addemb').onchange=e=>{const k=e.target.value;e.target.value='';if(k){S.emb[k]=Math.min(9,(S.emb[k]||0)+1);all()}};
+$('q').oninput=e=>{F.q=e.target.value;renderPool()};
+$('ftrait').innerHTML='<option value="">All traits</option>'+['F','C','S'].map(k=>`<optgroup label="${KIND[k]}">${TN.filter(n=>T[n].k===k).map(n=>`<option>${esc(n)}</option>`).join('')}</optgroup>`).join('');
+$('ftrait').onchange=e=>{F.trait=e.target.value;renderPool()};
+$('reset').onclick=()=>{F.q='';F.cost.clear();F.role.clear();F.trait='';$('q').value='';$('ftrait').value='';renderPool()};
+all();
+</script>
+
+</body></html>
