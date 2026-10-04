@@ -60,20 +60,35 @@ button,select,input{font:inherit;color:inherit}
 .u .ini{font-family:var(--display);font-weight:700;font-size:calc(var(--t)*.3);color:var(--cc);line-height:1;margin-top:auto}
 .u .nm{font-size:clamp(9px,calc(var(--t)*.13),12px);line-height:1.15;margin:auto 0 0;overflow-wrap:anywhere;max-height:3.5em;overflow:hidden}
 button.flip{border:0;cursor:pointer;font-family:var(--display)}
+.u button.flip{width:30px;height:30px;padding:0;font-size:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--cc) 28%,transparent);border:1px solid var(--cc);color:var(--fg);text-shadow:0 0 3px #000,0 0 2px #000}
+.u button.flip:hover{background:color-mix(in srgb,var(--cc) 55%,transparent)}
 .u{background-size:cover;background-position:center top;background-repeat:no-repeat}
 .u.art .ini{display:none}
 .u.art .nm{align-self:stretch;margin:auto -3px -4px;padding:14px 3px 4px;background:linear-gradient(transparent,rgba(6,10,36,.92) 55%);max-height:none}
 .u .cost{align-self:flex-start;font-family:var(--display);font-size:10px;background:var(--cc);color:#0a0f2e;padding:0 5px;border-radius:2px;font-weight:700}
-.u .bad{position:absolute;top:22px;left:4px;text-shadow:0 0 3px #000;color:var(--warn);font-weight:700;font-size:13px}
+.u .bad{text-shadow:0 0 3px #000;color:var(--warn);font-weight:700;font-size:13px}
 .ahanote{margin:0;align-self:stretch;border:1px dashed var(--c3);border-radius:4px;padding:8px 10px;font-size:12.5px;color:var(--muted);background:rgba(90,168,255,.08)}
 .ahanote b{color:var(--fg);font-weight:600}
-.u .gr{position:absolute;bottom:26%;left:4px;color:var(--c5);font-size:15px;text-shadow:0 0 3px #000}
+.u .gr{font-family:var(--display);font-size:10px;font-weight:700;background:var(--c5);color:#0a0f2e;padding:0 3px;border-radius:2px}
+.lcol{position:absolute;top:3px;left:3px;display:flex;flex-direction:column;gap:2px;align-items:flex-start}
+.tiles{padding-top:18px}
+.stars{position:absolute;bottom:100%;left:0;right:0;display:flex;justify-content:center}
+.stars button{flex:1;max-width:26px;height:22px;padding:0;border:0;background:none;font-size:17px;line-height:1;color:var(--line);cursor:pointer}
+.stars button:hover{color:var(--fg)}
+.stars button.on{color:var(--gold)}
+.stars.s4 button.on{color:var(--prism)}
+.notes{gap:6px}
+.gvn{margin:0 10px 8px;font-size:12px;color:var(--muted)}.gvn b{color:var(--fg);font-weight:600}
+.tip ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.tip li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:6px;color:var(--muted);padding:3px 6px;border-left:2px solid transparent}
+.tip li b{font-family:var(--display)}
+.tip li.hit{color:var(--fg);background:rgba(99,230,226,.10);border-left-color:var(--accent)}
+.tip .off{color:var(--warn)}
 .eqcol{position:absolute;top:3px;right:3px;display:flex;flex-direction:column;gap:2px;align-items:center}
 .eqb{width:18px;height:18px;padding:0;line-height:1;border:1px solid var(--accent);border-radius:3px;background:rgba(6,10,36,.85);color:var(--accent);font-weight:700;cursor:pointer}
 .eqb:hover{background:var(--accent);color:#06203a}
 .eqcol i{font-style:normal;font-family:var(--display);font-size:10px;font-weight:700;min-width:18px;padding:1px 2px;text-align:center;border-radius:2px;background:var(--gold);color:#0a0f2e}
 .more{text-transform:none;letter-spacing:0;opacity:.8}
-@media(hover:hover){.xin{display:none}}
 .xh{font-family:var(--display);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
 .xin{display:flex;flex-direction:column;gap:5px;border-left:2px solid var(--line);padding-left:8px}
 .tip{position:fixed;z-index:60;pointer-events:none;width:min(360px,calc(100vw - 16px));background:#070b26;border:1px solid var(--accent);border-radius:5px;padding:10px 12px;font-size:12.5px;color:var(--fg);display:flex;flex-direction:column;gap:6px;box-shadow:0 8px 28px rgba(0,0,0,.55)}
@@ -264,10 +279,10 @@ const GVM=[1,1.2,1.4,1.7,2,2.4,2.9,3.5];
 const TN=Object.keys(T);
 
 const KEY='cw-team-v1';
-let S={board:Array(13).fill(null),extra:0,emb:{},aha:3,eq:{},gr:null};
+let S={board:Array(13).fill(null),extra:0,emb:{},aha:3,eq:{},gr:null,star:{}};
 const AHA='Aeon ★ Aha',AHAC=[3,4,5,7];
 const costOf=u=>u.name===AHA?S.aha:u.cost;
-try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.board)&&s.board.length===13){S.board=s.board.map(n=>n==='March 7th'?'March 7th Hunt':n).map(n=>UB[n]?n:null);S.extra=Math.min(3,Math.max(0,s.extra|0));if(AHAC.includes(s.aha))S.aha=s.aha;if(s.emb)for(const k in s.emb)if(T[k]&&T[k].k!=='S'&&s.emb[k]>0)S.emb[k]=Math.min(9,s.emb[k]|0);if(s.eq)for(const k in s.eq)if(UB[k]&&Array.isArray(s.eq[k]))S.eq[k]=s.eq[k].filter(x=>IB[x]).slice(0,3);if(UB[s.gr])S.gr=s.gr}}catch(e){}
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.board)&&s.board.length===13){S.board=s.board.map(n=>n==='March 7th'?'March 7th Hunt':n).map(n=>UB[n]?n:null);S.extra=Math.min(3,Math.max(0,s.extra|0));if(AHAC.includes(s.aha))S.aha=s.aha;if(s.emb)for(const k in s.emb)if(T[k]&&T[k].k!=='S'&&s.emb[k]>0)S.emb[k]=Math.min(9,s.emb[k]|0);if(s.eq)for(const k in s.eq)if(UB[k]&&Array.isArray(s.eq[k]))S.eq[k]=s.eq[k].filter(x=>IB[x]).slice(0,3);if(UB[s.gr])S.gr=s.gr;if(s.star)for(const k in s.star)if(UB[k]&&[2,3,4].includes(s.star[k]))S.star[k]=s.star[k]}}catch(e){}
 const F={q:'',cost:new Set(),role:new Set(),trait:''};
 const open=new Set();
 const $=id=>document.getElementById(id);
@@ -278,17 +293,22 @@ const isFront=i=>i<4, usable=i=>i<10||i-10<S.extra;
 const misfit=(u,i)=>(u.role==='N'&&!isFront(i))||(u.role==='F'&&isFront(i));
 
 function unitEl(u,i){
-  const bad=misfit(u,i),{key,url}=artOf('character_preview',u),eq=S.eq[u.name]||[];
-  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}" title="${esc(u.name)} · ${costOf(u)}-cost · ${R[u.role]}\n${esc(u.traits.join(', '))}${bad?'\nThis unit is '+R[u.role]+' only':''}">${u.name===AHA?`<button class="cost flip" data-aha title="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" title="Galaxy Ranger">★</span>':''}<span class="eqcol"><button class="eqb" data-eq="${esc(u.name)}" title="Equipment (${eq.length}/${slotsFor(u)})" aria-label="Equipment for ${esc(u.name)}">+</button>${eq.map(x=>`<i title="${esc(IB[x].name)}">${esc(IB[x].short)}</i>`).join('')}</span><span class="ini">${ini(u.name)}</span><span class="nm">${esc(u.name)}</span></div>`;
+  const bad=misfit(u,i),{key,url}=artOf('character_preview',u),eq=S.eq[u.name]||[],st=starOf(u.name);
+  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}" title="${esc(u.name)} · ${costOf(u)}-cost · ${R[u.role]} · ${st}★\n${esc(u.traits.join(', '))}${bad?'\nThis unit is '+R[u.role]+' only':''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha title="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" title="Galaxy Ranger">GR</span>':''}</span><span class="eqcol"><button class="eqb" data-eq="${esc(u.name)}" title="Equipment (${eq.length}/${slotsFor(u)})" aria-label="Equipment for ${esc(u.name)}">+</button>${eq.map(x=>`<i title="${esc(IB[x].name)}">${esc(IB[x].short)}</i>`).join('')}</span><span class="ini">${ini(u.name)}</span><span class="nm">${esc(u.name)}</span></div>`;
+}
+const starOf=n=>S.star[n]||1; // units are 1★ unless marked
+function starsEl(n){
+  const st=starOf(n);
+  return `<span class="stars s${st}" role="group" aria-label="Star level for ${esc(n)}">${[1,2,3,4].map(k=>`<button data-star="${esc(n)}" data-k="${k}" class="${k<=st?'on':''}" title="${k}★" aria-label="${k} star" aria-pressed="${k===st}">★</button>`).join('')}</span>`;
 }
 function tileEl(i){
   const n=S.board[i],lock=!usable(i);
-  return `<div class="tile${n?' full':''}${lock?' locked':''}" data-tile="${i}">${n&&!lock?unitEl(UB[n],i):''}</div>`;
+  return `<div class="tile${n?' full':''}${lock?' locked':''}" data-tile="${i}">${n&&!lock?starsEl(n)+unitEl(UB[n],i):''}</div>`;
 }
 function renderBoard(){
   const r=(a)=>a.map(tileEl).join('');
   $('board').innerHTML=
-   `<div class="row"><div class="grp main"><span class="lab">On-Field</span><div class="tiles">${r([0,1,2,3])}</div></div>${S.board.some((n,i)=>n===AHA&&usable(i))?`<div class="grp side"><p class="ahanote"><b>Aeon ★ Aha</b> starts at 3-cost. Click the cost badge on her tile to switch her to 4, 5 or 7-cost.</p></div>`:''}${onBoard('Ashveil')&&!onBoard(AHA)?`<div class="grp side"><p class="ahanote"><b>Ashveil</b> is on the board. Pick a front-row unit as the Galaxy Ranger in the trait list.</p></div>`:''}</div>
+   `<div class="row"><div class="grp main"><span class="lab">On-Field</span><div class="tiles">${r([0,1,2,3])}</div></div><div class="grp side notes">${onBoard(AHA)?`<p class="ahanote"><b>Aeon ★ Aha</b> starts at 3-cost. Click the cost badge on her tile to switch her to 4, 5 or 7-cost.</p>`:''}${onBoard('Ashveil')?`<p class="ahanote"><b>Ashveil</b> is on the board. Pick a front-row unit as the Galaxy Ranger in the trait list. Its star level sets the size of the bonus.</p>`:''}</div></div>
     <div class="row"><div class="grp main"><span class="lab">Off-Field</span><div class="tiles">${r([4,5,6,7,8,9])}</div></div>
     <div class="grp side"><span class="lab">Extra tiles</span><div class="tiles">${r([10,11,12])}</div></div></div>`;
   const placed=S.board.filter(Boolean);
@@ -318,6 +338,19 @@ function gvTotals(who,e,ti){
   if(e)rows.push(['Lucky Strike DMG',18*e*m,e>1?e+' Emblems':'Emblem']);
   return `<table class="gv"><tr><th>Total bonus (×${m})</th><th>Squad</th><th>Voyagers</th></tr>${rows.map(([st,v,src])=>`<tr><td>${st}<small>${esc(src)}</small></td><td>${pct(v)}</td><td>${pct(v*2)}</td></tr>`).join('')}</table>`;
 }
+const SM={1:1,2:2,3:4,4:8}; // Merchant Guild multiplier by star level
+const GRM={1:1,2:3,3:6,4:12}; // Galaxy Ranger multiplier by star level
+const amgLevel=who=>who.filter(n=>starOf(n)>=3).length;
+function amgTotals(who,e){
+  const rows=who.map(n=>[n,starOf(n)]).concat(Array.from({length:e},()=>['Emblem holder',1]));
+  let sum=0;
+  const body=rows.map(([n,st])=>{const v=2*SM[st];sum+=v;return `<tr><td>${esc(n)}</td><td>${st}★</td><td>${pct(v)}</td></tr>`}).join('');
+  return `<table class="gv"><tr><th>Bond level ${amgLevel(who)} (3★+ members)</th><th>Stars</th><th>Gives</th></tr>${body}<tr><td>Each member gains<small>Lucky Strike Rate and DMG</small></td><td></td><td>${pct(sum)}</td></tr></table>`;
+}
+function grLine(){
+  const st=starOf(S.gr);
+  return `<p class="gvn"><b>${esc(S.gr)}</b> (${st}★) gains ${pct(30*GRM[st])} DMG and SPD Amplification.</p>`;
+}
 const xfx=d=>d.x.map(l=>`<p>${esc(l).replace(/^&quot;([^&]+)&quot;:/,'<b>$1:</b>')}</p>`).join('');
 function renderTraits(){
   const c=counts();
@@ -328,7 +361,7 @@ function renderTraits(){
   if(!rows.length){$('traits').innerHTML='<div class="empty">Place a unit to see its bonds and traits here. Inactive ones are listed too.</div>';return}
   $('traits').innerHTML=rows.map(r=>{
     const d=r.def,on=r.ti>=0,tiered=d.t.length>0,rk=on&&tiered?rankOf(d,r.ti):-1;
-    const pips=tiered?d.t.map(([k],i)=>{const hit=d.exact?i===r.ti:i<=r.ti;return `<i class="${hit?'hit p'+rankOf(d,i):''}">${k}</i>`}).join('<span>›</span>'):'<i>scales with stars</i>';
+    const pips=tiered?d.t.map(([k],i)=>{const hit=d.exact?i===r.ti:i<=r.ti;return `<i class="${hit?'hit p'+rankOf(d,i):''}">${k}</i>`}).join('<span>›</span>'):`<i>level ${amgLevel(r.who)} · one per 3★ member</i>`;
     let note='';
     if(r.e>0){
       const need=d.exact?r.e:Math.max(0,d.t[r.ti]?.[0]-(r.n-r.e));
@@ -340,15 +373,15 @@ function renderTraits(){
       const front=S.board.slice(0,4).filter(Boolean);
       ctl=`<span class="emb">Ranger<select data-gr aria-label="Galaxy Ranger"><option value="">None</option>${front.map(n=>`<option${n===S.gr?' selected':''}>${esc(n)}</option>`).join('')}</select></span>`;
     }else if(d.k!=='S')ctl=`<span class="emb">Emblem<span><button data-em="-1" data-t="${esc(r.name)}" aria-label="Remove an Emblem from ${esc(r.name)}"${r.e?'':' disabled'}>−</button><b>${r.e}</b><button data-em="1" data-t="${esc(r.name)}" aria-label="Add an Emblem to ${esc(r.name)}"${r.e>=9?' disabled':''}>+</button></span></span>`;
-    const gv=r.name==='Galactic Voyager'?gvTotals(r.who,r.e,r.ti):'';
+    const gv=r.name==='Galactic Voyager'?gvTotals(r.who,r.e,r.ti):r.name==='Astropolis Merchant Guild'?amgTotals(r.who,r.e):r.name==='Galaxy Ranger'&&grOk()?grLine():'';
     const det=open.has(r.name)?`<div class="det">${d.d?`<p>${esc(d.d)}</p>`:''}${tiered?`<ul>${d.t.map(([k,x],i)=>`<li class="${i===r.ti?'hit':''}"><b>(${k})</b><span>${esc(x)}</span></li>`).join('')}</ul>`:''}${d.x.length?`<div class="xin"><p class="xh">Additional effects</p>${xfx(d)}</div>`:''}<p>On board: <span class="who">${r.who.length?r.who.map(esc).join(', '):'none'}</span>${r.e?` + ${r.e} Emblem${r.e>1?'s':''}`:''}${r.name==='Galaxy Ranger'&&grOk()?` · Ranger: <span class="who">${esc(S.gr)}</span>`:''}</p><button class="link" data-find="${esc(r.name)}">Show all ${esc(r.name)} units</button></div>`:'';
-    return `<div class="tr${on?' on':''}${rk>=0?' r'+rk:''}"${d.x.length?` data-fx="${esc(r.name)}"`:''}><div class="hd"><button class="tog" data-tr="${esc(r.name)}" aria-expanded="${open.has(r.name)}"><span class="num">${r.n}</span><span><span class="tn">${esc(r.name)}</span><br><span class="kind">${KIND[d.k]} · <span class="rank">${on?(rk>=0?RANK[rk]:'active'):'inactive'}</span>${d.x.length?' · <span class="more">more on hover</span>':''}</span><span class="pips">${pips}</span>${note?`<span class="note">${note}</span>`:''}</span></button>${ctl}</div>${gv}${det}</div>`;
+    return `<div class="tr${on?' on':''}${rk>=0?' r'+rk:''}" data-fx="${esc(r.name)}" data-ti="${r.ti}" data-n="${r.n}"><div class="hd"><button class="tog" data-tr="${esc(r.name)}" aria-expanded="${open.has(r.name)}"><span class="num">${r.n}</span><span><span class="tn">${esc(r.name)}</span><br><span class="kind">${KIND[d.k]} · <span class="rank">${on?(rk>=0?RANK[rk]:'active'):'inactive'}</span></span><span class="pips">${pips}</span>${note?`<span class="note">${note}</span>`:''}</span></button>${ctl}</div>${gv}${det}</div>`;
   }).join('');
 }
 function renderPool(){
   const used=new Set(S.board.filter((n,i)=>n&&usable(i)));
   const q=F.q.trim().toLowerCase();
-  const list=U.filter(u=>(!q||u.name.toLowerCase().includes(q))&&(!F.cost.size||F.cost.has(costOf(u)))&&(!F.role.size||[...F.role].every(r=>u.role==='B'||u.role===r))&&(!F.trait||u.traits.includes(F.trait)));
+  const list=U.filter(u=>(!q||u.name.toLowerCase().includes(q))&&(!F.cost.size||F.cost.has(costOf(u))||(u.name===AHA&&AHAC.some(c=>F.cost.has(c))))&&(!F.role.size||[...F.role].every(r=>u.role==='B'||u.role===r))&&(!F.trait||u.traits.includes(F.trait)));
   $('psum').textContent=`${list.length} of ${U.length} shown, A to Z`;
   $('pool').innerHTML=list.length?list.map(u=>{
     const {key,url}=artOf('character',u),on=used.has(u.name);
@@ -358,6 +391,7 @@ function renderPool(){
 }
 function all(){
   const here=new Set(S.board.filter((n,i)=>n&&usable(i)));for(const k in S.eq)if(!here.has(k)||!S.eq[k].length)delete S.eq[k];
+  for(const k in S.star)if(!here.has(k))delete S.star[k];
   if(!grOk())S.gr=null;
   renderBoard();renderTraits();renderPool();save()}
 
@@ -416,6 +450,7 @@ document.addEventListener('click',e=>{
   if(justDragged)return;
   const t=e.target;let el;
   if(el=t.closest('[data-eq]'))return openEq(el.dataset.eq);
+  if(el=t.closest('[data-star]')){const k=+el.dataset.k;if(k>1)S.star[el.dataset.star]=k;else delete S.star[el.dataset.star];return all()}
   if(el=t.closest('[data-aha]')){S.aha=AHAC[(AHAC.indexOf(S.aha)+1)%4];return all()}
   if(el=t.closest('[data-em]')){const k=el.dataset.t;S.emb[k]=Math.min(9,Math.max(0,(S.emb[k]||0)+ +el.dataset.em));if(!S.emb[k])delete S.emb[k];return all()}
   if(el=t.closest('.u[data-from]')){S.board[+el.dataset.from]=null;return all()}
@@ -429,7 +464,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
   if((e.key==='Enter'||e.key===' ')&&e.target.classList?.contains('card')){e.preventDefault();e.target.click()}
 });
-$('clear').onclick=()=>{S.board.fill(null);S.emb={};S.aha=3;S.eq={};S.gr=null;all()};
+$('clear').onclick=()=>{S.board.fill(null);S.emb={};S.eq={};S.star={};S.gr=null;all()};
 document.addEventListener('change',e=>{if(e.target.matches('[data-gr]')){S.gr=e.target.value||null;all()}});
 
 // equipment popup
@@ -455,10 +490,17 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&EQ)closeEq()});
 
 // additional effects box that follows the cursor
 const tip=$('tip');
+function tipHtml(name,ti,n){
+  const d=T[name];
+  if(!d.t.length)return `<p class="xh">${esc(name)} · ${n} on board</p><p>${esc(d.d)}</p>`;
+  const next=d.t.find(([k])=>k>n);
+  return `<p class="xh">${esc(name)} · ${n} on board</p><ul>${d.t.map(([k,x],i)=>`<li class="${i===ti?'hit':''}"><b class="p${rankOf(d,i)}">${k}</b><span>${esc(x)}</span></li>`).join('')}</ul>${ti<0?`<p class="off">Not active yet${d.exact?'. Needs exactly '+d.t.map(t=>t[0]).join(' or ')+'.':next?'. First interval at '+d.t[0][0]+'.':'.'}</p>`:''}`;
+}
 $('traits').addEventListener('pointermove',e=>{
   const row=e.pointerType==='mouse'&&e.target.closest('.tr[data-fx]');
   if(!row||e.target.closest('.det')){tip.hidden=true;return}
-  if(tip.dataset.for!==row.dataset.fx){tip.dataset.for=row.dataset.fx;tip.innerHTML=`<p class="xh">${esc(row.dataset.fx)} · additional effects</p>${xfx(T[row.dataset.fx])}`}
+  const key=row.dataset.fx+'|'+row.dataset.ti+'|'+row.dataset.n;
+  if(tip.dataset.for!==key){tip.dataset.for=key;tip.innerHTML=tipHtml(row.dataset.fx,+row.dataset.ti,+row.dataset.n)}
   tip.hidden=false;
   const w=tip.offsetWidth,h=tip.offsetHeight;
   let x=e.clientX+16,y=e.clientY+16;
