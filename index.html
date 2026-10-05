@@ -181,7 +181,7 @@ button.flip{border:0;cursor:pointer;font-family:var(--display)}
 <div class="wrap">
   <header>
     <div>
-      <h1>Currency Wars 4.7 <span>Team Builder</span></h1>
+      <h1>Currency Wars <span>Team Builder</span></h1>
       <p class="sub">Drag units onto the board, or click one to drop it in the first open tile. Click a placed unit to send it back. Use + and − on a trait to count Emblems.</p>
     </div>
   </header>
@@ -268,6 +268,8 @@ function findArt(key){
   next();
 }
 const artOf=(dir,u)=>{const key=dir+'/'+ID[u.name];if(ART[key]===undefined)findArt(key);const url=typeof ART[key]==='string'?ART[key]:'';return{key,url}};
+// Merchant Guild: intervals count 3★+ members, not units, and every reached interval stays active.
+Object.assign(T['Astropolis Merchant Guild'],{stack:true,t:[[1, "Gain 1 EXP every time the shop refreshes."], [2, "Gain 1 free shop refresh when entering a new node."], [3, "When entering a new node, an Astropolis Merchant Guild unit appears in the shop."], [4, "Opens the Astropolis vault and choose a reward."], [5, "Obtains an Astropolis Privilege Card, every 15 shop refreshes grants 1 use of the item."], [6, "Units in the shop randomly becomes 2/3/4 stars, can be purchased at base cost."]]});
 const KIND={F:'Faction',C:'Class',S:'Unique'};
 // Equipment. Placeholder list until the real items are known: replace with {id,name,short} entries (add a category field later).
 const ITEMS=Array.from({length:20},(_,i)=>({id:'e'+(i+1),name:'Equipment '+(i+1),short:''+(i+1)}));
@@ -327,7 +329,7 @@ function tierOf(def,n){
   let x=-1;def.t.forEach(([k],i)=>{if(def.exact?n===k:n>=k)x=i});return x;
 }
 // bronze, silver, gold, prismatic. Traits with more than 5 intervals (Galactic Voyager) step every two.
-const rankOf=(def,i)=>Math.min(3,def.t.length>5?Math.floor(i/2):i);
+const rankOf=(def,i)=>Math.min(3,def.t.length>6?Math.floor(i/2):i);
 const RANK=['Bronze','Silver','Gold','Prismatic'];
 const onBoard=n=>S.board.some((x,i)=>x===n&&usable(i));
 const grOk=()=>!!S.gr&&onBoard('Ashveil')&&S.board.slice(0,4).includes(S.gr);
@@ -345,28 +347,30 @@ function amgTotals(who,e){
   const rows=who.map(n=>[n,starOf(n)]).concat(Array.from({length:e},()=>['Emblem holder',1]));
   let sum=0;
   const body=rows.map(([n,st])=>{const v=2*SM[st];sum+=v;return `<tr><td>${esc(n)}</td><td>${st}★</td><td>${pct(v)}</td></tr>`}).join('');
-  return `<table class="gv"><tr><th>Bond level ${amgLevel(who)} (3★+ members)</th><th>Stars</th><th>Gives</th></tr>${body}<tr><td>Each member gains<small>Lucky Strike Rate and DMG</small></td><td></td><td>${pct(sum)}</td></tr></table>`;
+  return `<table class="gv"><tr><th>${amgLevel(who)} member${amgLevel(who)===1?'':'s'} at 3★+</th><th>Stars</th><th>Gives</th></tr>${body}<tr><td>Each member gains<small>Lucky Strike Rate and DMG</small></td><td></td><td>${pct(sum)}</td></tr></table>`;
 }
 function grLine(){
   const st=starOf(S.gr);
   return `<p class="gvn"><b>${esc(S.gr)}</b> (${st}★) gains ${pct(30*GRM[st])} DMG and SPD Amplification.</p>`;
 }
 const xfx=d=>d.x.map(l=>`<p>${esc(l).replace(/^&quot;([^&]+)&quot;:/,'<b>$1:</b>')}</p>`).join('');
+// a stacking bond (Merchant Guild) gives its stats with any member; 3★+ members only unlock its intervals
+const isOn=r=>r.def.stack?r.n>0:r.ti>=0;
 function renderTraits(){
   const c=counts();
   const names=[...new Set([...Object.keys(c),...Object.keys(S.emb).filter(k=>S.emb[k]>0)])];
-  const rows=names.map(name=>{const def=T[name],who=c[name]||[],e=S.emb[name]||0,extra=name==='Galaxy Ranger'&&grOk()?1:0,n=who.length+e+extra;return{name,def,n,e,who,ti:tierOf(def,n),base:tierOf(def,who.length+extra)}})
-    .sort((a,b)=>(b.ti>=0)-(a.ti>=0)||(b.def.t.length?rankOf(b.def,b.ti):0)*(b.ti>=0)-(a.def.t.length?rankOf(a.def,a.ti):0)*(a.ti>=0)||b.n-a.n||a.name.localeCompare(b.name));
-  $('tsum').textContent=rows.length?`${rows.filter(r=>r.ti>=0).length} active of ${rows.length}`:'';
+  const rows=names.map(name=>{const def=T[name],who=c[name]||[],e=S.emb[name]||0,extra=name==='Galaxy Ranger'&&grOk()?1:0,n=who.length+e+extra;return{name,def,n,e,who,ti:def.stack?Math.min(def.t.length,amgLevel(who))-1:tierOf(def,n),base:def.stack?Math.min(def.t.length,amgLevel(who))-1:tierOf(def,who.length+extra)}})
+    .sort((a,b)=>isOn(b)-isOn(a)||(b.def.t.length?rankOf(b.def,b.ti):0)*(b.ti>=0)-(a.def.t.length?rankOf(a.def,a.ti):0)*(a.ti>=0)||b.n-a.n||a.name.localeCompare(b.name));
+  $('tsum').textContent=rows.length?`${rows.filter(isOn).length} active of ${rows.length}`:'';
   if(!rows.length){$('traits').innerHTML='<div class="empty">Place a unit to see its bonds and traits here. Inactive ones are listed too.</div>';return}
   $('traits').innerHTML=rows.map(r=>{
-    const d=r.def,on=r.ti>=0,tiered=d.t.length>0,rk=on&&tiered?rankOf(d,r.ti):-1;
+    const d=r.def,on=isOn(r),tiered=d.t.length>0,rk=r.ti>=0&&tiered?rankOf(d,r.ti):-1;
     const pips=tiered?d.t.map(([k],i)=>{const hit=d.exact?i===r.ti:i<=r.ti;return `<i class="${hit?'hit p'+rankOf(d,i):''}">${k}</i>`}).join('<span>›</span>'):`<i>level ${amgLevel(r.who)} · one per 3★ member</i>`;
     let note='';
     if(r.e>0){
       const need=d.exact?r.e:Math.max(0,d.t[r.ti]?.[0]-(r.n-r.e));
       if(on&&tiered&&r.ti!==r.base)note=`${need} Emblem${need>1?'s':''} required`;
-      else note=`${r.e} Emblem${r.e>1?'s':''} added, no new interval`;
+      else note=d.stack?`${r.e} Emblem${r.e>1?'s':''} added, counted at 1★`:`${r.e} Emblem${r.e>1?'s':''} added, no new interval`;
     }
     let ctl='';
     if(r.name==='Galaxy Ranger'){
@@ -374,7 +378,7 @@ function renderTraits(){
       ctl=`<span class="emb">Ranger<select data-gr aria-label="Galaxy Ranger"><option value="">None</option>${front.map(n=>`<option${n===S.gr?' selected':''}>${esc(n)}</option>`).join('')}</select></span>`;
     }else if(d.k!=='S')ctl=`<span class="emb">Emblem<span><button data-em="-1" data-t="${esc(r.name)}" aria-label="Remove an Emblem from ${esc(r.name)}"${r.e?'':' disabled'}>−</button><b>${r.e}</b><button data-em="1" data-t="${esc(r.name)}" aria-label="Add an Emblem to ${esc(r.name)}"${r.e>=9?' disabled':''}>+</button></span></span>`;
     const gv=r.name==='Galactic Voyager'?gvTotals(r.who,r.e,r.ti):r.name==='Astropolis Merchant Guild'?amgTotals(r.who,r.e):r.name==='Galaxy Ranger'&&grOk()?grLine():'';
-    const det=open.has(r.name)?`<div class="det">${d.d?`<p>${esc(d.d)}</p>`:''}${tiered?`<ul>${d.t.map(([k,x],i)=>`<li class="${i===r.ti?'hit':''}"><b>(${k})</b><span>${esc(x)}</span></li>`).join('')}</ul>`:''}${d.x.length?`<div class="xin"><p class="xh">Additional effects</p>${xfx(d)}</div>`:''}<p>On board: <span class="who">${r.who.length?r.who.map(esc).join(', '):'none'}</span>${r.e?` + ${r.e} Emblem${r.e>1?'s':''}`:''}${r.name==='Galaxy Ranger'&&grOk()?` · Ranger: <span class="who">${esc(S.gr)}</span>`:''}</p><button class="link" data-find="${esc(r.name)}">Show all ${esc(r.name)} units</button></div>`:'';
+    const det=open.has(r.name)?`<div class="det">${d.d?`<p>${esc(d.d)}</p>`:''}${tiered?`<ul>${d.t.map(([k,x],i)=>`<li class="${(d.stack?i<=r.ti:i===r.ti)?'hit':''}"><b>(${k})</b><span>${esc(x)}</span></li>`).join('')}</ul>`:''}${d.x.length?`<div class="xin"><p class="xh">Additional effects</p>${xfx(d)}</div>`:''}<p>On board: <span class="who">${r.who.length?r.who.map(esc).join(', '):'none'}</span>${r.e?` + ${r.e} Emblem${r.e>1?'s':''}`:''}${r.name==='Galaxy Ranger'&&grOk()?` · Ranger: <span class="who">${esc(S.gr)}</span>`:''}</p><button class="link" data-find="${esc(r.name)}">Show all ${esc(r.name)} units</button></div>`:'';
     return `<div class="tr${on?' on':''}${rk>=0?' r'+rk:''}" data-fx="${esc(r.name)}" data-ti="${r.ti}" data-n="${r.n}"><div class="hd"><button class="tog" data-tr="${esc(r.name)}" aria-expanded="${open.has(r.name)}"><span class="num">${r.n}</span><span><span class="tn">${esc(r.name)}</span><br><span class="kind">${KIND[d.k]} · <span class="rank">${on?(rk>=0?RANK[rk]:'active'):'inactive'}</span></span><span class="pips">${pips}</span>${note?`<span class="note">${note}</span>`:''}</span></button>${ctl}</div>${gv}${det}</div>`;
   }).join('');
 }
@@ -494,7 +498,7 @@ function tipHtml(name,ti,n){
   const d=T[name];
   if(!d.t.length)return `<p class="xh">${esc(name)} · ${n} on board</p><p>${esc(d.d)}</p>`;
   const next=d.t.find(([k])=>k>n);
-  return `<p class="xh">${esc(name)} · ${n} on board</p><ul>${d.t.map(([k,x],i)=>`<li class="${i===ti?'hit':''}"><b class="p${rankOf(d,i)}">${k}</b><span>${esc(x)}</span></li>`).join('')}</ul>${ti<0?`<p class="off">Not active yet${d.exact?'. Needs exactly '+d.t.map(t=>t[0]).join(' or ')+'.':next?'. First interval at '+d.t[0][0]+'.':'.'}</p>`:''}`;
+  return `<p class="xh">${esc(name)} · ${n} on board</p><ul>${d.t.map(([k,x],i)=>`<li class="${(d.stack?i<=ti:i===ti)?'hit':''}"><b class="p${rankOf(d,i)}">${k}</b><span>${esc(x)}</span></li>`).join('')}</ul>${ti<0?`<p class="off">${d.stack?'Stat bonus is active. No interval unlocked yet: each 3★ or 4★ member unlocks one.':'Not active yet'}${d.stack?'':d.exact?'. Needs exactly '+d.t.map(t=>t[0]).join(' or ')+'.':next?'. First interval at '+d.t[0][0]+'.':'.'}</p>`:''}`;
 }
 $('traits').addEventListener('pointermove',e=>{
   const row=e.pointerType==='mouse'&&e.target.closest('.tr[data-fx]');
