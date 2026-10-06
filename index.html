@@ -269,7 +269,7 @@ function findArt(key){
 }
 const artOf=(dir,u)=>{const key=dir+'/'+ID[u.name];if(ART[key]===undefined)findArt(key);const url=typeof ART[key]==='string'?ART[key]:'';return{key,url}};
 // Merchant Guild: intervals count 3★+ members, not units, and every reached interval stays active.
-Object.assign(T['Astropolis Merchant Guild'],{stack:true,t:[[1, "Gain 1 EXP every time the shop refreshes."], [2, "Gain 1 free shop refresh when entering a new node."], [3, "When entering a new node, an Astropolis Merchant Guild unit appears in the shop."], [4, "Opens the Astropolis vault and choose a reward."], [5, "Obtains an Astropolis Privilege Card, every 15 shop refreshes grants 1 use of the item."], [6, "Units in the shop randomly becomes 2/3/4 stars, can be purchased at base cost."]]});
+Object.assign(T['Astropolis Merchant Guild'],{stack:true,t:[[1, "Gain 1 EXP every time the shop refreshes."], [2, "Gain 1 free shop refresh when entering a new node."], [3, "When entering a new node, an Astropolis Merchant Guild unit appears in the shop. Astropolis stat bonuses are increased by 100%."], [4, "Opens the Astropolis vault and choose a reward."], [5, "Obtains an Astropolis Privilege Card, every 15 shop refreshes grants 1 use of the item."], [6, "Units in the shop randomly becomes 2/3/4 stars, can be purchased at base cost."]]});
 const KIND={F:'Faction',C:'Class',S:'Unique'};
 // Equipment. Placeholder list until the real items are known: replace with {id,name,short} entries (add a category field later).
 const ITEMS=Array.from({length:20},(_,i)=>({id:'e'+(i+1),name:'Equipment '+(i+1),short:''+(i+1)}));
