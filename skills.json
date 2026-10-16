@@ -375,11 +375,11 @@
   "F": {
    "1": [
     [
-     "Cornerstone Deluxe (BPSkill)",
+     "Cornerstone Deluxe (Skill)",
      "Provides a \"Fortified Wager\" shield that blocks DMG equal to 24.0% of Aventurine's DEF plus 120 to all allies for 3 turn(s). When gaining \"Fortified Wager\" repeatedly, the Shield effect can stack up to 300% of the Shield provided by the current Skill."
     ],
     [
-     "Roulette Shark (Ultra)",
+     "Roulette Shark (Enhance)",
      "Randomly gains 1 to 7 points of \"Blind Bet.\" Then, inflicts \"Unnerved\" on one designated enemy target for 3 turn(s) and deals Imaginary DMG equal to 400% of Aventurine's DEF to that enemy target. When an ally target hits an \"Unnerved\" enemy target, the CRIT DMG dealt increases by 40.0%."
     ],
     [
@@ -393,11 +393,11 @@
    ],
    "2": [
     [
-     "Cornerstone Deluxe (BPSkill)",
+     "Cornerstone Deluxe (Skill)",
      "Provides a \"Fortified Wager\" shield that blocks DMG equal to 36.0% of Aventurine's DEF plus 180 to all allies for 3 turn(s). When gaining \"Fortified Wager\" repeatedly, the Shield effect can stack up to 300% of the Shield provided by the current Skill."
     ],
     [
-     "Roulette Shark (Ultra)",
+     "Roulette Shark (Enhance)",
      "Randomly gains 1 to 7 points of \"Blind Bet.\" Then, inflicts \"Unnerved\" on one designated enemy target for 3 turn(s) and deals Imaginary DMG equal to 500% of Aventurine's DEF to that enemy target. When an ally target hits an \"Unnerved\" enemy target, the CRIT DMG dealt increases by 60.0%."
     ],
     [
@@ -411,11 +411,11 @@
    ],
    "3": [
     [
-     "Cornerstone Deluxe (BPSkill)",
+     "Cornerstone Deluxe (Skill)",
      "Provides a \"Fortified Wager\" shield that blocks DMG equal to 48.0% of Aventurine's DEF plus 240 to all allies for 3 turn(s). When gaining \"Fortified Wager\" repeatedly, the Shield effect can stack up to 300% of the Shield provided by the current Skill."
     ],
     [
-     "Roulette Shark (Ultra)",
+     "Roulette Shark (Enhance)",
      "Randomly gains 1 to 7 points of \"Blind Bet.\" Then, inflicts \"Unnerved\" on one designated enemy target for 3 turn(s) and deals Imaginary DMG equal to 720% of Aventurine's DEF to that enemy target. When an ally target hits an \"Unnerved\" enemy target, the CRIT DMG dealt increases by 100.0%."
     ],
     [
@@ -621,7 +621,7 @@
   "F": {
    "1": [
     [
-     "Death Sentence (Ultra)",
+     "Death Sentence (Enhance)",
      "Consumes HP equal to 20% of Max HP, deals Wind DMG to one enemy equal to 90% of his Max HP plus 72% of the tally of Blade's HP loss in the current battle. At the same time, deals Wind DMG to adjacent targets equal to 36.0% of his Max HP plus 36% of the tally of his HP loss in the current battle.\nThe tally of Blade's HP loss in the current battle is capped at 54% of his Max HP. This value will be reset and re-accumulated after his Ultimate has been used."
     ],
     [
@@ -639,7 +639,7 @@
    ],
    "2": [
     [
-     "Death Sentence (Ultra)",
+     "Death Sentence (Enhance)",
      "Consumes HP equal to 20% of Max HP, deals Wind DMG to one enemy equal to 113% of his Max HP plus 90% of the tally of Blade's HP loss in the current battle. At the same time, deals Wind DMG to adjacent targets equal to 45.0% of his Max HP plus 45% of the tally of his HP loss in the current battle.\nThe tally of Blade's HP loss in the current battle is capped at 68% of his Max HP. This value will be reset and re-accumulated after his Ultimate has been used."
     ],
     [
@@ -657,7 +657,7 @@
    ],
    "3": [
     [
-     "Death Sentence (Ultra)",
+     "Death Sentence (Enhance)",
      "Consumes HP equal to 20% of Max HP, deals Wind DMG to one enemy equal to 162% of his Max HP plus 130% of the tally of Blade's HP loss in the current battle. At the same time, deals Wind DMG to adjacent targets equal to 64.8% of his Max HP plus 65% of the tally of his HP loss in the current battle.\nThe tally of Blade's HP loss in the current battle is capped at 97% of his Max HP. This value will be reset and re-accumulated after his Ultimate has been used."
     ],
     [
@@ -763,7 +763,7 @@
   "F": {
    "1": [
     [
-     "Silence, Wraithfly's Caress (BPSkill)",
+     "Silence, Wraithfly's Caress (Skill)",
      "Consumes 15% of all allies' current HP. Deals Quantum DMG equal to 30% of Castorice's Max HP to one designated enemy and Quantum DMG equal to 20% of Castorice's Max HP to adjacent targets.\nIf the current HP is insufficient, reduces the current HP down to 1.\nIf Netherwing is on the battlefield, the Skill becomes \"Boneclaw, Doomdrake's Embrace\" instead."
     ],
     [
@@ -771,7 +771,7 @@
      "For each point of HP lost by all ally targets, Castorice gains 1 \"Newbud.\" When \"Newbud\" reaches its maximum limit, Ultimate can be activated. When allies lose HP, the DMG dealt by Castorice and Netherwing increases by 10%, stacking up to 3 time(s) and lasting for 3 turn(s). The \"Newbud\" cap is fixed at 120000, and 35% of Netherwing's overflow HP will be recorded, granting Castorice an equal amount of \"Newbud\" after it disappears.\nWhile Netherwing is on the field, \"Newbud\" cannot be gained through Talent. For each point of HP lost by all ally targets except Netherwing, it will be converted into an equal amount of HP for Netherwing. When the number of ally squad characters currently on the field in the team is (less than 4)/5/6/7, Castorice gains an additional 120%/70%/40%/20% \"Newbud.\""
     ],
     [
-     "Boneclaw, Doomdrake's Embrace (BPSkill)",
+     "Boneclaw, Doomdrake's Embrace (Skill)",
      "Consumes 15% of the current HP of all allies (except Netherwing). Castorice and Netherwing launch Joint ATK on the targets, dealing Quantum DMG equal to 20.0% and 30.0% of Castorice's Max HP to all enemies.\nIf the current HP is insufficient, reduces the current HP down to 1."
     ],
     [
@@ -781,7 +781,7 @@
    ],
    "2": [
     [
-     "Silence, Wraithfly's Caress (BPSkill)",
+     "Silence, Wraithfly's Caress (Skill)",
      "Consumes 15% of all allies' current HP. Deals Quantum DMG equal to 38% of Castorice's Max HP to one designated enemy and Quantum DMG equal to 25% of Castorice's Max HP to adjacent targets.\nIf the current HP is insufficient, reduces the current HP down to 1.\nIf Netherwing is on the battlefield, the Skill becomes \"Boneclaw, Doomdrake's Embrace\" instead."
     ],
     [
@@ -789,7 +789,7 @@
      "For each point of HP lost by all ally targets, Castorice gains 1 \"Newbud.\" When \"Newbud\" reaches its maximum limit, Ultimate can be activated. When allies lose HP, the DMG dealt by Castorice and Netherwing increases by 15%, stacking up to 3 time(s) and lasting for 3 turn(s). The \"Newbud\" cap is fixed at 120000, and 35% of Netherwing's overflow HP will be recorded, granting Castorice an equal amount of \"Newbud\" after it disappears.\nWhile Netherwing is on the field, \"Newbud\" cannot be gained through Talent. For each point of HP lost by all ally targets except Netherwing, it will be converted into an equal amount of HP for Netherwing. When the number of ally squad characters currently on the field in the team is (less than 4)/5/6/7, Castorice gains an additional 120%/70%/40%/20% \"Newbud.\""
     ],
     [
-     "Boneclaw, Doomdrake's Embrace (BPSkill)",
+     "Boneclaw, Doomdrake's Embrace (Skill)",
      "Consumes 15% of the current HP of all allies (except Netherwing). Castorice and Netherwing launch Joint ATK on the targets, dealing Quantum DMG equal to 25.0% and 37.5% of Castorice's Max HP to all enemies.\nIf the current HP is insufficient, reduces the current HP down to 1."
     ],
     [
@@ -799,7 +799,7 @@
    ],
    "3": [
     [
-     "Silence, Wraithfly's Caress (BPSkill)",
+     "Silence, Wraithfly's Caress (Skill)",
      "Consumes 15% of all allies' current HP. Deals Quantum DMG equal to 54% of Castorice's Max HP to one designated enemy and Quantum DMG equal to 36% of Castorice's Max HP to adjacent targets.\nIf the current HP is insufficient, reduces the current HP down to 1.\nIf Netherwing is on the battlefield, the Skill becomes \"Boneclaw, Doomdrake's Embrace\" instead."
     ],
     [
@@ -807,7 +807,7 @@
      "For each point of HP lost by all ally targets, Castorice gains 1 \"Newbud.\" When \"Newbud\" reaches its maximum limit, Ultimate can be activated. When allies lose HP, the DMG dealt by Castorice and Netherwing increases by 25%, stacking up to 3 time(s) and lasting for 3 turn(s). The \"Newbud\" cap is fixed at 120000, and 35% of Netherwing's overflow HP will be recorded, granting Castorice an equal amount of \"Newbud\" after it disappears.\nWhile Netherwing is on the field, \"Newbud\" cannot be gained through Talent. For each point of HP lost by all ally targets except Netherwing, it will be converted into an equal amount of HP for Netherwing. When the number of ally squad characters currently on the field in the team is (less than 4)/5/6/7, Castorice gains an additional 120%/70%/40%/20% \"Newbud.\""
     ],
     [
-     "Boneclaw, Doomdrake's Embrace (BPSkill)",
+     "Boneclaw, Doomdrake's Embrace (Skill)",
      "Consumes 15% of the current HP of all allies (except Netherwing). Castorice and Netherwing launch Joint ATK on the targets, dealing Quantum DMG equal to 36.0% and 54.0% of Castorice's Max HP to all enemies.\nIf the current HP is insufficient, reduces the current HP down to 1."
     ],
     [
@@ -1007,7 +1007,7 @@
   "F": {
    "1": [
     [
-     "Missile Salvo (BPSkill)",
+     "Missile Salvo (Skill)",
      "Fires 4 missiles. Each missile deals Physical DMG equal to 40% of Clara's ATK to all enemies, and additionally deals Physical DMG equal to 40% of Clara's ATK to enemies marked by Svarog with a \"Mark of Counter.\"\nAll Marks of Counter will be removed after this Skill is used."
     ],
     [
@@ -1017,7 +1017,7 @@
    ],
    "2": [
     [
-     "Missile Salvo (BPSkill)",
+     "Missile Salvo (Skill)",
      "Fires 4 missiles. Each missile deals Physical DMG equal to 50% of Clara's ATK to all enemies, and additionally deals Physical DMG equal to 50% of Clara's ATK to enemies marked by Svarog with a \"Mark of Counter.\"\nAll Marks of Counter will be removed after this Skill is used."
     ],
     [
@@ -1027,7 +1027,7 @@
    ],
    "3": [
     [
-     "Missile Salvo (BPSkill)",
+     "Missile Salvo (Skill)",
      "Fires 4 missiles. Each missile deals Physical DMG equal to 400% of Clara's ATK to all enemies, and additionally deals Physical DMG equal to 400% of Clara's ATK to enemies marked by Svarog with a \"Mark of Counter.\"\nAll Marks of Counter will be removed after this Skill is used."
     ],
     [
@@ -1097,7 +1097,7 @@
   "F": {
    "1": [
     [
-     "Bloom, Elysium of Beyond (BPSkill)",
+     "Bloom, Elysium of Beyond (Skill)",
      "Gains 3 \"Recollection\" and deploys a Zone that lasts 2 turn(s), with its duration decreasing by 1 at each start of Cyrene's turn. While the Zone is active, for each instance of DMG dealt by the ally squad, deals 1 additional instance of True DMG equal to 12% of the original DMG."
     ],
     [
@@ -1115,7 +1115,7 @@
    ],
    "2": [
     [
-     "Bloom, Elysium of Beyond (BPSkill)",
+     "Bloom, Elysium of Beyond (Skill)",
      "Gains 3 \"Recollection\" and deploys a Zone that lasts 2 turn(s), with its duration decreasing by 1 at each start of Cyrene's turn. While the Zone is active, for each instance of DMG dealt by the ally squad, deals 1 additional instance of True DMG equal to 16% of the original DMG."
     ],
     [
@@ -1133,7 +1133,7 @@
    ],
    "3": [
     [
-     "Bloom, Elysium of Beyond (BPSkill)",
+     "Bloom, Elysium of Beyond (Skill)",
      "Gains 3 \"Recollection\" and deploys a Zone that lasts 2 turn(s), with its duration decreasing by 1 at each start of Cyrene's turn. While the Zone is active, for each instance of DMG dealt by the ally squad, deals 1 additional instance of True DMG equal to 20% of the original DMG."
     ],
     [
@@ -1567,7 +1567,7 @@
   "F": {
    "1": [
     [
-     "Terrasplit (Ultra)",
+     "Terrasplit (Enhance)",
      "Deals Wind DMG to one designated enemy target, up to 402% of Feixiao's ATK. During this time, can ignore Weakness Type to reduce the target's Toughness. When the target is not Weakness Broken, Feixiao's Weakness Break Efficiency increases by 100%.\nDuring the attack, Feixiao first launches \"Boltsunder Blitz\" or \"Waraxe Skyward\" on the target, for a total of 6 time(s). At the end, deals Wind DMG equal to 96% of Feixiao's ATK to the target."
     ],
     [
@@ -1575,11 +1575,11 @@
      "Can activate Ultimate when \"Flying Aureus\" reaches 6 point(s), accumulating up to 12 point(s). For every 2 attack(s) by on-field allies or every 1 attack(s) by off-field allies, Feixiao gains 1 point of \"Flying Aureus.\" Feixiao's Ultimate attacks do not count toward this number.\nAfter ally squad members (except Feixiao) attack an enemy target, Feixiao immediately launches a Follow-up ATK against the primary target, dealing Wind DMG equal to 55% of Feixiao's ATK. If there is no primary target available to attack, Feixiao attacks one random enemy instead. This effect can only trigger once per turn, and the trigger count resets at the start of Feixiao's turn. When using this attack, increases DMG dealt by this unit by 30%, lasting for 2 turn(s)."
     ],
     [
-     "Boltsunder Blitz (Ultra)",
+     "Boltsunder Blitz (Enhance)",
      "Deals Wind DMG equal to 36% of Feixiao's ATK to the chosen target. If the target is Weakness Broken, the DMG multiplier increases by 15%."
     ],
     [
-     "Waraxe Skyward (Ultra)",
+     "Waraxe Skyward (Enhance)",
      "Deals Wind DMG equal to 36% of Feixiao's ATK to the chosen target. If the target is not Weakness Broken, the DMG multiplier increases by 15%."
     ],
     [
@@ -1589,7 +1589,7 @@
    ],
    "2": [
     [
-     "Terrasplit (Ultra)",
+     "Terrasplit (Enhance)",
      "Deals Wind DMG to one designated enemy target, up to 442% of Feixiao's ATK. During this time, can ignore Weakness Type to reduce the target's Toughness. When the target is not Weakness Broken, Feixiao's Weakness Break Efficiency increases by 100%.\nDuring the attack, Feixiao first launches \"Boltsunder Blitz\" or \"Waraxe Skyward\" on the target, for a total of 6 time(s). At the end, deals Wind DMG equal to 106% of Feixiao's ATK to the target."
     ],
     [
@@ -1597,11 +1597,11 @@
      "Can activate Ultimate when \"Flying Aureus\" reaches 6 point(s), accumulating up to 12 point(s). For every 2 attack(s) by on-field allies or every 1 attack(s) by off-field allies, Feixiao gains 1 point of \"Flying Aureus.\" Feixiao's Ultimate attacks do not count toward this number.\nAfter ally squad members (except Feixiao) attack an enemy target, Feixiao immediately launches a Follow-up ATK against the primary target, dealing Wind DMG equal to 55% of Feixiao's ATK. If there is no primary target available to attack, Feixiao attacks one random enemy instead. This effect can only trigger once per turn, and the trigger count resets at the start of Feixiao's turn. When using this attack, increases DMG dealt by this unit by 30%, lasting for 2 turn(s)."
     ],
     [
-     "Boltsunder Blitz (Ultra)",
+     "Boltsunder Blitz (Enhance)",
      "Deals Wind DMG equal to 40% of Feixiao's ATK to the chosen target. If the target is Weakness Broken, the DMG multiplier increases by 17%."
     ],
     [
-     "Waraxe Skyward (Ultra)",
+     "Waraxe Skyward (Enhance)",
      "Deals Wind DMG equal to 40% of Feixiao's ATK to the chosen target. If the target is not Weakness Broken, the DMG multiplier increases by 17%."
     ],
     [
@@ -1611,7 +1611,7 @@
    ],
    "3": [
     [
-     "Terrasplit (Ultra)",
+     "Terrasplit (Enhance)",
      "Deals Wind DMG to one designated enemy target, up to 482% of Feixiao's ATK. During this time, can ignore Weakness Type to reduce the target's Toughness. When the target is not Weakness Broken, Feixiao's Weakness Break Efficiency increases by 100%.\nDuring the attack, Feixiao first launches \"Boltsunder Blitz\" or \"Waraxe Skyward\" on the target, for a total of 6 time(s). At the end, deals Wind DMG equal to 115% of Feixiao's ATK to the target."
     ],
     [
@@ -1619,11 +1619,11 @@
      "Can activate Ultimate when \"Flying Aureus\" reaches 6 point(s), accumulating up to 12 point(s). For every 2 attack(s) by on-field allies or every 1 attack(s) by off-field allies, Feixiao gains 1 point of \"Flying Aureus.\" Feixiao's Ultimate attacks do not count toward this number.\nAfter ally squad members (except Feixiao) attack an enemy target, Feixiao immediately launches a Follow-up ATK against the primary target, dealing Wind DMG equal to 55% of Feixiao's ATK. If there is no primary target available to attack, Feixiao attacks one random enemy instead. This effect can only trigger once per turn, and the trigger count resets at the start of Feixiao's turn. When using this attack, increases DMG dealt by this unit by 30%, lasting for 2 turn(s)."
     ],
     [
-     "Boltsunder Blitz (Ultra)",
+     "Boltsunder Blitz (Enhance)",
      "Deals Wind DMG equal to 43% of Feixiao's ATK to the chosen target. If the target is Weakness Broken, the DMG multiplier increases by 18%."
     ],
     [
-     "Waraxe Skyward (Ultra)",
+     "Waraxe Skyward (Enhance)",
      "Deals Wind DMG equal to 43% of Feixiao's ATK to the chosen target. If the target is not Weakness Broken, the DMG multiplier increases by 18%."
     ],
     [
@@ -1637,7 +1637,7 @@
   "F": {
    "1": [
     [
-     "Supernova Overload (Ultra)",
+     "Supernova Overload (Enhance)",
      "Applies Fire Weakness to all enemies for 2 turns. Restores HP equal to 50% of this unit's Max HP, deals Fire DMG equal to SAM's ATK (0.3 × Break Effect + 300.0%) to all enemies, and additionally converts this attack's Toughness Reduction into a 80% Super Break DMG after the attack."
     ],
     [
@@ -1647,7 +1647,7 @@
    ],
    "2": [
     [
-     "Supernova Overload (Ultra)",
+     "Supernova Overload (Enhance)",
      "Applies Fire Weakness to all enemies for 2 turns. Restores HP equal to 50% of this unit's Max HP, deals Fire DMG equal to SAM's ATK (0.3 × Break Effect + 300.0%) to all enemies, and additionally converts this attack's Toughness Reduction into a 100% Super Break DMG after the attack."
     ],
     [
@@ -1657,7 +1657,7 @@
    ],
    "3": [
     [
-     "Supernova Overload (Ultra)",
+     "Supernova Overload (Enhance)",
      "Applies Fire Weakness to all enemies for 2 turns. Restores HP equal to 50% of this unit's Max HP, deals Fire DMG equal to SAM's ATK (0.3 × Break Effect + 300.0%) to all enemies, and additionally converts this attack's Toughness Reduction into a 120% Super Break DMG after the attack."
     ],
     [
@@ -1667,7 +1667,7 @@
    ],
    "4": [
     [
-     "Supernova Overload (Ultra)",
+     "Supernova Overload (Enhance)",
      "Applies Fire Weakness to all enemies for 2 turns. Restores HP equal to 50% of this unit's Max HP, deals Fire DMG equal to SAM's ATK (0.3 × Break Effect + 300.0%) to all enemies, and additionally converts this attack's Toughness Reduction into a 140% Super Break DMG after the attack."
     ],
     [
@@ -1739,7 +1739,7 @@
   "F": {
    "1": [
     [
-     "Virtue Beckons Bliss (BPSkill)",
+     "Virtue Beckons Bliss (Skill)",
      "Grants one designated ally \"Foxian Prayer.\" Enters the \"Torrid Scorch\" state, lasting for 3 turn(s). The duration decreases by 1 at the start of Fugue's every turn. \"Foxian Prayer\" only takes effect on the most recent target of Fugue's Skill.\nThe ally target with \"Foxian Prayer\" increases their Break Effect by 15% and can also reduce Toughness even when attacking enemies that don't have the corresponding Weakness Type, with the effect equivalent to 50% of the original Toughness Reduction value. This cannot stack with other Toughness Reduction effects that also ignore Weakness Type.\nWhile in the \"Torrid Scorch\" state, Fugue enhances her Basic ATK. Every time an ally target with \"Foxian Prayer\" attacks, Fugue has a 100% base chance to reduce the attacked enemy target's DEF by 8%, lasting for 2 turn(s)."
     ],
     [
@@ -1749,7 +1749,7 @@
    ],
    "2": [
     [
-     "Virtue Beckons Bliss (BPSkill)",
+     "Virtue Beckons Bliss (Skill)",
      "Grants one designated ally \"Foxian Prayer.\" Enters the \"Torrid Scorch\" state, lasting for 3 turn(s). The duration decreases by 1 at the start of Fugue's every turn. \"Foxian Prayer\" only takes effect on the most recent target of Fugue's Skill.\nThe ally target with \"Foxian Prayer\" increases their Break Effect by 15% and can also reduce Toughness even when attacking enemies that don't have the corresponding Weakness Type, with the effect equivalent to 50% of the original Toughness Reduction value. This cannot stack with other Toughness Reduction effects that also ignore Weakness Type.\nWhile in the \"Torrid Scorch\" state, Fugue enhances her Basic ATK. Every time an ally target with \"Foxian Prayer\" attacks, Fugue has a 100% base chance to reduce the attacked enemy target's DEF by 8%, lasting for 2 turn(s)."
     ],
     [
@@ -1759,7 +1759,7 @@
    ],
    "3": [
     [
-     "Virtue Beckons Bliss (BPSkill)",
+     "Virtue Beckons Bliss (Skill)",
      "Grants one designated ally \"Foxian Prayer.\" Enters the \"Torrid Scorch\" state, lasting for 3 turn(s). The duration decreases by 1 at the start of Fugue's every turn. \"Foxian Prayer\" only takes effect on the most recent target of Fugue's Skill.\nThe ally target with \"Foxian Prayer\" increases their Break Effect by 15% and can also reduce Toughness even when attacking enemies that don't have the corresponding Weakness Type, with the effect equivalent to 50% of the original Toughness Reduction value. This cannot stack with other Toughness Reduction effects that also ignore Weakness Type.\nWhile in the \"Torrid Scorch\" state, Fugue enhances her Basic ATK. Every time an ally target with \"Foxian Prayer\" attacks, Fugue has a 100% base chance to reduce the attacked enemy target's DEF by 8%, lasting for 2 turn(s)."
     ],
     [
@@ -1769,7 +1769,7 @@
    ],
    "4": [
     [
-     "Virtue Beckons Bliss (BPSkill)",
+     "Virtue Beckons Bliss (Skill)",
      "Grants one designated ally \"Foxian Prayer.\" Enters the \"Torrid Scorch\" state, lasting for 3 turn(s). The duration decreases by 1 at the start of Fugue's every turn. \"Foxian Prayer\" only takes effect on the most recent target of Fugue's Skill.\nThe ally target with \"Foxian Prayer\" increases their Break Effect by 15% and can also reduce Toughness even when attacking enemies that don't have the corresponding Weakness Type, with the effect equivalent to 50% of the original Toughness Reduction value. This cannot stack with other Toughness Reduction effects that also ignore Weakness Type.\nWhile in the \"Torrid Scorch\" state, Fugue enhances her Basic ATK. Every time an ally target with \"Foxian Prayer\" attacks, Fugue has a 100% base chance to reduce the attacked enemy target's DEF by 8%, lasting for 2 turn(s)."
     ],
     [
@@ -1841,7 +1841,7 @@
   "F": {
    "1": [
     [
-     "Blazing Welcome (BPSkill)",
+     "Blazing Welcome (Skill)",
      "Deals Fire DMG equal to 80% of Guinaifen's ATK to one designated enemy, and Fire DMG equal to 40% of Guinaifen's ATK to adjacent targets. Additionally deals 3 instance(s) of DMG, with each instance dealing Fire DMG equal to 40% of Guinaifen's ATK to one random enemy and Fire DMG equal to 20% of Guinaifen's ATK to adjacent targets."
     ],
     [
@@ -1851,7 +1851,7 @@
    ],
    "2": [
     [
-     "Blazing Welcome (BPSkill)",
+     "Blazing Welcome (Skill)",
      "Deals Fire DMG equal to 100% of Guinaifen's ATK to one designated enemy, and Fire DMG equal to 50% of Guinaifen's ATK to adjacent targets. Additionally deals 4 instance(s) of DMG, with each instance dealing Fire DMG equal to 50% of Guinaifen's ATK to one random enemy and Fire DMG equal to 25% of Guinaifen's ATK to adjacent targets."
     ],
     [
@@ -1861,7 +1861,7 @@
    ],
    "3": [
     [
-     "Blazing Welcome (BPSkill)",
+     "Blazing Welcome (Skill)",
      "Deals Fire DMG equal to 144% of Guinaifen's ATK to one designated enemy, and Fire DMG equal to 72% of Guinaifen's ATK to adjacent targets. Additionally deals 5 instance(s) of DMG, with each instance dealing Fire DMG equal to 72% of Guinaifen's ATK to one random enemy and Fire DMG equal to 36% of Guinaifen's ATK to adjacent targets."
     ],
     [
@@ -1871,7 +1871,7 @@
    ],
    "4": [
     [
-     "Blazing Welcome (BPSkill)",
+     "Blazing Welcome (Skill)",
      "Deals Fire DMG equal to 224% of Guinaifen's ATK to one designated enemy, and Fire DMG equal to 112% of Guinaifen's ATK to adjacent targets. Additionally deals 6 instance(s) of DMG, with each instance dealing Fire DMG equal to 112% of Guinaifen's ATK to one random enemy and Fire DMG equal to 56% of Guinaifen's ATK to adjacent targets."
     ],
     [
@@ -2607,7 +2607,7 @@
      "When entering combat, Jingliu enters the \"Spectral Transmigration\" state, and her CRIT Rate increases by 40%. Then, Jingliu's Skill \"Transcendent Flash\" is enhanced to \"Moon On Glacial River,\" and only this enhanced Skill is available for use in battle. When she enters the \"Spectral Transmigration\" state for the first time, her action advances by 100%. When Jingliu uses an attack in the \"Spectral Transmigration\" state, she consumes HP from on-field ally teammates equal to 5% of their respective Max HP (this cannot reduce HP to below 1). During the \"Spectral Transmigration\" state, when ally targets receive DMG or consume HP, Jingliu gains 1 stack of \"Moonlight.\" Each \"Moonlight\" stack increases Jingliu's CRIT DMG by 22%, stacking up to 5 time(s). Jingliu cannot enter the \"Spectral Transmigration\" state again until the current \"Spectral Transmigration\" state ends. \"Syzygy\" can stack up to 5 time(s). When \"Syzygy\" stacks become 0, Jingliu reenters the \"Spectral Transmigration\" state."
     ],
     [
-     "Moon On Glacial River (BPSkill)",
+     "Moon On Glacial River (Skill)",
      "Deals Ice DMG equal to 75% of Jingliu's Max HP to one designated enemy, and Ice DMG equal to 38% of Jingliu's Max HP to adjacent targets. When using Enhanced Skill, Jingliu consumes 1 stack(s) of \"Syzygy,\" with a 30% chance to consume all \"Syzygy.\" For each stack consumed, the multiplier of this attack increases by 25%, and additionally increases by 50% when consuming all \"Syzygy.\""
     ],
     [
@@ -2621,7 +2621,7 @@
      "When entering combat, Jingliu enters the \"Spectral Transmigration\" state, and her CRIT Rate increases by 40%. Then, Jingliu's Skill \"Transcendent Flash\" is enhanced to \"Moon On Glacial River,\" and only this enhanced Skill is available for use in battle. When she enters the \"Spectral Transmigration\" state for the first time, her action advances by 100%. When Jingliu uses an attack in the \"Spectral Transmigration\" state, she consumes HP from on-field ally teammates equal to 5% of their respective Max HP (this cannot reduce HP to below 1). During the \"Spectral Transmigration\" state, when ally targets receive DMG or consume HP, Jingliu gains 1 stack of \"Moonlight.\" Each \"Moonlight\" stack increases Jingliu's CRIT DMG by 28%, stacking up to 5 time(s). Jingliu cannot enter the \"Spectral Transmigration\" state again until the current \"Spectral Transmigration\" state ends. \"Syzygy\" can stack up to 5 time(s). When \"Syzygy\" stacks become 0, Jingliu reenters the \"Spectral Transmigration\" state."
     ],
     [
-     "Moon On Glacial River (BPSkill)",
+     "Moon On Glacial River (Skill)",
      "Deals Ice DMG equal to 94% of Jingliu's Max HP to one designated enemy, and Ice DMG equal to 47% of Jingliu's Max HP to adjacent targets. When using Enhanced Skill, Jingliu consumes 1 stack(s) of \"Syzygy,\" with a 30% chance to consume all \"Syzygy.\" For each stack consumed, the multiplier of this attack increases by 31%, and additionally increases by 63% when consuming all \"Syzygy.\""
     ],
     [
@@ -2635,7 +2635,7 @@
      "When entering combat, Jingliu enters the \"Spectral Transmigration\" state, and her CRIT Rate increases by 40%. Then, Jingliu's Skill \"Transcendent Flash\" is enhanced to \"Moon On Glacial River,\" and only this enhanced Skill is available for use in battle. When she enters the \"Spectral Transmigration\" state for the first time, her action advances by 100%. When Jingliu uses an attack in the \"Spectral Transmigration\" state, she consumes HP from on-field ally teammates equal to 5% of their respective Max HP (this cannot reduce HP to below 1). During the \"Spectral Transmigration\" state, when ally targets receive DMG or consume HP, Jingliu gains 1 stack of \"Moonlight.\" Each \"Moonlight\" stack increases Jingliu's CRIT DMG by 33%, stacking up to 5 time(s). Jingliu cannot enter the \"Spectral Transmigration\" state again until the current \"Spectral Transmigration\" state ends. \"Syzygy\" can stack up to 5 time(s). When \"Syzygy\" stacks become 0, Jingliu reenters the \"Spectral Transmigration\" state."
     ],
     [
-     "Moon On Glacial River (BPSkill)",
+     "Moon On Glacial River (Skill)",
      "Deals Ice DMG equal to 135% of Jingliu's Max HP to one designated enemy, and Ice DMG equal to 68% of Jingliu's Max HP to adjacent targets. When using Enhanced Skill, Jingliu consumes 1 stack(s) of \"Syzygy,\" with a 30% chance to consume all \"Syzygy.\" For each stack consumed, the multiplier of this attack increases by 45%, and additionally increases by 90% when consuming all \"Syzygy.\""
     ],
     [
@@ -2727,7 +2727,7 @@
   "F": {
    "1": [
     [
-     "Dripping Mistscape (Ultra)",
+     "Dripping Mistscape (Enhance)",
      "Inflicts \"Befog\" on all enemies. While in \"Befog,\" DMG taken by targets increases by 10%, lasting for 2 turn(s).\nDeals Fire DMG equal to 90% of Lingsha's ATK to all enemies, and at the same time restores HP equal to 8.0% of Lingsha's ATK plus 90 for on-field allies. Fuyuan immediately launches its Talent's Follow-Up ATK against enemies."
     ],
     [
@@ -2741,7 +2741,7 @@
    ],
    "2": [
     [
-     "Dripping Mistscape (Ultra)",
+     "Dripping Mistscape (Enhance)",
      "Inflicts \"Befog\" on all enemies. While in \"Befog,\" DMG taken by targets increases by 15%, lasting for 2 turn(s).\nDeals Fire DMG equal to 113% of Lingsha's ATK to all enemies, and at the same time restores HP equal to 12.0% of Lingsha's ATK plus 135 for on-field allies. Fuyuan immediately launches its Talent's Follow-Up ATK against enemies."
     ],
     [
@@ -2755,7 +2755,7 @@
    ],
    "3": [
     [
-     "Dripping Mistscape (Ultra)",
+     "Dripping Mistscape (Enhance)",
      "Inflicts \"Befog\" on all enemies. While in \"Befog,\" DMG taken by targets increases by 20%, lasting for 2 turn(s).\nDeals Fire DMG equal to 162% of Lingsha's ATK to all enemies, and at the same time restores HP equal to 16.0% of Lingsha's ATK plus 180 for on-field allies. Fuyuan immediately launches its Talent's Follow-Up ATK against enemies."
     ],
     [
@@ -2769,7 +2769,7 @@
    ],
    "4": [
     [
-     "Dripping Mistscape (Ultra)",
+     "Dripping Mistscape (Enhance)",
      "Inflicts \"Befog\" on all enemies. While in \"Befog,\" DMG taken by targets increases by 25%, lasting for 2 turn(s).\nDeals Fire DMG equal to 252% of Lingsha's ATK to all enemies, and at the same time restores HP equal to 20.0% of Lingsha's ATK plus 225 for on-field allies. Fuyuan immediately launches its Talent's Follow-Up ATK against enemies."
     ],
     [
@@ -2861,11 +2861,11 @@
   "F": {
    "1": [
     [
-     "Prayer of Abyss Flower (BPSkill)",
+     "Prayer of Abyss Flower (Skill)",
      "After using Skill, immediately restores one designated ally's HP equal to 40% of Luocha's ATK plus 200. Meanwhile, Luocha gains 1 stack(s) of \"Abyss Flower's Sprout.\"\nLuocha has 1 initial stack(s) of \"Abyss Flower's Sprout.\" When any ally's current HP percentage drops to 50% or lower, Luocha consumes 1 stack of \"Abyss Flower's Sprout\" to immediately trigger an effect equivalent to his Skill on this ally for 1 time (without consuming Skill Points)."
     ],
     [
-     "Death Wish (Ultra)",
+     "Death Wish (Enhance)",
      "Removes 1 buff(s) from all enemies and deals all enemies Imaginary DMG equal to 120% of Luocha's ATK. At the same time, Luocha gains 1 stack of \"Abyss Flower's Sprout.\""
     ],
     [
@@ -2875,11 +2875,11 @@
    ],
    "2": [
     [
-     "Prayer of Abyss Flower (BPSkill)",
+     "Prayer of Abyss Flower (Skill)",
      "After using Skill, immediately restores one designated ally's HP equal to 60% of Luocha's ATK plus 300. Meanwhile, Luocha gains 1 stack(s) of \"Abyss Flower's Sprout.\"\nLuocha has 1 initial stack(s) of \"Abyss Flower's Sprout.\" When any ally's current HP percentage drops to 50% or lower, Luocha consumes 1 stack of \"Abyss Flower's Sprout\" to immediately trigger an effect equivalent to his Skill on this ally for 1 time (without consuming Skill Points)."
     ],
     [
-     "Death Wish (Ultra)",
+     "Death Wish (Enhance)",
      "Removes 1 buff(s) from all enemies and deals all enemies Imaginary DMG equal to 150% of Luocha's ATK. At the same time, Luocha gains 1 stack of \"Abyss Flower's Sprout.\""
     ],
     [
@@ -2889,11 +2889,11 @@
    ],
    "3": [
     [
-     "Prayer of Abyss Flower (BPSkill)",
+     "Prayer of Abyss Flower (Skill)",
      "After using Skill, immediately restores one designated ally's HP equal to 80% of Luocha's ATK plus 400. Meanwhile, Luocha gains 1 stack(s) of \"Abyss Flower's Sprout.\"\nLuocha has 1 initial stack(s) of \"Abyss Flower's Sprout.\" When any ally's current HP percentage drops to 50% or lower, Luocha consumes 1 stack of \"Abyss Flower's Sprout\" to immediately trigger an effect equivalent to his Skill on this ally for 1 time (without consuming Skill Points)."
     ],
     [
-     "Death Wish (Ultra)",
+     "Death Wish (Enhance)",
      "Removes 1 buff(s) from all enemies and deals all enemies Imaginary DMG equal to 216% of Luocha's ATK. At the same time, Luocha gains 1 stack of \"Abyss Flower's Sprout.\""
     ],
     [
@@ -3641,11 +3641,11 @@
   "F": {
    "1": [
     [
-     "Pinion's Aria (BPSkill)",
+     "Pinion's Aria (Skill)",
      "Gains \"Aria\": Increase DMG dealt by the ally squad by 25%, lasting for 3 turn(s). This duration decreases by 1 at the start of Robin's every turn."
     ],
     [
-     "Vox Harmonique, Opus Cosmique (Ultra)",
+     "Vox Harmonique, Opus Cosmique (Enhance)",
      "Robin enters the \"Concerto\" state and makes all teammates (i.e., excluding this unit) immediately take action.\nWhile in the \"Concerto\" state, increases all allies' ATK by 12.0% of Robin's ATK plus 40. Moreover, after every attack by ally targets, Robin deals Physical Additional DMG equal to 72% of her ATK for 1 time, with a fixed CRIT Rate for this damage set at 100% and fixed CRIT DMG set at 150%.\nWhile in the \"Concerto\" state, Robin is immune to Crowd Control debuffs and cannot enter her turn or take action until the \"Concerto\" state ends.\nA \"Concerto\" countdown appears in the Action Order. When the countdown's turn begins, Robin exits the \"Concerto\" state and immediately takes action. The countdown has its own fixed SPD of 90.\nRegenerates 2 Energy for Robin after the ally squad launches an attack. After Robin's Energy reaches its max, each attack from the ally squad will increase the SPD of the \"Concerto\" countdown by 10.0%."
     ],
     [
@@ -3655,11 +3655,11 @@
    ],
    "2": [
     [
-     "Pinion's Aria (BPSkill)",
+     "Pinion's Aria (Skill)",
      "Gains \"Aria\": Increase DMG dealt by the ally squad by 35%, lasting for 3 turn(s). This duration decreases by 1 at the start of Robin's every turn."
     ],
     [
-     "Vox Harmonique, Opus Cosmique (Ultra)",
+     "Vox Harmonique, Opus Cosmique (Enhance)",
      "Robin enters the \"Concerto\" state and makes all teammates (i.e., excluding this unit) immediately take action.\nWhile in the \"Concerto\" state, increases all allies' ATK by 16.8% of Robin's ATK plus 56. Moreover, after every attack by ally targets, Robin deals Physical Additional DMG equal to 90% of her ATK for 1 time, with a fixed CRIT Rate for this damage set at 100% and fixed CRIT DMG set at 150%.\nWhile in the \"Concerto\" state, Robin is immune to Crowd Control debuffs and cannot enter her turn or take action until the \"Concerto\" state ends.\nA \"Concerto\" countdown appears in the Action Order. When the countdown's turn begins, Robin exits the \"Concerto\" state and immediately takes action. The countdown has its own fixed SPD of 90.\nRegenerates 3 Energy for Robin after the ally squad launches an attack. After Robin's Energy reaches its max, each attack from the ally squad will increase the SPD of the \"Concerto\" countdown by 15.0%."
     ],
     [
@@ -3669,11 +3669,11 @@
    ],
    "3": [
     [
-     "Pinion's Aria (BPSkill)",
+     "Pinion's Aria (Skill)",
      "Gains \"Aria\": Increase DMG dealt by the ally squad by 45%, lasting for 3 turn(s). This duration decreases by 1 at the start of Robin's every turn."
     ],
     [
-     "Vox Harmonique, Opus Cosmique (Ultra)",
+     "Vox Harmonique, Opus Cosmique (Enhance)",
      "Robin enters the \"Concerto\" state and makes all teammates (i.e., excluding this unit) immediately take action.\nWhile in the \"Concerto\" state, increases all allies' ATK by 21.6% of Robin's ATK plus 72. Moreover, after every attack by ally targets, Robin deals Physical Additional DMG equal to 130% of her ATK for 1 time, with a fixed CRIT Rate for this damage set at 100% and fixed CRIT DMG set at 150%.\nWhile in the \"Concerto\" state, Robin is immune to Crowd Control debuffs and cannot enter her turn or take action until the \"Concerto\" state ends.\nA \"Concerto\" countdown appears in the Action Order. When the countdown's turn begins, Robin exits the \"Concerto\" state and immediately takes action. The countdown has its own fixed SPD of 90.\nRegenerates 3 Energy for Robin after the ally squad launches an attack. After Robin's Energy reaches its max, each attack from the ally squad will increase the SPD of the \"Concerto\" countdown by 20.0%."
     ],
     [
@@ -3683,11 +3683,11 @@
    ],
    "4": [
     [
-     "Pinion's Aria (BPSkill)",
+     "Pinion's Aria (Skill)",
      "Gains \"Aria\": Increase DMG dealt by the ally squad by 55%, lasting for 3 turn(s). This duration decreases by 1 at the start of Robin's every turn."
     ],
     [
-     "Vox Harmonique, Opus Cosmique (Ultra)",
+     "Vox Harmonique, Opus Cosmique (Enhance)",
      "Robin enters the \"Concerto\" state and makes all teammates (i.e., excluding this unit) immediately take action.\nWhile in the \"Concerto\" state, increases all allies' ATK by 26.4% of Robin's ATK plus 88. Moreover, after every attack by ally targets, Robin deals Physical Additional DMG equal to 202% of her ATK for 1 time, with a fixed CRIT Rate for this damage set at 100% and fixed CRIT DMG set at 150%.\nWhile in the \"Concerto\" state, Robin is immune to Crowd Control debuffs and cannot enter her turn or take action until the \"Concerto\" state ends.\nA \"Concerto\" countdown appears in the Action Order. When the countdown's turn begins, Robin exits the \"Concerto\" state and immediately takes action. The countdown has its own fixed SPD of 90.\nRegenerates 4 Energy for Robin after the ally squad launches an attack. After Robin's Energy reaches its max, each attack from the ally squad will increase the SPD of the \"Concerto\" countdown by 25.0%."
     ],
     [
@@ -3701,11 +3701,11 @@
   "F": {
    "1": [
     [
-     "Lightning Flash (BPSkill)",
+     "Lightning Flash (Skill)",
      "Deals Lightning DMG equal to 120% of Serval's ATK to one designated enemy, and Lightning DoT equal to 60% of Serval's ATK to adjacent targets, with a 80% base chance to inflict Shock on the attacked enemy targets, lasting for 2 turn(s). Then, additionally deals DMG a number of times equal to the number of \"Magnetic Scale\" stacks, with each hit dealing Lightning DoT equal to 150% of Serval's ATK to one random enemy, and inflicting the \"String Vibration Rock\" state on the attacked enemy target, lasting for 3 turn(s). Using this ability does not consume Skill Points.\nWhile in the Shock state, enemy targets take Lightning DoT equal to 60% of Serval's ATK at the start of each turn.\nWhile in the \"String Vibration Rock\" state, each stack causes the enemy target to take Lightning DoT equal to 40% of Serval's ATK at the start of each turn, stacking up to 100 time(s)."
     ],
     [
-     "Here Comes the Mechanical Fever (Ultra)",
+     "Here Comes the Mechanical Fever (Enhance)",
      "Deals Lightning DMG equal to 120% of Serval's ATK to all enemies, and extends the duration of the Shock state on Shocked enemy targets by 2 turn(s), causing all DoT debuffs currently placed on them to immediately produce DMG equal to 150% of their original DMG."
     ],
     [
@@ -3715,11 +3715,11 @@
    ],
    "2": [
     [
-     "Lightning Flash (BPSkill)",
+     "Lightning Flash (Skill)",
      "Deals Lightning DMG equal to 150% of Serval's ATK to one designated enemy, and Lightning DoT equal to 75% of Serval's ATK to adjacent targets, with a 100% base chance to inflict Shock on the attacked enemy targets, lasting for 2 turn(s). Then, additionally deals DMG a number of times equal to the number of \"Magnetic Scale\" stacks, with each hit dealing Lightning DoT equal to 188% of Serval's ATK to one random enemy, and inflicting the \"String Vibration Rock\" state on the attacked enemy target, lasting for 3 turn(s). Using this ability does not consume Skill Points.\nWhile in the Shock state, enemy targets take Lightning DoT equal to 75% of Serval's ATK at the start of each turn.\nWhile in the \"String Vibration Rock\" state, each stack causes the enemy target to take Lightning DoT equal to 50% of Serval's ATK at the start of each turn, stacking up to 100 time(s)."
     ],
     [
-     "Here Comes the Mechanical Fever (Ultra)",
+     "Here Comes the Mechanical Fever (Enhance)",
      "Deals Lightning DMG equal to 150% of Serval's ATK to all enemies, and extends the duration of the Shock state on Shocked enemy targets by 2 turn(s), causing all DoT debuffs currently placed on them to immediately produce DMG equal to 200% of their original DMG."
     ],
     [
@@ -3729,11 +3729,11 @@
    ],
    "3": [
     [
-     "Lightning Flash (BPSkill)",
+     "Lightning Flash (Skill)",
      "Deals Lightning DMG equal to 216% of Serval's ATK to one designated enemy, and Lightning DoT equal to 108% of Serval's ATK to adjacent targets, with a 120% base chance to inflict Shock on the attacked enemy targets, lasting for 2 turn(s). Then, additionally deals DMG a number of times equal to the number of \"Magnetic Scale\" stacks, with each hit dealing Lightning DoT equal to 270% of Serval's ATK to one random enemy, and inflicting the \"String Vibration Rock\" state on the attacked enemy target, lasting for 3 turn(s). Using this ability does not consume Skill Points.\nWhile in the Shock state, enemy targets take Lightning DoT equal to 108% of Serval's ATK at the start of each turn.\nWhile in the \"String Vibration Rock\" state, each stack causes the enemy target to take Lightning DoT equal to 72% of Serval's ATK at the start of each turn, stacking up to 100 time(s)."
     ],
     [
-     "Here Comes the Mechanical Fever (Ultra)",
+     "Here Comes the Mechanical Fever (Enhance)",
      "Deals Lightning DMG equal to 216% of Serval's ATK to all enemies, and extends the duration of the Shock state on Shocked enemy targets by 2 turn(s), causing all DoT debuffs currently placed on them to immediately produce DMG equal to 300% of their original DMG."
     ],
     [
@@ -3793,25 +3793,25 @@
   "F": {
    "1": [
     [
-     "The Hero with a Thousand Faces (Ultra)",
+     "The Hero with a Thousand Faces (Enhance)",
      "Recovers 6 Skill Point(s) for allies. If Skill Points overflow when recovered, records the excess Skill Points, up to a max of 10 point(s). When an ally character's turn ends, if Skill Points are below the max limit, Sparkle consumes the recorded value to recover Skill Points for allies until the max limit is reached. Then, grants all allies \"Cipher\" for 3 turn(s). For ally targets with \"Cipher,\" each stack of the DMG Boost effect triggered by Sparkle's Talent additionally increases by 3.6%. Additionally, grants Sparkle \"Riddle,\" increasing DMG taken by all enemies by (8% + 8% × ExtraHeight), lasting for 3 turn(s).\nWhen \"Aha Instant\" is present on the field, gains 10 Punchline."
     ]
    ],
    "2": [
     [
-     "The Hero with a Thousand Faces (Ultra)",
+     "The Hero with a Thousand Faces (Enhance)",
      "Recovers 6 Skill Point(s) for allies. If Skill Points overflow when recovered, records the excess Skill Points, up to a max of 10 point(s). When an ally character's turn ends, if Skill Points are below the max limit, Sparkle consumes the recorded value to recover Skill Points for allies until the max limit is reached. Then, grants all allies \"Cipher\" for 3 turn(s). For ally targets with \"Cipher,\" each stack of the DMG Boost effect triggered by Sparkle's Talent additionally increases by 3.6%. Additionally, grants Sparkle \"Riddle,\" increasing DMG taken by all enemies by (16% + 8% × ExtraHeight), lasting for 3 turn(s).\nWhen \"Aha Instant\" is present on the field, gains 20 Punchline."
     ]
    ],
    "3": [
     [
-     "The Hero with a Thousand Faces (Ultra)",
+     "The Hero with a Thousand Faces (Enhance)",
      "Recovers 6 Skill Point(s) for allies. If Skill Points overflow when recovered, records the excess Skill Points, up to a max of 10 point(s). When an ally character's turn ends, if Skill Points are below the max limit, Sparkle consumes the recorded value to recover Skill Points for allies until the max limit is reached. Then, grants all allies \"Cipher\" for 3 turn(s). For ally targets with \"Cipher,\" each stack of the DMG Boost effect triggered by Sparkle's Talent additionally increases by 3.6%. Additionally, grants Sparkle \"Riddle,\" increasing DMG taken by all enemies by (24% + 8% × ExtraHeight), lasting for 3 turn(s).\nWhen \"Aha Instant\" is present on the field, gains 30 Punchline."
     ]
    ],
    "4": [
     [
-     "The Hero with a Thousand Faces (Ultra)",
+     "The Hero with a Thousand Faces (Enhance)",
      "Recovers 6 Skill Point(s) for allies. If Skill Points overflow when recovered, records the excess Skill Points, up to a max of 10 point(s). When an ally character's turn ends, if Skill Points are below the max limit, Sparkle consumes the recorded value to recover Skill Points for allies until the max limit is reached. Then, grants all allies \"Cipher\" for 3 turn(s). For ally targets with \"Cipher,\" each stack of the DMG Boost effect triggered by Sparkle's Talent additionally increases by 3.6%. Additionally, grants Sparkle \"Riddle,\" increasing DMG taken by all enemies by (32% + 8% × ExtraHeight), lasting for 3 turn(s).\nWhen \"Aha Instant\" is present on the field, gains 40 Punchline."
     ]
    ]
@@ -3987,7 +3987,7 @@
   "F": {
    "1": [
     [
-     "Ode to Caress and Cicatrix (Ultra)",
+     "Ode to Caress and Cicatrix (Enhance)",
      "Regenerates Energy by 20.0% of Max Energy for one designated ally character, and turns the target and their summon into \"The Beatified.\" \"The Beatified\" have their SPD increased by 20%, and when \"The Beatified\" exists, the ally squad's CRIT DMG increased by an amount equal to 24.0% of Sunday's CRIT DMG plus 12.0%.\nAt the start of each of Sunday's turns, the duration of \"The Beatified\" decreases by 1 turn, lasting for a total of 3 turn(s). And it only takes effect on the most recent target of the Ultimate. When Sunday is knocked down, \"The Beatified\" will also be dispelled."
     ],
     [
@@ -3997,7 +3997,7 @@
    ],
    "2": [
     [
-     "Ode to Caress and Cicatrix (Ultra)",
+     "Ode to Caress and Cicatrix (Enhance)",
      "Regenerates Energy by 20.0% of Max Energy for one designated ally character, and turns the target and their summon into \"The Beatified.\" \"The Beatified\" have their SPD increased by 26%, and when \"The Beatified\" exists, the ally squad's CRIT DMG increased by an amount equal to 30.0% of Sunday's CRIT DMG plus 16.0%.\nAt the start of each of Sunday's turns, the duration of \"The Beatified\" decreases by 1 turn, lasting for a total of 3 turn(s). And it only takes effect on the most recent target of the Ultimate. When Sunday is knocked down, \"The Beatified\" will also be dispelled."
     ],
     [
@@ -4007,7 +4007,7 @@
    ],
    "3": [
     [
-     "Ode to Caress and Cicatrix (Ultra)",
+     "Ode to Caress and Cicatrix (Enhance)",
      "Regenerates Energy by 20.0% of Max Energy for one designated ally character, and turns the target and their summon into \"The Beatified.\" \"The Beatified\" have their SPD increased by 32%, and when \"The Beatified\" exists, the ally squad's CRIT DMG increased by an amount equal to 36.0% of Sunday's CRIT DMG plus 20.0%.\nAt the start of each of Sunday's turns, the duration of \"The Beatified\" decreases by 1 turn, lasting for a total of 3 turn(s). And it only takes effect on the most recent target of the Ultimate. When Sunday is knocked down, \"The Beatified\" will also be dispelled."
     ],
     [
@@ -4017,7 +4017,7 @@
    ],
    "4": [
     [
-     "Ode to Caress and Cicatrix (Ultra)",
+     "Ode to Caress and Cicatrix (Enhance)",
      "Regenerates Energy by 20.0% of Max Energy for one designated ally character, and turns the target and their summon into \"The Beatified.\" \"The Beatified\" have their SPD increased by 38%, and when \"The Beatified\" exists, the ally squad's CRIT DMG increased by an amount equal to 42.0% of Sunday's CRIT DMG plus 24.0%.\nAt the start of each of Sunday's turns, the duration of \"The Beatified\" decreases by 1 turn, lasting for a total of 3 turn(s). And it only takes effect on the most recent target of the Ultimate. When Sunday is knocked down, \"The Beatified\" will also be dispelled."
     ],
     [
@@ -4199,7 +4199,7 @@
   "F": {
    "1": [
     [
-     "Turn a Profit! (Ultra)",
+     "Turn a Profit! (Enhance)",
      "Numby enters the \"Windfall Bonanza!\" state. Its DMG multiplier increases by 75% and CRIT DMG increases by 13%. Its attacks also deal Fire DMG equal to 38% of Topaz's ATK to adjacent targets. When enemy targets inflicted with \"Proof of Debt\" are hit by an ally's Basic ATK, Skill, or Ultimate, Numby's action is advanced by 50%. Numby exits the \"Windfall Bonanza!\" state after using 2 attack(s)."
     ],
     [
@@ -4209,7 +4209,7 @@
    ],
    "2": [
     [
-     "Turn a Profit! (Ultra)",
+     "Turn a Profit! (Enhance)",
      "Numby enters the \"Windfall Bonanza!\" state. Its DMG multiplier increases by 94% and CRIT DMG increases by 13%. Its attacks also deal Fire DMG equal to 47% of Topaz's ATK to adjacent targets. When enemy targets inflicted with \"Proof of Debt\" are hit by an ally's Basic ATK, Skill, or Ultimate, Numby's action is advanced by 50%. Numby exits the \"Windfall Bonanza!\" state after using 2 attack(s)."
     ],
     [
@@ -4219,7 +4219,7 @@
    ],
    "3": [
     [
-     "Turn a Profit! (Ultra)",
+     "Turn a Profit! (Enhance)",
      "Numby enters the \"Windfall Bonanza!\" state. Its DMG multiplier increases by 135% and CRIT DMG increases by 13%. Its attacks also deal Fire DMG equal to 68% of Topaz's ATK to adjacent targets. When enemy targets inflicted with \"Proof of Debt\" are hit by an ally's Basic ATK, Skill, or Ultimate, Numby's action is advanced by 50%. Numby exits the \"Windfall Bonanza!\" state after using 2 attack(s)."
     ],
     [
@@ -4229,7 +4229,7 @@
    ],
    "4": [
     [
-     "Turn a Profit! (Ultra)",
+     "Turn a Profit! (Enhance)",
      "Numby enters the \"Windfall Bonanza!\" state. Its DMG multiplier increases by 210% and CRIT DMG increases by 13%. Its attacks also deal Fire DMG equal to 105% of Topaz's ATK to adjacent targets. When enemy targets inflicted with \"Proof of Debt\" are hit by an ally's Basic ATK, Skill, or Ultimate, Numby's action is advanced by 50%. Numby exits the \"Windfall Bonanza!\" state after using 2 attack(s)."
     ],
     [
@@ -4399,7 +4399,7 @@
   "F": {
    "1": [
     [
-     "Where'd the Gifts Go (BPSkill)",
+     "Where'd the Gifts Go (Skill)",
      "Gains \"Numinosity,\" lasting for 3 turn(s). This duration decreases by 1 at the start of this unit's every turn. While Tribbie has \"Numinosity,\" increases the ally squad's All-Type RES PEN by 24.0%, and Lucky Strike DMG by (15.0% + 15.0% × ExtraHeight)."
     ],
     [
@@ -4413,7 +4413,7 @@
    ],
    "2": [
     [
-     "Where'd the Gifts Go (BPSkill)",
+     "Where'd the Gifts Go (Skill)",
      "Gains \"Numinosity,\" lasting for 3 turn(s). This duration decreases by 1 at the start of this unit's every turn. While Tribbie has \"Numinosity,\" increases the ally squad's All-Type RES PEN by 30.0%, and Lucky Strike DMG by (30.0% + 15.0% × ExtraHeight)."
     ],
     [
@@ -4427,7 +4427,7 @@
    ],
    "3": [
     [
-     "Where'd the Gifts Go (BPSkill)",
+     "Where'd the Gifts Go (Skill)",
      "Gains \"Numinosity,\" lasting for 3 turn(s). This duration decreases by 1 at the start of this unit's every turn. While Tribbie has \"Numinosity,\" increases the ally squad's All-Type RES PEN by 45.0%, and Lucky Strike DMG by (60.0% + 15.0% × ExtraHeight)."
     ],
     [
@@ -4501,11 +4501,11 @@
   "F": {
    "1": [
     [
-     "Edge of the Void (BPSkill)",
+     "Edge of the Void (Skill)",
      "Deals Imaginary DMG equal to 36% of Welt's ATK to all enemies, and additionally deals 4 instances of DMG, with each instance dealing Imaginary DMG equal to 36% of Welt's ATK to one random enemy. On hit, there is a 65% base chance to reduce the hit enemy target's SPD by 10%, lasting for 2 turn(s)."
     ],
     [
-     "Synthetic Black Hole (Ultra)",
+     "Synthetic Black Hole (Enhance)",
      "Deals Imaginary DMG equal to 90% of Welt's ATK to all enemies. Has a 100% base chance to Imprison hit enemy targets for 1 turn.\nWhile Imprisoned, enemy targets have their actions delayed by 6.0% and their SPD reduced by 10%. After using his Ultimate, inflicts the \"Weightless\" state on all enemies. When targets in the \"Weightless\" state get attacked, their actions are delayed by 4.0%. This effect can trigger up to 8 time(s) per target per turn. \"Weightless\" lasts for 2 turn(s)."
     ],
     [
@@ -4515,11 +4515,11 @@
    ],
    "2": [
     [
-     "Edge of the Void (BPSkill)",
+     "Edge of the Void (Skill)",
      "Deals Imaginary DMG equal to 45% of Welt's ATK to all enemies, and additionally deals 4 instances of DMG, with each instance dealing Imaginary DMG equal to 45% of Welt's ATK to one random enemy. On hit, there is a 65% base chance to reduce the hit enemy target's SPD by 10%, lasting for 2 turn(s)."
     ],
     [
-     "Synthetic Black Hole (Ultra)",
+     "Synthetic Black Hole (Enhance)",
      "Deals Imaginary DMG equal to 113% of Welt's ATK to all enemies. Has a 100% base chance to Imprison hit enemy targets for 1 turn.\nWhile Imprisoned, enemy targets have their actions delayed by 6.0% and their SPD reduced by 10%. After using his Ultimate, inflicts the \"Weightless\" state on all enemies. When targets in the \"Weightless\" state get attacked, their actions are delayed by 4.0%. This effect can trigger up to 8 time(s) per target per turn. \"Weightless\" lasts for 2 turn(s)."
     ],
     [
@@ -4529,11 +4529,11 @@
    ],
    "3": [
     [
-     "Edge of the Void (BPSkill)",
+     "Edge of the Void (Skill)",
      "Deals Imaginary DMG equal to 65% of Welt's ATK to all enemies, and additionally deals 4 instances of DMG, with each instance dealing Imaginary DMG equal to 65% of Welt's ATK to one random enemy. On hit, there is a 65% base chance to reduce the hit enemy target's SPD by 10%, lasting for 2 turn(s)."
     ],
     [
-     "Synthetic Black Hole (Ultra)",
+     "Synthetic Black Hole (Enhance)",
      "Deals Imaginary DMG equal to 162% of Welt's ATK to all enemies. Has a 100% base chance to Imprison hit enemy targets for 1 turn.\nWhile Imprisoned, enemy targets have their actions delayed by 6.0% and their SPD reduced by 10%. After using his Ultimate, inflicts the \"Weightless\" state on all enemies. When targets in the \"Weightless\" state get attacked, their actions are delayed by 4.0%. This effect can trigger up to 8 time(s) per target per turn. \"Weightless\" lasts for 2 turn(s)."
     ],
     [
@@ -4543,11 +4543,11 @@
    ],
    "4": [
     [
-     "Edge of the Void (BPSkill)",
+     "Edge of the Void (Skill)",
      "Deals Imaginary DMG equal to 101% of Welt's ATK to all enemies, and additionally deals 4 instances of DMG, with each instance dealing Imaginary DMG equal to 101% of Welt's ATK to one random enemy. On hit, there is a 65% base chance to reduce the hit enemy target's SPD by 10%, lasting for 2 turn(s)."
     ],
     [
-     "Synthetic Black Hole (Ultra)",
+     "Synthetic Black Hole (Enhance)",
      "Deals Imaginary DMG equal to 252% of Welt's ATK to all enemies. Has a 100% base chance to Imprison hit enemy targets for 1 turn.\nWhile Imprisoned, enemy targets have their actions delayed by 6.0% and their SPD reduced by 10%. After using his Ultimate, inflicts the \"Weightless\" state on all enemies. When targets in the \"Weightless\" state get attacked, their actions are delayed by 4.0%. This effect can trigger up to 8 time(s) per target per turn. \"Weightless\" lasts for 2 turn(s)."
     ],
     [
@@ -4619,7 +4619,7 @@
   "F": {
    "1": [
     [
-     "Divine Castigation (Ultra)",
+     "Divine Castigation (Enhance)",
      "Deals Quantum DMG equal to 150% of Xueyi's ATK to one designated enemy. This attack ignores Weakness Types and reduces the enemy's Toughness. When Breaking Weakness, triggers the Quantum Weakness Break effect. At the same time, generates a \"Shackled Coffin,\" locking the countdown to the end of combat and all enemy targets, preventing them from actively attacking allies. This lasts for 25 action value, takes effect up to 2 time(s) per combat, and does not take effect repeatedly when a \"Shackled Coffin\" already exists.\nIn this attack, the more Toughness is reduced, the higher the DMG dealt, up to a max increase of 36.0%."
     ],
     [
@@ -4633,7 +4633,7 @@
    ],
    "2": [
     [
-     "Divine Castigation (Ultra)",
+     "Divine Castigation (Enhance)",
      "Deals Quantum DMG equal to 156% of Xueyi's ATK to one designated enemy. This attack ignores Weakness Types and reduces the enemy's Toughness. When Breaking Weakness, triggers the Quantum Weakness Break effect. At the same time, generates a \"Shackled Coffin,\" locking the countdown to the end of combat and all enemy targets, preventing them from actively attacking allies. This lasts for 25 action value, takes effect up to 3 time(s) per combat, and does not take effect repeatedly when a \"Shackled Coffin\" already exists.\nIn this attack, the more Toughness is reduced, the higher the DMG dealt, up to a max increase of 54.0%."
     ],
     [
@@ -4647,7 +4647,7 @@
    ],
    "3": [
     [
-     "Divine Castigation (Ultra)",
+     "Divine Castigation (Enhance)",
      "Deals Quantum DMG equal to 1500% of Xueyi's ATK to one designated enemy. This attack ignores Weakness Types and reduces the enemy's Toughness. When Breaking Weakness, triggers the Quantum Weakness Break effect. At the same time, generates a \"Shackled Coffin,\" locking the countdown to the end of combat and all enemy targets, preventing them from actively attacking allies. This lasts for 999 action value, takes effect up to 1 time(s) per combat, and does not take effect repeatedly when a \"Shackled Coffin\" already exists.\nIn this attack, the more Toughness is reduced, the higher the DMG dealt, up to a max increase of 72.0%."
     ],
     [
@@ -4759,7 +4759,7 @@
   "F": {
    "1": [
     [
-     "Earthbind, Etherbreak (Ultra)",
+     "Earthbind, Etherbreak (Enhance)",
      "Consumes 120 Energy. Yunli gains \"Parry\" and Taunts all enemies, lasting until the end of the next ally's or enemy's turn. Increases the CRIT DMG dealt by Yunli's next Counter by 60%. When triggering the Counter effect from Talent, launches the Counter \"Intuit: Cull\" instead and removes the \"Parry\" effect. If no Counter is triggered while \"Parry\" is active, Yunli will immediately launch the Counter \"Intuit: Slash\" on a random enemy target when \"Parry\" ends.\n\"Intuit: Slash\": Deals Physical DMG equal to 180% of Yunli's ATK to the target, and deals Physical DMG equal to 90% of Yunli's ATK to adjacent targets.\n\"Intuit: Cull\": Deals Physical DMG equal to 180% of Yunli's ATK to the target, and deals Physical DMG equal to 90% of Yunli's ATK to adjacent targets. Then, additionally deals 6 instance(s) of DMG, each dealing Physical DMG equal to 60% of Yunli's ATK to one random enemy.\nWhen Yunli deals DMG via this ability, it's considered as dealing Ultimate DMG."
     ],
     [
@@ -4769,7 +4769,7 @@
    ],
    "2": [
     [
-     "Earthbind, Etherbreak (Ultra)",
+     "Earthbind, Etherbreak (Enhance)",
      "Consumes 120 Energy. Yunli gains \"Parry\" and Taunts all enemies, lasting until the end of the next ally's or enemy's turn. Increases the CRIT DMG dealt by Yunli's next Counter by 60%. When triggering the Counter effect from Talent, launches the Counter \"Intuit: Cull\" instead and removes the \"Parry\" effect. If no Counter is triggered while \"Parry\" is active, Yunli will immediately launch the Counter \"Intuit: Slash\" on a random enemy target when \"Parry\" ends.\n\"Intuit: Slash\": Deals Physical DMG equal to 225% of Yunli's ATK to the target, and deals Physical DMG equal to 113% of Yunli's ATK to adjacent targets.\n\"Intuit: Cull\": Deals Physical DMG equal to 225% of Yunli's ATK to the target, and deals Physical DMG equal to 113% of Yunli's ATK to adjacent targets. Then, additionally deals 6 instance(s) of DMG, each dealing Physical DMG equal to 75% of Yunli's ATK to one random enemy.\nWhen Yunli deals DMG via this ability, it's considered as dealing Ultimate DMG."
     ],
     [
@@ -4779,7 +4779,7 @@
    ],
    "3": [
     [
-     "Earthbind, Etherbreak (Ultra)",
+     "Earthbind, Etherbreak (Enhance)",
      "Consumes 120 Energy. Yunli gains \"Parry\" and Taunts all enemies, lasting until the end of the next ally's or enemy's turn. Increases the CRIT DMG dealt by Yunli's next Counter by 60%. When triggering the Counter effect from Talent, launches the Counter \"Intuit: Cull\" instead and removes the \"Parry\" effect. If no Counter is triggered while \"Parry\" is active, Yunli will immediately launch the Counter \"Intuit: Slash\" on a random enemy target when \"Parry\" ends.\n\"Intuit: Slash\": Deals Physical DMG equal to 324% of Yunli's ATK to the target, and deals Physical DMG equal to 162% of Yunli's ATK to adjacent targets.\n\"Intuit: Cull\": Deals Physical DMG equal to 324% of Yunli's ATK to the target, and deals Physical DMG equal to 162% of Yunli's ATK to adjacent targets. Then, additionally deals 6 instance(s) of DMG, each dealing Physical DMG equal to 108% of Yunli's ATK to one random enemy.\nWhen Yunli deals DMG via this ability, it's considered as dealing Ultimate DMG."
     ],
     [
@@ -4789,7 +4789,7 @@
    ],
    "4": [
     [
-     "Earthbind, Etherbreak (Ultra)",
+     "Earthbind, Etherbreak (Enhance)",
      "Consumes 120 Energy. Yunli gains \"Parry\" and Taunts all enemies, lasting until the end of the next ally's or enemy's turn. Increases the CRIT DMG dealt by Yunli's next Counter by 60%. When triggering the Counter effect from Talent, launches the Counter \"Intuit: Cull\" instead and removes the \"Parry\" effect. If no Counter is triggered while \"Parry\" is active, Yunli will immediately launch the Counter \"Intuit: Slash\" on a random enemy target when \"Parry\" ends.\n\"Intuit: Slash\": Deals Physical DMG equal to 504% of Yunli's ATK to the target, and deals Physical DMG equal to 252% of Yunli's ATK to adjacent targets.\n\"Intuit: Cull\": Deals Physical DMG equal to 504% of Yunli's ATK to the target, and deals Physical DMG equal to 252% of Yunli's ATK to adjacent targets. Then, additionally deals 6 instance(s) of DMG, each dealing Physical DMG equal to 168% of Yunli's ATK to one random enemy.\nWhen Yunli deals DMG via this ability, it's considered as dealing Ultimate DMG."
     ],
     [
