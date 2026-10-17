@@ -6,7 +6,7 @@
   <header>
     <div>
       <h1>Currency Wars <span>Team Builder</span></h1>
-      <p class="sub">Drag units onto the board, or click one to drop it in the first open tile. Click a placed unit to send it back. Use + and − on a trait to count Emblems.</p>
+      <p class="sub">Drag units onto the board, or click one to drop it in the first open tile. Click a placed unit to send it back. Use a tile's + button to equip items and Emblems.</p>
     </div>
   </header>
 
@@ -41,7 +41,6 @@
     <aside class="panel side-panel">
       <div class="phead"><h2>Bonds &amp; traits</h2><span class="tools" id="tsum"></span></div>
       <div class="tlist" id="traits"></div>
-      <select class="addemb" id="addemb" aria-label="Add an Emblem for a trait"></select>
     </aside>
   </div>
 </div>
@@ -52,9 +51,10 @@
   <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="eqh">
     <div class="phead"><div><h2 id="eqh">Equipment</h2><span class="tools" id="eqt"></span></div><button class="btn" data-close>Close</button></div>
     <div class="slots" id="eqslots"></div>
-    <input id="eqq" type="search" placeholder="Search equipment" aria-label="Search equipment">
+    <div class="eqbar"><input id="eqq" type="search" placeholder="Search equipment" aria-label="Search equipment"><div class="chips" id="eqcats" role="group" aria-label="Equipment type"></div></div>
     <div class="items" id="eqgrid"></div>
-    <p class="hint">Placeholder items for now. Click an item to equip it, click an equipped slot to remove it.</p>
+    <div class="eqd" id="eqd" aria-live="polite"></div>
+    <p class="hint">Click an item to equip it. Click an equipped slot to remove it. Greyed items can't be added to this unit.</p>
   </div>
 </div>
 

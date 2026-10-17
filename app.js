@@ -17,10 +17,10 @@ const GH='https://raw.githubusercontent.com/Akaerya/currencywars47/refs/heads/ma
 // Copies published next to this page come first (the Artifact viewer blocks images from other sites); GitHub is used anywhere else.
 const BASES=['',GH];
 const ART={}; // "folder/id" -> url once found, false if neither file loads, 'wait' while checking
-function findArt(key){
+function findArt(key,exts=['png','webp']){
   if(ART[key]!==undefined)return;
   ART[key]='wait';
-  const tries=BASES.flatMap(b=>[b+key+'.png',b+key+'.webp']);
+  const tries=BASES.flatMap(b=>exts.map(x=>b+key+'.'+x));
   const next=()=>{
     const url=tries.shift();
     if(!url){ART[key]=false;return}
@@ -31,6 +31,7 @@ function findArt(key){
   };
   next();
 }
+const eqArt=it=>{const key='equipment/'+it.id;if(ART[key]===undefined)findArt(key,['webp','png']);const url=typeof ART[key]==='string'?ART[key]:'';return `data-art="${key}"${url?` style="background-image:url('${url}')"`:''}`};
 const artOf=(dir,u)=>{const key=dir+'/'+ID[u.name];if(ART[key]===undefined)findArt(key);const url=typeof ART[key]==='string'?ART[key]:'';return{key,url}};
 // Merchant Guild: intervals count 3★+ members, not units, and every reached interval stays active.
 Object.assign(T['Astropolis Merchant Guild'],{stack:true,t:[[1, "Gain 1 EXP every time the shop refreshes."], [2, "Gain 1 free shop refresh when entering a new node."], [3, "When entering a new node, an Astropolis Merchant Guild unit appears in the shop."], [4, "Opens the Astropolis vault and choose a reward."], [5, "Obtains an Astropolis Privilege Card, every 15 shop refreshes grants 1 use of the item."], [6, "Units in the shop randomly becomes 2/3/4 stars, can be purchased at base cost."]]});
@@ -38,9 +39,12 @@ Object.assign(T['Astropolis Merchant Guild'],{stack:true,t:[[1, "Gain 1 EXP ever
 let SK=null; // filled from skills.json
 fetch('skills.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(j=>{SK=j;utip.dataset.for=''}).catch(()=>{SK=false;utip.dataset.for=''});
 const KIND={F:'Faction',C:'Class',S:'Unique'};
-// Equipment. Placeholder list until the real items are known: replace with {id,name,short} entries (add a category field later).
-const ITEMS=Array.from({length:20},(_,i)=>({id:'e'+(i+1),name:'Equipment '+(i+1),short:''+(i+1)}));
-const IB=Object.fromEntries(ITEMS.map(x=>[x.id,x]));
+// Equipment, filled from equipment.json. k = key saved on units, id = image ID, cat = basic / advanced / privileged / emblem.
+let ITEMS=[],IB={},EQLOAD='wait';
+const CATS=[['','All'],['basic','Basic'],['advanced','Advanced'],['privileged','Privileged'],['emblem','Emblems']];
+const eqOf=n=>(S.eq[n]||[]).map(k=>IB[k]).filter(Boolean);
+// Emblem wearers per trait: [{trait:[unit,...]}]. An Emblem never counts for a trait the unit already has.
+function emblemMap(){const m={};S.board.forEach((n,i)=>{if(n&&usable(i))eqOf(n).forEach(it=>{if(it.cat==='emblem'&&!UB[n].traits.includes(it.trait))(m[it.trait]=m[it.trait]||[]).push(n)})});return m}
 const slotsFor=u=>3; // natural equipment slots; raise per unit here later
 // Galactic Voyager: base value each member gives the squad, before the bond multiplier
 const GVB={"Fugue":["Off-Field Strength",20],"Boothill":["Weakness Break Efficiency",20],"Natasha":["DMG Mitigation",10],"The Herta":["On-Field Strength",20],"Luocha":["SPD Amplification",10],"Aventurine":["Lucky Strike Rate",10],"Clara":["DMG Amplification",10]};
@@ -48,10 +52,10 @@ const GVM=[1,1.2,1.4,1.7,2,2.4,2.9,3.5];
 const TN=Object.keys(T);
 
 const KEY='cw-team-v1';
-let S={board:Array(13).fill(null),extra:0,emb:{},aha:3,eq:{},gr:null,star:{}};
+let S={board:Array(13).fill(null),extra:0,aha:3,eq:{},gr:null,star:{}};
 const AHA='Aeon ★ Aha',AHAC=[3,4,5,7];
 const costOf=u=>u.name===AHA?S.aha:u.cost;
-try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.board)&&s.board.length===13){S.board=s.board.map(n=>n==='March 7th'?'March 7th Hunt':n).map(n=>UB[n]?n:null);S.extra=Math.min(3,Math.max(0,s.extra|0));if(AHAC.includes(s.aha))S.aha=s.aha;if(s.emb)for(const k in s.emb)if(T[k]&&T[k].k!=='S'&&s.emb[k]>0)S.emb[k]=Math.min(9,s.emb[k]|0);if(s.eq)for(const k in s.eq)if(UB[k]&&Array.isArray(s.eq[k]))S.eq[k]=s.eq[k].filter(x=>IB[x]).slice(0,3);if(UB[s.gr])S.gr=s.gr;if(s.star)for(const k in s.star)if(UB[k]&&[2,3,4].includes(s.star[k]))S.star[k]=s.star[k]}}catch(e){}
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.board)&&s.board.length===13){S.board=s.board.map(n=>n==='March 7th'?'March 7th Hunt':n).map(n=>UB[n]?n:null);S.extra=Math.min(3,Math.max(0,s.extra|0));if(AHAC.includes(s.aha))S.aha=s.aha;if(s.eq)for(const k in s.eq)if(UB[k]&&Array.isArray(s.eq[k]))S.eq[k]=s.eq[k].filter(x=>typeof x==='string').slice(0,3);if(UB[s.gr])S.gr=s.gr;if(s.star)for(const k in s.star)if(UB[k]&&[2,3,4].includes(s.star[k]))S.star[k]=s.star[k]}}catch(e){}
 const F={q:'',cost:new Set(),role:new Set(),trait:''};
 const open=new Set();
 const $=id=>document.getElementById(id);
@@ -62,8 +66,8 @@ const isFront=i=>i<4, usable=i=>i<10||i-10<S.extra;
 const misfit=(u,i)=>(u.role==='N'&&!isFront(i))||(u.role==='F'&&isFront(i));
 
 function unitEl(u,i){
-  const bad=misfit(u,i),{key,url}=artOf('character_preview',u),eq=S.eq[u.name]||[],st=starOf(u.name);
-  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha aria-label="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" aria-label="Galaxy Ranger">GR</span>':''}</span><span class="eqcol"><button class="eqb" data-eq="${esc(u.name)}" aria-label="Equipment for ${esc(u.name)}">+</button>${eq.map(x=>`<i aria-label="${esc(IB[x].name)}">${esc(IB[x].short)}</i>`).join('')}</span><span class="ini">${ini(u.name)}</span><span class="nm">${esc(u.name)}</span></div>`;
+  const bad=misfit(u,i),{key,url}=artOf('character_preview',u),eq=eqOf(u.name),st=starOf(u.name);
+  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha aria-label="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" aria-label="Galaxy Ranger">GR</span>':''}</span><span class="eqcol"><button class="eqb" data-eq="${esc(u.name)}" aria-label="Equipment for ${esc(u.name)}">+</button></span><span class="ini">${ini(u.name)}</span><span class="bot"><span class="nm">${esc(u.name)}</span>${eq.length?`<span class="eqrow">${eq.map(it=>`<i class="eqi ${it.cat}" ${eqArt(it)} aria-label="${esc(it.name)}"></i>`).join('')}</span>`:''}</span></div>`;
 }
 const starOf=n=>S.star[n]||1; // units are 1★ unless marked
 function starsEl(n){
@@ -89,6 +93,7 @@ function renderBoard(){
 function counts(){
   const c={};
   S.board.forEach((n,i)=>{if(n&&usable(i))UB[n].traits.forEach(t=>(c[t]=c[t]||[]).push(n))});
+  const em=emblemMap();for(const t in em)(c[t]=c[t]||[]).push(...em[t]);
   return c;
 }
 function tierOf(def,n){
@@ -101,17 +106,17 @@ const RANK=['Bronze','Silver','Gold','Prismatic'];
 const onBoard=n=>S.board.some((x,i)=>x===n&&usable(i));
 const grOk=()=>!!S.gr&&onBoard('Ashveil')&&S.board.slice(0,4).includes(S.gr);
 const pct=v=>'+'+(+v.toFixed(1))+'%';
-function gvTotals(who,e,ti){
+function gvTotals(who,holders,ti){
   if(ti<0)return '';
-  const m=GVM[Math.min(ti,7)],rows=who.filter(n=>GVB[n]).map(n=>[GVB[n][0],GVB[n][1]*m,n]);
-  if(e)rows.push(['Lucky Strike DMG',18*e*m,e>1?e+' Emblems':'Emblem']);
+  const m=GVM[Math.min(ti,7)],rows=who.filter(n=>GVB[n]&&!holders.includes(n)).map(n=>[GVB[n][0],GVB[n][1]*m,n]);
+  holders.forEach(n=>rows.push(['Lucky Strike DMG',18*m,n+' (Emblem)']));
   return `<table class="gv"><tr><th>Total bonus (×${m})</th><th>Squad</th><th>Voyagers</th></tr>${rows.map(([st,v,src])=>`<tr><td>${st}<small>${esc(src)}</small></td><td>${pct(v)}</td><td>${pct(v*2)}</td></tr>`).join('')}</table>`;
 }
 const SM={1:1,2:2,3:4,4:8}; // Merchant Guild multiplier by star level
 const GRM={1:1,2:3,3:6,4:12}; // Galaxy Ranger multiplier by star level
 const amgLevel=who=>who.filter(n=>starOf(n)>=3).length;
-function amgTotals(who,e){
-  const rows=who.map(n=>[n,starOf(n)]).concat(Array.from({length:e},()=>['Emblem holder',1]));
+function amgTotals(who,holders){
+  const rows=who.map(n=>[holders.includes(n)?n+' (Emblem)':n,starOf(n)]);
   let sum=0;
   const body=rows.map(([n,st])=>{const v=2*SM[st];sum+=v;return `<tr><td>${esc(n)}</td><td>${st}★</td><td>${pct(v)}</td></tr>`}).join('');
   return `<table class="gv"><tr><th>${amgLevel(who)} member${amgLevel(who)===1?'':'s'} at 3★+</th><th>Stars</th><th>Gives</th></tr>${body}<tr><td>Each member gains<small>Lucky Strike Rate and DMG</small></td><td></td><td>${pct(sum)}</td></tr></table>`;
@@ -125,8 +130,8 @@ const xfx=d=>d.x.map(l=>`<p>${esc(l).replace(/^&quot;([^&]+)&quot;:/,'<b>$1:</b>
 const isOn=r=>r.def.stack?r.n>0:r.ti>=0;
 function renderTraits(){
   const c=counts();
-  const names=[...new Set([...Object.keys(c),...Object.keys(S.emb).filter(k=>S.emb[k]>0)])];
-  const rows=names.map(name=>{const def=T[name],who=c[name]||[],e=S.emb[name]||0,extra=name==='Galaxy Ranger'&&grOk()?1:0,n=who.length+e+extra;return{name,def,n,e,who,ti:def.stack?Math.min(def.t.length,amgLevel(who))-1:tierOf(def,n),base:def.stack?Math.min(def.t.length,amgLevel(who))-1:tierOf(def,who.length+extra)}})
+  const em=emblemMap(),names=Object.keys(c);
+  const rows=names.map(name=>{const def=T[name],who=c[name]||[],holders=em[name]||[],e=holders.length,extra=name==='Galaxy Ranger'&&grOk()?1:0,n=who.length+extra;return{name,def,n,e,who,holders,ti:def.stack?Math.min(def.t.length,amgLevel(who))-1:tierOf(def,n),base:def.stack?Math.min(def.t.length,amgLevel(who))-1:tierOf(def,who.length-e+extra)}})
     .sort((a,b)=>isOn(b)-isOn(a)||(b.def.t.length?rankOf(b.def,b.ti):0)*(b.ti>=0)-(a.def.t.length?rankOf(a.def,a.ti):0)*(a.ti>=0)||b.n-a.n||a.name.localeCompare(b.name));
   $('tsum').textContent=rows.length?`${rows.filter(isOn).length} active of ${rows.length}`:'';
   if(!rows.length){$('traits').innerHTML='<div class="empty">Place a unit to see its bonds and traits here. Inactive ones are listed too.</div>';return}
@@ -137,15 +142,15 @@ function renderTraits(){
     if(r.e>0){
       const need=d.exact?r.e:Math.max(0,d.t[r.ti]?.[0]-(r.n-r.e));
       if(on&&tiered&&r.ti!==r.base)note=`${need} Emblem${need>1?'s':''} required`;
-      else note=d.stack?`${r.e} Emblem${r.e>1?'s':''} added, counted at 1★`:`${r.e} Emblem${r.e>1?'s':''} added, no new interval`;
+      else note=`${r.e} Emblem${r.e>1?'s':''} worn${d.stack?'':', no new interval'}`;
     }
     let ctl='';
     if(r.name==='Galaxy Ranger'){
       const front=S.board.slice(0,4).filter(Boolean);
       ctl=`<span class="emb">Ranger<select data-gr aria-label="Galaxy Ranger"><option value="">None</option>${front.map(n=>`<option${n===S.gr?' selected':''}>${esc(n)}</option>`).join('')}</select></span>`;
-    }else if(d.k!=='S')ctl=`<span class="emb">Emblem<span><button data-em="-1" data-t="${esc(r.name)}" aria-label="Remove an Emblem from ${esc(r.name)}"${r.e?'':' disabled'}>−</button><b>${r.e}</b><button data-em="1" data-t="${esc(r.name)}" aria-label="Add an Emblem to ${esc(r.name)}"${r.e>=9?' disabled':''}>+</button></span></span>`;
-    const gv=r.name==='Galactic Voyager'?gvTotals(r.who,r.e,r.ti):r.name==='Astropolis Merchant Guild'?amgTotals(r.who,r.e):r.name==='Galaxy Ranger'&&grOk()?grLine():'';
-    const det=open.has(r.name)?`<div class="det">${d.d?`<p>${esc(d.d)}</p>`:''}${tiered?`<ul>${d.t.map(([k,x],i)=>`<li class="${(d.stack?i<=r.ti:i===r.ti)?'hit':''}"><b>(${k})</b><span>${esc(x)}</span></li>`).join('')}</ul>`:''}${d.x.length?`<div class="xin"><p class="xh">Additional effects</p>${xfx(d)}</div>`:''}<p>On board: <span class="who">${r.who.length?r.who.map(esc).join(', '):'none'}</span>${r.e?` + ${r.e} Emblem${r.e>1?'s':''}`:''}${r.name==='Galaxy Ranger'&&grOk()?` · Ranger: <span class="who">${esc(S.gr)}</span>`:''}</p><button class="link" data-find="${esc(r.name)}">Show all ${esc(r.name)} units</button></div>`:'';
+    }
+    const gv=r.name==='Galactic Voyager'?gvTotals(r.who,r.holders,r.ti):r.name==='Astropolis Merchant Guild'?amgTotals(r.who,r.holders):r.name==='Galaxy Ranger'&&grOk()?grLine():'';
+    const det=open.has(r.name)?`<div class="det">${d.d?`<p>${esc(d.d)}</p>`:''}${tiered?`<ul>${d.t.map(([k,x],i)=>`<li class="${(d.stack?i<=r.ti:i===r.ti)?'hit':''}"><b>(${k})</b><span>${esc(x)}</span></li>`).join('')}</ul>`:''}${d.x.length?`<div class="xin"><p class="xh">Additional effects</p>${xfx(d)}</div>`:''}<p>On board: <span class="who">${r.who.length?r.who.map(n=>esc(n)+(r.holders.includes(n)?' (Emblem)':'')).join(', '):'none'}</span>${r.name==='Galaxy Ranger'&&grOk()?` · Ranger: <span class="who">${esc(S.gr)}</span>`:''}</p><button class="link" data-find="${esc(r.name)}">Show all ${esc(r.name)} units</button></div>`:'';
     return `<div class="tr${on?' on':''}${rk>=0?' r'+rk:''}" data-fx="${esc(r.name)}" data-ti="${r.ti}" data-n="${r.n}"><div class="hd"><button class="tog" data-tr="${esc(r.name)}" aria-expanded="${open.has(r.name)}"><span class="num">${r.n}</span><span><span class="tn">${esc(r.name)}</span><br><span class="kind">${KIND[d.k]} · <span class="rank">${on?(rk>=0?RANK[rk]:'active'):'inactive'}</span></span><span class="pips">${pips}</span>${note?`<span class="note">${note}</span>`:''}</span></button>${ctl}</div>${gv}${det}</div>`;
   }).join('');
 }
@@ -273,7 +278,6 @@ document.addEventListener('click',e=>{
   if(el=t.closest('[data-eq]'))return openEq(el.dataset.eq);
   if(el=t.closest('[data-star]')){const k=+el.dataset.k;if(k>1)S.star[el.dataset.star]=k;else delete S.star[el.dataset.star];return all()}
   if(el=t.closest('[data-aha]')){S.aha=AHAC[(AHAC.indexOf(S.aha)+1)%4];return all()}
-  if(el=t.closest('[data-em]')){const k=el.dataset.t;S.emb[k]=Math.min(9,Math.max(0,(S.emb[k]||0)+ +el.dataset.em));if(!S.emb[k])delete S.emb[k];return all()}
   if(el=t.closest('.u[data-from]')){S.board[+el.dataset.from]=null;return all()}
   if(el=t.closest('.card')){if(!el.classList.contains('used')&&el.dataset.unit)autoPlace(el.dataset.unit);return}
   if(el=t.closest('[data-x]')){S.extra=+el.dataset.x;for(let i=10+S.extra;i<13;i++)S.board[i]=null;return all()}
@@ -285,29 +289,50 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
   if((e.key==='Enter'||e.key===' ')&&e.target.classList?.contains('card')){e.preventDefault();e.target.click()}
 });
-$('clear').onclick=()=>{S.board.fill(null);S.emb={};S.eq={};S.star={};S.gr=null;all()};
+$('clear').onclick=()=>{S.board.fill(null);S.eq={};S.star={};S.gr=null;all()};
 document.addEventListener('change',e=>{if(e.target.matches('[data-gr]')){S.gr=e.target.value||null;all()}});
 
 // equipment popup
 let EQ=null;
-function renderEq(){
-  const u=UB[EQ],eq=S.eq[EQ]||[],max=slotsFor(u),q=$('eqq').value.trim().toLowerCase();
-  $('eqt').textContent=`${EQ} · ${eq.length}/${max} equipped`;
-  $('eqslots').innerHTML=Array.from({length:max},(_,i)=>eq[i]?`<button class="slot full" data-unq="${i}" title="Remove ${esc(IB[eq[i]].name)}"><b>${esc(IB[eq[i]].short)}</b><span>${esc(IB[eq[i]].name)}</span><em>remove</em></button>`:`<span class="slot">Empty slot</span>`).join('');
-  const list=ITEMS.filter(x=>!q||x.name.toLowerCase().includes(q));
-  $('eqgrid').innerHTML=list.length?list.map(x=>`<button class="item" data-item="${x.id}"${eq.length>=max?' disabled':''}><b>${esc(x.short)}</b><span>${esc(x.name)}</span></button>`).join(''):'<div class="empty" style="grid-column:1/-1">No equipment matches that search.</div>';
+let EQCAT='',EQHOV=null;
+function eqBlock(it){ // why an item can't be added right now, or ''
+  const worn=eqOf(EQ);
+  if(worn.length>=slotsFor(UB[EQ]))return 'All slots are full.';
+  if(it.cat==='emblem'&&UB[EQ].traits.includes(it.trait))return `${EQ} already has ${it.trait}.`;
+  if(it.unique&&worn.some(w=>w.id===it.id))return 'Unique: this unit already wears one.';
+  return '';
 }
-function openEq(n){EQ=n;$('eqq').value='';$('eqm').hidden=false;renderEq();$('eqq').focus()}
+const CATL={basic:'Basic',advanced:'Advanced',privileged:'Privileged',emblem:'Emblem'};
+function eqInfo(it){
+  if(!it)return '<p class="eqd-empty">Hover or focus an item to read what it does.</p>';
+  const why=eqBlock(it);
+  return `<p class="eqd-h"><b>${esc(it.name)}</b> · ${CATL[it.cat]}${it.unique&&it.cat!=='emblem'?' · Unique':''}</p><p>${it.d?esc(it.d).replace(/\n/g,'<br>'):'Basic equipment. Combine two to make advanced equipment.'}</p>${why?`<p class="eqd-no">${esc(why)}</p>`:''}`;
+}
+function renderEq(){
+  const u=UB[EQ],eq=eqOf(EQ),max=slotsFor(u),q=$('eqq').value.trim().toLowerCase();
+  $('eqt').textContent=`${EQ} · ${eq.length}/${max} equipped`;
+  $('eqcats').innerHTML=CATS.map(([k,l])=>`<button class="chip" data-cat="${k}" aria-pressed="${EQCAT===k}">${l}</button>`).join('');
+  $('eqslots').innerHTML=Array.from({length:max},(_,i)=>eq[i]?`<button class="slot full ${eq[i].cat}" data-unq="${i}" aria-label="Remove ${esc(eq[i].name)}"><i class="eqi ${eq[i].cat}" ${eqArt(eq[i])}></i><span>${esc(eq[i].name)}</span><em>remove</em></button>`:`<span class="slot">Empty slot</span>`).join('');
+  if(EQLOAD!==true){$('eqgrid').innerHTML=`<div class="empty" style="grid-column:1/-1">${EQLOAD==='wait'?'Loading equipment…':'Could not load equipment.json. It must sit next to this page.'}</div>`;$('eqd').innerHTML='';return}
+  const list=ITEMS.filter(x=>(!EQCAT||x.cat===EQCAT)&&(!q||x.name.toLowerCase().includes(q)||(x.trait||'').toLowerCase().includes(q)));
+  $('eqgrid').innerHTML=list.length?list.map(x=>`<button class="item ${x.cat}" data-item="${x.k}"${eqBlock(x)?' aria-disabled="true"':''}><i class="eqi" ${eqArt(x)}></i><span>${esc(x.name)}</span></button>`).join(''):'<div class="empty" style="grid-column:1/-1">No equipment matches.</div>';
+  $('eqd').innerHTML=eqInfo(IB[EQHOV]);
+}
+function openEq(n){EQ=n;EQHOV=null;$('eqq').value='';$('eqm').hidden=false;renderEq();$('eqq').focus()}
 function closeEq(){EQ=null;$('eqm').hidden=true}
 $('eqq').oninput=renderEq;
 $('eqm').addEventListener('click',e=>{
   e.stopPropagation();
   const t=e.target;let el;
   if(t===$('eqm')||t.closest('[data-close]'))return closeEq();
-  if(el=t.closest('[data-item]')){const a=S.eq[EQ]=S.eq[EQ]||[];if(a.length<slotsFor(UB[EQ]))a.push(el.dataset.item);all();return renderEq()}
-  if(el=t.closest('[data-unq]')){S.eq[EQ].splice(+el.dataset.unq,1);const n=EQ;all();EQ=n;return renderEq()}
+  if(el=t.closest('[data-cat]')){EQCAT=el.dataset.cat;return renderEq()}
+  if(el=t.closest('[data-item]')){const it=IB[el.dataset.item];EQHOV=it.k;if(!eqBlock(it)){const a=S.eq[EQ]=(S.eq[EQ]||[]).filter(x=>IB[x]);a.push(it.k);all()}return renderEq()}
+  if(el=t.closest('[data-unq]')){S.eq[EQ]=S.eq[EQ].filter(x=>IB[x]);S.eq[EQ].splice(+el.dataset.unq,1);const n=EQ;all();EQ=n;return renderEq()}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&EQ)closeEq()});
+const eqHover=e=>{const el=e.target.closest('[data-item]');if(el&&EQHOV!==el.dataset.item){EQHOV=el.dataset.item;$('eqd').innerHTML=eqInfo(IB[EQHOV])}};
+$('eqgrid').addEventListener('pointerover',eqHover);$('eqgrid').addEventListener('focusin',eqHover);
+fetch('equipment.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(j=>{ITEMS=j;IB=Object.fromEntries(j.map(x=>[x.k,x]));EQLOAD=true;all();if(EQ)renderEq()}).catch(()=>{EQLOAD=false;if(EQ)renderEq()});
 
 // additional effects box that follows the cursor
 const tip=$('tip');
@@ -330,8 +355,6 @@ $('traits').addEventListener('pointermove',e=>{
   tip.style.left=Math.max(8,x)+'px';tip.style.top=y+'px';
 });
 $('traits').addEventListener('pointerleave',()=>{tip.hidden=true});
-$('addemb').innerHTML='<option value="">Add an Emblem for a trait not listed…</option>'+['F','C'].map(k=>`<optgroup label="${KIND[k]}">${TN.filter(n=>T[n].k===k).sort((a,b)=>a.localeCompare(b)).map(n=>`<option>${esc(n)}</option>`).join('')}</optgroup>`).join('');
-$('addemb').onchange=e=>{const k=e.target.value;e.target.value='';if(k){S.emb[k]=Math.min(9,(S.emb[k]||0)+1);all()}};
 $('q').oninput=e=>{F.q=e.target.value;renderPool()};
 $('ftrait').innerHTML='<option value="">All traits</option>'+['F','C','S'].map(k=>`<optgroup label="${KIND[k]}">${TN.filter(n=>T[n].k===k).sort((a,b)=>a.localeCompare(b)).map(n=>`<option>${esc(n)}</option>`).join('')}</optgroup>`).join('');
 $('ftrait').onchange=e=>{F.trait=e.target.value;renderPool()};

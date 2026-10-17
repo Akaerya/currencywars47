@@ -1,0 +1,863 @@
+[
+ {
+  "k": "a35030101",
+  "id": "35030101",
+  "name": "Anti-Grav Boots",
+  "cat": "advanced",
+  "d": "At the start of each of the wearer's turns, SPD Amplification increases by 12%. This effect is stackable.",
+  "unique": false
+ },
+ {
+  "k": "p35030101",
+  "id": "35030101",
+  "name": "Anti-Grav Boots: Privilege",
+  "cat": "privileged",
+  "d": "At the start of each of the wearer's turns, SPD Amplification increases by 24%. This effect is stackable.",
+  "unique": false
+ },
+ {
+  "k": "a35030102",
+  "id": "35030102",
+  "name": "Firestorm Surge",
+  "cat": "advanced",
+  "d": "After each attack by the wearer, their On-Field/Off-Field Strength increases by 6%. This effect is stackable.",
+  "unique": false
+ },
+ {
+  "k": "p35030102",
+  "id": "35030102",
+  "name": "Firestorm Surge: Privilege",
+  "cat": "privileged",
+  "d": "After each attack by the wearer, their On-Field/Off-Field Strength increases by 12%. This effect is stackable.",
+  "unique": false
+ },
+ {
+  "k": "a35030103",
+  "id": "35030103",
+  "name": "Electromagnetic Catapult",
+  "cat": "advanced",
+  "d": "At the start of the battle, the wearer's action advances by 100%.",
+  "unique": false
+ },
+ {
+  "k": "p35030103",
+  "id": "35030103",
+  "name": "Electromagnetic Catapult: Privilege",
+  "cat": "privileged",
+  "d": "At the start of the battle, the wearer's action advances by 100%.",
+  "unique": false
+ },
+ {
+  "k": "a35030104",
+  "id": "35030104",
+  "name": "Chasing Stars",
+  "cat": "advanced",
+  "d": "After attacking, the wearer inflicts \"Fragility\" on the target, increasing their DMG taken by 35% for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "p35030104",
+  "id": "35030104",
+  "name": "Chasing Stars: Privilege",
+  "cat": "privileged",
+  "d": "After attacking, the wearer inflicts \"Fragility\" on the target, increasing their DMG taken by 70% for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "a35030106",
+  "id": "35030106",
+  "name": "Meteor Wings",
+  "cat": "advanced",
+  "d": "Increases all allies' SPD Amplification by 15%. After the wearer uses their Ultimate, recovers 1 Skill Point(s).",
+  "unique": false
+ },
+ {
+  "k": "p35030106",
+  "id": "35030106",
+  "name": "Meteor Wings: Privilege",
+  "cat": "privileged",
+  "d": "Increases all allies' SPD Amplification by 30%. After the wearer uses their Ultimate, recovers 1 Skill Point(s).",
+  "unique": false
+ },
+ {
+  "k": "a35030107",
+  "id": "35030107",
+  "name": "Light Speed Propeller",
+  "cat": "advanced",
+  "d": "During combat, for every 10 SPD the wearer has, they gain 2% On-Field Strength and 1% Off-Field Strength.",
+  "unique": false
+ },
+ {
+  "k": "p35030107",
+  "id": "35030107",
+  "name": "Light Speed Propeller: Privilege",
+  "cat": "privileged",
+  "d": "During combat, for every 10 SPD the wearer has, they gain 4% On-Field Strength and 2% Off-Field Strength.",
+  "unique": false
+ },
+ {
+  "k": "a35030108",
+  "id": "35030108",
+  "name": "Starfaring Boots",
+  "cat": "advanced",
+  "d": "Greatly increases SPD Amplification. At the start of each of the wearer's turns, regenerates a fixed amount of Energy equal to 10% of Max Energy. (Unique)",
+  "unique": true
+ },
+ {
+  "k": "p35030108",
+  "id": "35030108",
+  "name": "Starfaring Boots: Privilege",
+  "cat": "privileged",
+  "d": "Greatly increases SPD Amplification. At the start of each of the wearer's turns, regenerates a fixed amount of Energy equal to 20% of Max Energy. (Unique)",
+  "unique": true
+ },
+ {
+  "k": "a35030202",
+  "id": "35030202",
+  "name": "Starcleaver Blade",
+  "cat": "advanced",
+  "d": "Greatly increases On-Field Strength. DMG dealt by the wearer becomes 115% of the original DMG.",
+  "unique": false
+ },
+ {
+  "k": "p35030202",
+  "id": "35030202",
+  "name": "Starcleaver Blade: Privilege",
+  "cat": "privileged",
+  "d": "Greatly increases On-Field Strength. DMG dealt by the wearer becomes 130% of the original DMG.",
+  "unique": false
+ },
+ {
+  "k": "a35030203",
+  "id": "35030203",
+  "name": "Weapon Master",
+  "cat": "advanced",
+  "d": "Increases ally squad's On-Field/Off-Field Strength by 25%.",
+  "unique": false
+ },
+ {
+  "k": "p35030203",
+  "id": "35030203",
+  "name": "Weapon Master: Privilege",
+  "cat": "privileged",
+  "d": "Increases ally squad's On-Field/Off-Field Strength by 50%.",
+  "unique": false
+ },
+ {
+  "k": "a35030204",
+  "id": "35030204",
+  "name": "High-frequency Chainsaw",
+  "cat": "advanced",
+  "d": "At the start of the battle, if the wearer is on-field, increases their Lucky Strike DMG by 10%.",
+  "unique": false
+ },
+ {
+  "k": "p35030204",
+  "id": "35030204",
+  "name": "High-frequency Chainsaw: Privilege",
+  "cat": "privileged",
+  "d": "At the start of the battle, if the wearer is on-field, increases their Lucky Strike DMG by 20%.",
+  "unique": false
+ },
+ {
+  "k": "a35030205",
+  "id": "35030205",
+  "name": "Bloodthirsty",
+  "cat": "advanced",
+  "d": "After the wearer defeats an enemy, gains 1 stack(s) of \"Red Eye\": DMG Amplification increases by 8% and HP Amplification increases by 4%. In each battle, starts with 3 stack(s) of \"Red Eye.\"",
+  "unique": false
+ },
+ {
+  "k": "p35030205",
+  "id": "35030205",
+  "name": "Bloodthirsty: Privilege",
+  "cat": "privileged",
+  "d": "After the wearer defeats an enemy, gains 1 stack(s) of \"Red Eye\": DMG Amplification increases by 16% and HP Amplification increases by 8%. In each battle, starts with 3 stack(s) of \"Red Eye.\"",
+  "unique": false
+ },
+ {
+  "k": "a35030206",
+  "id": "35030206",
+  "name": "Confidence Injector",
+  "cat": "advanced",
+  "d": "When the wearer uses an ability on an ally target, increases their On-Field Strength by 30% and grants 10% DMG Mitigation for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "p35030206",
+  "id": "35030206",
+  "name": "Confidence Injector: Privilege",
+  "cat": "privileged",
+  "d": "When the wearer uses an ability on an ally target, increases their On-Field Strength by 60% and grants 20% DMG Mitigation for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "a35030207",
+  "id": "35030207",
+  "name": "Momentum Edge",
+  "cat": "advanced",
+  "d": "At the start of the wearer's turn, recovers 2 Skill Point(s). For every 1 Skill Point consumed by the wearer, DMG Amplification increases by 2%.",
+  "unique": false
+ },
+ {
+  "k": "p35030207",
+  "id": "35030207",
+  "name": "Momentum Edge: Privilege",
+  "cat": "privileged",
+  "d": "At the start of the wearer's turn, recovers 3 Skill Point(s). For every 1 Skill Point consumed by the wearer, DMG Amplification increases by 4%.",
+  "unique": false
+ },
+ {
+  "k": "a35030208",
+  "id": "35030208",
+  "name": "Codex of Combat",
+  "cat": "advanced",
+  "d": "The wearer gains 7% SPD Amplification and 7% DMG Amplification. When the wearer is 2/3-star or higher, these amplifications respectively increase to 3/6 times their original values.",
+  "unique": false
+ },
+ {
+  "k": "p35030208",
+  "id": "35030208",
+  "name": "Codex of Combat: Privilege",
+  "cat": "privileged",
+  "d": "The wearer gains 14% SPD Amplification and 14% DMG Amplification. When the wearer is 2/3-star or higher, these amplifications respectively increase to 3/6 times their original values.",
+  "unique": false
+ },
+ {
+  "k": "a35030303",
+  "id": "35030303",
+  "name": "Orbital Railgun",
+  "cat": "advanced",
+  "d": "Greatly increases Off-Field Strength. DMG dealt by the wearer is 115% of the original DMG.",
+  "unique": false
+ },
+ {
+  "k": "p35030303",
+  "id": "35030303",
+  "name": "Orbital Railgun: Privilege",
+  "cat": "privileged",
+  "d": "Greatly increases Off-Field Strength. DMG dealt by the wearer is 130% of the original DMG.",
+  "unique": false
+ },
+ {
+  "k": "a35030304",
+  "id": "35030304",
+  "name": "Starfall Sniper",
+  "cat": "advanced",
+  "d": "At the start of the battle, if the wearer is off-field, increases their Lucky Strike DMG by 10%.",
+  "unique": false
+ },
+ {
+  "k": "p35030304",
+  "id": "35030304",
+  "name": "Starfall Sniper: Privilege",
+  "cat": "privileged",
+  "d": "At the start of the battle, if the wearer is off-field, increases their Lucky Strike DMG by 20%.",
+  "unique": false
+ },
+ {
+  "k": "a35030305",
+  "id": "35030305",
+  "name": "Bastion Projector",
+  "cat": "advanced",
+  "d": "At the start of the wearer's turn, provides a Shield equal to 30% of the wearer's Max HP to all on-field allies for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "p35030305",
+  "id": "35030305",
+  "name": "Bastion Projector: Privilege",
+  "cat": "privileged",
+  "d": "At the start of the wearer's turn, provides a Shield equal to 60% of the wearer's Max HP to all on-field allies for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "a35030306",
+  "id": "35030306",
+  "name": "Adaptive Exoskeleton",
+  "cat": "advanced",
+  "d": "At the start of combat, if the wearer is on-field, they gain 25% DMG Mitigation and have a higher chance to be attacked.\nIf the wearer is off-field, their Off-Field Strength increases by 20% and SPD Amplification increases by 20%.",
+  "unique": false
+ },
+ {
+  "k": "p35030306",
+  "id": "35030306",
+  "name": "Adaptive Exoskeleton: Privilege",
+  "cat": "privileged",
+  "d": "At the start of combat, if the wearer is on-field, they gain 50% DMG Mitigation and have a higher chance to be attacked.\nIf the wearer is off-field, their Off-Field Strength increases by 40% and SPD Amplification increases by 40%.",
+  "unique": false
+ },
+ {
+  "k": "a35030307",
+  "id": "35030307",
+  "name": "Decapitation Operation",
+  "cat": "advanced",
+  "d": "The wearer's DMG Amplification increases by 30%, and they gain an additional 30% in Encounter and Boss Nodes.",
+  "unique": false
+ },
+ {
+  "k": "p35030307",
+  "id": "35030307",
+  "name": "Decapitation Operation: Privilege",
+  "cat": "privileged",
+  "d": "The wearer's DMG Amplification increases by 60%, and they gain an additional 60% in Encounter and Boss Nodes.",
+  "unique": false
+ },
+ {
+  "k": "a35030308",
+  "id": "35030308",
+  "name": "Charging Sail",
+  "cat": "advanced",
+  "d": "The wearer regenerates 2 Energy for each action value spent. (Unique)",
+  "unique": true
+ },
+ {
+  "k": "p35030308",
+  "id": "35030308",
+  "name": "Charging Sail: Privilege",
+  "cat": "privileged",
+  "d": "The wearer regenerates 4 Energy for each action value spent. (Unique)",
+  "unique": true
+ },
+ {
+  "k": "a35030404",
+  "id": "35030404",
+  "name": "Whatever Dice",
+  "cat": "advanced",
+  "d": "At each Node, Whatever Dice randomly equips the character with two items (requires empty equipment slot to equip Whatever Dice).",
+  "unique": false
+ },
+ {
+  "k": "p35030404",
+  "id": "35030404",
+  "name": "Whatever Dice: Privilege",
+  "cat": "privileged",
+  "d": "At each Node, Whatever Dice: Privilege randomly equips the character with two privileged equipment (requires empty equipment slot to equip Whatever Dice: Privilege).",
+  "unique": false
+ },
+ {
+  "k": "a35030405",
+  "id": "35030405",
+  "name": "Fist of Fury",
+  "cat": "advanced",
+  "d": "While the wearer's Max HP exceeds 5000, every 1000 HP increases Lucky Strike Rate by 2%, up to 60%.",
+  "unique": false
+ },
+ {
+  "k": "p35030405",
+  "id": "35030405",
+  "name": "Fist of Fury: Privilege",
+  "cat": "privileged",
+  "d": "While the wearer's Max HP exceeds 5000, every 1000 HP increases Lucky Strike Rate by 4%, up to 100%.",
+  "unique": false
+ },
+ {
+  "k": "a35030406",
+  "id": "35030406",
+  "name": "Chassis of Retribution",
+  "cat": "advanced",
+  "d": "At the start of combat, all on-field allies gain a Shield equal to 300% of the wearer's DEF. When the wearer is attacked, deals Physical DMG to the attacker equal to 250% of the Shield Effect before the attack. This DMG cannot defeat enemy targets.",
+  "unique": false
+ },
+ {
+  "k": "p35030406",
+  "id": "35030406",
+  "name": "Chassis of Retribution: Privilege",
+  "cat": "privileged",
+  "d": "At the start of combat, all on-field allies gain a Shield equal to 600% of the wearer's DEF. When the wearer is attacked, deals Physical DMG to the attacker equal to 500% of the Shield Effect before the attack. This DMG cannot defeat enemy targets.",
+  "unique": false
+ },
+ {
+  "k": "a35030407",
+  "id": "35030407",
+  "name": "Victory Banner",
+  "cat": "advanced",
+  "d": "Increases ally squad's Lucky Strike Rate by 12% and resists 4 instance(s) of Crowd Control debuffs. This effect is stackable.",
+  "unique": false
+ },
+ {
+  "k": "p35030407",
+  "id": "35030407",
+  "name": "Victory Banner: Privilege",
+  "cat": "privileged",
+  "d": "Increases ally squad's Lucky Strike Rate by 24% and resists 8 instance(s) of Crowd Control debuffs. This effect is stackable.",
+  "unique": false
+ },
+ {
+  "k": "a35030408",
+  "id": "35030408",
+  "name": "Pun Generator",
+  "cat": "advanced",
+  "d": "Every time the wearer uses their Ultimate, increases the wearer's Lucky Strike Rate by 10%. After increasing 5 time(s), subsequent uses instead increase Lucky Strike DMG by 8%.",
+  "unique": false
+ },
+ {
+  "k": "p35030408",
+  "id": "35030408",
+  "name": "Pun Generator: Privilege",
+  "cat": "privileged",
+  "d": "Every time the wearer uses their Ultimate, increases the wearer's Lucky Strike Rate by 20%. After increasing 5 time(s), subsequent uses instead increase Lucky Strike DMG by 16%.",
+  "unique": false
+ },
+ {
+  "k": "a35030505",
+  "id": "35030505",
+  "name": "Ring of Life",
+  "cat": "advanced",
+  "d": "Increases ally squad's Max HP by 15%.",
+  "unique": false
+ },
+ {
+  "k": "p35030505",
+  "id": "35030505",
+  "name": "Ring of Life: Privilege",
+  "cat": "privileged",
+  "d": "Increases ally squad's Max HP by 30%.",
+  "unique": false
+ },
+ {
+  "k": "a35030506",
+  "id": "35030506",
+  "name": "Analgesia Chip",
+  "cat": "advanced",
+  "d": "After the wearer heals an ally target or grants a Shield to them, grants them 15% DMG Mitigation for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "p35030506",
+  "id": "35030506",
+  "name": "Analgesia Chip: Privilege",
+  "cat": "privileged",
+  "d": "After the wearer heals an ally target or grants a Shield to them, grants them 30% DMG Mitigation for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "a35030507",
+  "id": "35030507",
+  "name": "Molecular Solvent",
+  "cat": "advanced",
+  "d": "The wearer's first attack each turn deals True DMG to one random target equal to 3% of their Max HP.",
+  "unique": false
+ },
+ {
+  "k": "p35030507",
+  "id": "35030507",
+  "name": "Molecular Solvent: Privilege",
+  "cat": "privileged",
+  "d": "The wearer's first attack each turn deals True DMG to one random target equal to 6% of their Max HP.",
+  "unique": false
+ },
+ {
+  "k": "a35030508",
+  "id": "35030508",
+  "name": "Caloric Overload",
+  "cat": "advanced",
+  "d": "When ally squad takes action, restore HP equal to 12% of the wearer's Max HP. After the wearer uses Ultimate, regenerate 10 Energy. (Unique)",
+  "unique": true
+ },
+ {
+  "k": "p35030508",
+  "id": "35030508",
+  "name": "Caloric Overload: Privilege",
+  "cat": "privileged",
+  "d": "When ally squad takes action, restore HP equal to 24% of the wearer's Max HP. After the wearer uses Ultimate, regenerate 20 Energy. (Unique)",
+  "unique": true
+ },
+ {
+  "k": "a35030606",
+  "id": "35030606",
+  "name": "Sturdy Plate",
+  "cat": "advanced",
+  "d": "The ally squad gains 18% DMG Mitigation.",
+  "unique": false
+ },
+ {
+  "k": "p35030606",
+  "id": "35030606",
+  "name": "Sturdy Plate: Privilege",
+  "cat": "privileged",
+  "d": "The ally squad gains 36% DMG Mitigation.",
+  "unique": false
+ },
+ {
+  "k": "a35030607",
+  "id": "35030607",
+  "name": "Flash Grenade",
+  "cat": "advanced",
+  "d": "After entering combat, enemies become \"Weakened,\" reducing their DMG dealt by 20%.",
+  "unique": false
+ },
+ {
+  "k": "p35030607",
+  "id": "35030607",
+  "name": "Flash Grenade: Privilege",
+  "cat": "privileged",
+  "d": "After entering combat, enemies become \"Weakened,\" reducing their DMG dealt by 40%.",
+  "unique": false
+ },
+ {
+  "k": "a35030608",
+  "id": "35030608",
+  "name": "Photon Shield",
+  "cat": "advanced",
+  "d": "When an on-field ally's HP drops below 50% of their Max HP, the wearer provides a Shield equal to 300% of their DEF that lasts for 2 turn(s). This effect can be triggered up to 5 time(s). When on-field allies have Shield, they are immune to the action delay effects.",
+  "unique": false
+ },
+ {
+  "k": "p35030608",
+  "id": "35030608",
+  "name": "Photon Shield: Privilege",
+  "cat": "privileged",
+  "d": "When an on-field ally's HP drops below 50% of their Max HP, the wearer provides a Shield equal to 600% of their DEF that lasts for 2 turn(s). This effect can be triggered up to 10 time(s). When on-field allies have Shield, they are immune to the action delay effects.",
+  "unique": false
+ },
+ {
+  "k": "a35030707",
+  "id": "35030707",
+  "name": "Wormhole Drill",
+  "cat": "advanced",
+  "d": "Greatly increases Weakness Break Efficiency. Increases Break Effect by 250%.",
+  "unique": false
+ },
+ {
+  "k": "p35030707",
+  "id": "35030707",
+  "name": "Wormhole Drill: Privilege",
+  "cat": "privileged",
+  "d": "Greatly increases Weakness Break Efficiency. Increases Break Effect by 500%.",
+  "unique": false
+ },
+ {
+  "k": "a35030708",
+  "id": "35030708",
+  "name": "Planetary Drill",
+  "cat": "advanced",
+  "d": "After attacking, the wearer inflicts \"Fragility\" on the target, increasing their DMG taken by 35% for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "p35030708",
+  "id": "35030708",
+  "name": "Planetary Drill: Privilege",
+  "cat": "privileged",
+  "d": "After attacking, the wearer inflicts \"Fragility\" on the target, increasing their DMG taken by 70% for 2 turn(s).",
+  "unique": false
+ },
+ {
+  "k": "a35030808",
+  "id": "35030808",
+  "name": "Perpetual Engine",
+  "cat": "advanced",
+  "d": "When entering combat, activates the wearer's Ultimate. After using 3 Ultimates, activates their Ultimate again. Ultimates activated by equipment will not count towards the number of uses.",
+  "unique": false
+ },
+ {
+  "k": "p35030808",
+  "id": "35030808",
+  "name": "Perpetual Engine: Privilege",
+  "cat": "privileged",
+  "d": "When entering combat, activates the wearer's Ultimate. After using 3 Ultimates, activates their Ultimate again. Ultimates activated by equipment will not count towards the number of uses.",
+  "unique": false
+ },
+ {
+  "k": "a47030105",
+  "id": "47030105",
+  "name": "Anti-Spiral Step",
+  "cat": "advanced",
+  "d": "Each time the wearer uses a Basic ATK or Skill, DMG Amplification increases by 5%. This effect is stackable.",
+  "unique": false
+ },
+ {
+  "k": "p47030105",
+  "id": "47030105",
+  "name": "Anti-Spiral Step: Privilege",
+  "cat": "privileged",
+  "d": "Each time the wearer uses a Basic ATK or Skill, DMG Amplification increases by 10%. This effect is stackable.",
+  "unique": false
+ },
+ {
+  "k": "a47030306",
+  "id": "47030306",
+  "name": "Uncalled Mask",
+  "cat": "advanced",
+  "d": "The wearer gains bonuses based on their Path:\nRemembrance: The On/Off-Field Strength of the wearer and their memosprite increases by 80%.\nElation: Elation increases by 60% and Elation DMG Amplification increases by 40%.\nOthers: 35% DMG Mitigation.\n(Unique Equipment)",
+  "unique": true
+ },
+ {
+  "k": "p47030306",
+  "id": "47030306",
+  "name": "Uncalled Mask: Privilege",
+  "cat": "privileged",
+  "d": "The wearer gains bonuses based on their Path:\nRemembrance: The On/Off-Field Strength of the wearer and their memosprite increases by 160%.\nElation: Elation increases by 120% and Elation DMG Amplification increases by 80%.\nOthers: 60% DMG Mitigation.\n(Unique Equipment)",
+  "unique": true
+ },
+ {
+  "k": "a47030406",
+  "id": "47030406",
+  "name": "Colossal Imagenated Armor",
+  "cat": "advanced",
+  "d": "After the wearer is attacked by an enemy target or consumes HP, gains 6% On/Off-Field Strength. This effect is stackable and can only be triggered 1 time per action.",
+  "unique": false
+ },
+ {
+  "k": "p47030406",
+  "id": "47030406",
+  "name": "Colossal Imagenated Armor: Privilege",
+  "cat": "privileged",
+  "d": "After the wearer is attacked by an enemy target or consumes HP, gains 12% On/Off-Field Strength. This effect is stackable and can only be triggered 1 time per action.",
+  "unique": false
+ },
+ {
+  "k": "b350201",
+  "id": "350201",
+  "name": "Roller Skates",
+  "cat": "basic",
+  "d": "",
+  "unique": false
+ },
+ {
+  "k": "b350202",
+  "id": "350202",
+  "name": "Folding Knife",
+  "cat": "basic",
+  "d": "",
+  "unique": false
+ },
+ {
+  "k": "b350203",
+  "id": "350203",
+  "name": "Peace Pistol",
+  "cat": "basic",
+  "d": "",
+  "unique": false
+ },
+ {
+  "k": "b350204",
+  "id": "350204",
+  "name": "Lucky Star",
+  "cat": "basic",
+  "d": "",
+  "unique": false
+ },
+ {
+  "k": "b350205",
+  "id": "350205",
+  "name": "Flower of Life",
+  "cat": "basic",
+  "d": "",
+  "unique": false
+ },
+ {
+  "k": "b350206",
+  "id": "350206",
+  "name": "Batch Produced Armor",
+  "cat": "basic",
+  "d": "",
+  "unique": false
+ },
+ {
+  "k": "b350207",
+  "id": "350207",
+  "name": "Aether Drill",
+  "cat": "basic",
+  "d": "",
+  "unique": false
+ },
+ {
+  "k": "b350208",
+  "id": "350208",
+  "name": "Photon Cell",
+  "cat": "basic",
+  "d": "",
+  "unique": false
+ },
+ {
+  "k": "e355100102",
+  "id": "355100102",
+  "name": "Xianzhou Fleet Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Xianzhou Fleet\" Bond.",
+  "unique": true,
+  "trait": "Xianzhou Fleet"
+ },
+ {
+  "k": "e355100202",
+  "id": "355100202",
+  "name": "Beast Garden Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Beast Garden\" Bond.",
+  "unique": true,
+  "trait": "Beast Garden"
+ },
+ {
+  "k": "e355100302",
+  "id": "355100302",
+  "name": "Phantasmoon Games Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Phantasmoon Games\" Bond.",
+  "unique": true,
+  "trait": "Phantasmoon Games"
+ },
+ {
+  "k": "e355100402",
+  "id": "355100402",
+  "name": "Galactic Voyager Emblem",
+  "cat": "emblem",
+  "d": "Grants wearer the \"Galactic Voyager\" Bond.",
+  "unique": true,
+  "trait": "Galactic Voyager"
+ },
+ {
+  "k": "e355100502",
+  "id": "355100502",
+  "name": "Trailblaze Silver Rail Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Trailblaze Silver Rail\" Bond.",
+  "unique": true,
+  "trait": "Trailblaze Silver Rail"
+ },
+ {
+  "k": "e355100602",
+  "id": "355100602",
+  "name": "Astropolis Merchant Guild Emblem",
+  "cat": "emblem",
+  "d": "Grants wearer the \"Astropolis Merchant Guild\" Bond.",
+  "unique": true,
+  "trait": "Astropolis Merchant Guild"
+ },
+ {
+  "k": "e355100802",
+  "id": "355100802",
+  "name": "Stellaron Hunters Emblem",
+  "cat": "emblem",
+  "d": "Grants wearer the \"Stellaron Hunters\" Bond.",
+  "unique": true,
+  "trait": "Stellaron Hunters"
+ },
+ {
+  "k": "e355100902",
+  "id": "355100902",
+  "name": "Little Giant Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Little Giant\" Bond. Increases the wearer's On/Off-Field Strength by 20% for every point of \"Height.\"",
+  "unique": true,
+  "trait": "Little Giant"
+ },
+ {
+  "k": "e355101002",
+  "id": "355101002",
+  "name": "Intertwined Dreamscapes Emblem",
+  "cat": "emblem",
+  "d": "Grants wearer the \"Intertwined Dreamscapes\" Bond.",
+  "unique": true,
+  "trait": "Intertwined Dreamscapes"
+ },
+ {
+  "k": "e355101202",
+  "id": "355101202",
+  "name": "The Grand Restaurant Emblem",
+  "cat": "emblem",
+  "d": "Grants wearer the \"The Grand Restaurant\" Bond.",
+  "unique": true,
+  "trait": "The Grand Restaurant"
+ },
+ {
+  "k": "e355200102",
+  "id": "355200102",
+  "name": "Follow-Up ATK Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Follow-Up ATK\" Bond. After attacking, deals Additional DMG equal to 100% of ATK. After defeating an enemy target, their action advances by 50%.",
+  "unique": true,
+  "trait": "Follow-Up ATK"
+ },
+ {
+  "k": "e355200202",
+  "id": "355200202",
+  "name": "DoT Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"DoT\" Bond. After attacking, inflicts \"Freeze\" on the attack target: DEF decreases by 20%, and deals Ice DoT equal to 200% of the wearer's ATK at the start of this unit's turn.",
+  "unique": true,
+  "trait": "DoT"
+ },
+ {
+  "k": "e355200302",
+  "id": "355200302",
+  "name": "AoE Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"AoE ATK\" Bond. After using an attack, for each enemy target hit by this attack, On/Off-Field Strength increases by 2%. This effect can stack up to 50 time(s).",
+  "unique": true,
+  "trait": "AoE ATK"
+ },
+ {
+  "k": "e355200402",
+  "id": "355200402",
+  "name": "Combo Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Combo\" Bond. Gains 20% base \"Combo Rate\", and DMG dealt in the extra turn from Combo increases by 50%.",
+  "unique": true,
+  "trait": "Combo"
+ },
+ {
+  "k": "e355200502",
+  "id": "355200502",
+  "name": "Break Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Break\" Bond. Break Effect increases by 100%. When an enemy target is Weakness Broken by the wearer for the first time, they take True DMG equal to 8% of their Max HP.",
+  "unique": true,
+  "trait": "Break"
+ },
+ {
+  "k": "e355200602",
+  "id": "355200602",
+  "name": "Summon Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Summon\" Bond. For every 1 ally target, DMG dealt by the wearer and their memosprite increases by 8%.",
+  "unique": true,
+  "trait": "Summon"
+ },
+ {
+  "k": "e355200702",
+  "id": "355200702",
+  "name": "Elation Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Elation\" Bond. When entering combat, grants the ally squad 25% Elation.\nObtains the \"Euphoric Maelstrom\" Elation Skill, which deals Elation DMG equal to 100% of the wearer's stats to all enemies.",
+  "unique": true,
+  "trait": "Elation"
+ },
+ {
+  "k": "e355200802",
+  "id": "355200802",
+  "name": "Counter Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Counter\" Bond.\nWhen combat begins, if the wearer is on-field: After being attacked by an enemy target, their action advances by 10% and DMG dealt increases by 20%, lasting for 1 turn(s) and stackable up to 10 time(s).\nIf the wearer is off-field: Causes \"Counter King\" to ignore 30% of the enemy target's DEF when attacking.",
+  "unique": true,
+  "trait": "Counter"
+ },
+ {
+  "k": "e355200902",
+  "id": "355200902",
+  "name": "Energy Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Energy\" Bond. After using Ultimate, regenerates Energy for all allies equal to 20% of their respective Max Energy. After this effect is triggered, 100 action value must pass before it can be triggered again.",
+  "unique": true,
+  "trait": "Energy"
+ },
+ {
+  "k": "e355201002",
+  "id": "355201002",
+  "name": "Healing Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Heal\" Bond. When taking action, restores HP for all on-field allies by an amount equal to 10% of the wearer's Max HP.",
+  "unique": true,
+  "trait": "Heal"
+ },
+ {
+  "k": "e355201102",
+  "id": "355201102",
+  "name": "Defender Emblem",
+  "cat": "emblem",
+  "d": "Grants the wearer the \"Defender\" Bond. At the start of combat, provides all on-field allies with a Shield equal to 200% of the wearer's DEF. During combat, the wearer gains DMG Amplification equal to this unit's Shield effect × 0.2%.",
+  "unique": true,
+  "trait": "Protection"
+ }
+]
