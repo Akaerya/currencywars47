@@ -67,7 +67,7 @@ const misfit=(u,i)=>(u.role==='N'&&!isFront(i))||(u.role==='F'&&isFront(i));
 
 function unitEl(u,i){
   const bad=misfit(u,i),{key,url}=artOf('character_preview',u),eq=eqOf(u.name),st=starOf(u.name);
-  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha aria-label="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" aria-label="Galaxy Ranger">GR</span>':''}</span><span class="ini">${ini(u.name)}</span><span class="eqrow"><button class="eqb" data-eq="${esc(u.name)}" aria-label="Equipment for ${esc(u.name)}">+</button>${Array.from({length:slotsFor(u)},(_,k)=>eq[k]?`<i class="eqi ${eq[k].cat}" ${eqArt(eq[k])} aria-label="${esc(eq[k].name)}"></i>`:'<i class="eqi open"></i>').join('')}</span><span class="bot"><span class="nm"><span>${esc(u.name)}</span></span></span></div>`;
+  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha aria-label="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" aria-label="Galaxy Ranger">GR</span>':''}</span><span class="ini">${ini(u.name)}</span><span class="eqrow"><button class="eqb" data-eq="${esc(u.name)}" aria-label="Equipment for ${esc(u.name)}">+</button>${Array.from({length:slotsFor(u)},(_,k)=>eq[k]?`<i class="eqi ${eq[k].cat}" data-k="${eq[k].k}" ${eqArt(eq[k])} aria-label="${esc(eq[k].name)}"></i>`:'<i class="eqi open"></i>').join('')}</span><span class="bot"><span class="nm"><span>${esc(u.name)}</span></span></span></div>`;
 }
 const starOf=n=>S.star[n]||1; // units are 1★ unless marked
 function starsEl(n){
@@ -225,7 +225,7 @@ function utipHtml(el){
   return `<p class="uh"><b>${esc(name)}</b> · ${costOf(u)}-cost · ${front?'on-field':'off-field'} tile</p><div class="ucols c1">${skCol(front?'Frontline':'Backline',sec,starOf(name))}</div>`;
 }
 document.addEventListener('pointermove',e=>{
-  const el=e.pointerType==='mouse'&&!(D&&D.ghost)&&e.target.closest('.card[data-unit],.u[data-from]');
+  const el=e.pointerType==='mouse'&&!(D&&D.ghost)&&!e.target.closest('[data-k]')&&e.target.closest('.card[data-unit],.u[data-from]');
   if(!el||!$('eqm').hidden){utip.hidden=true;utip.dataset.for='';return}
   const key=el.dataset.unit+'|'+(el.dataset.from??'pool')+'|'+starOf(el.dataset.unit)+'|'+S.aha+'|'+(SK?1:SK);
   if(utip.dataset.for!==key){
@@ -297,7 +297,7 @@ document.addEventListener('change',e=>{if(e.target.matches('[data-gr]')){S.gr=e.
 
 // equipment popup
 let EQ=null;
-let EQCAT='',EQHOV=null;
+let EQCAT='';
 function eqBlock(it){ // why an item can't be added right now, or ''
   const worn=eqOf(EQ);
   if(worn.length>=slotsFor(UB[EQ]))return 'All slots are full.';
@@ -306,22 +306,21 @@ function eqBlock(it){ // why an item can't be added right now, or ''
   return '';
 }
 const CATL={basic:'Basic',advanced:'Advanced',privileged:'Privileged',emblem:'Emblem'};
-function eqInfo(it){
-  if(!it)return '<p class="eqd-empty">Hover or focus an item to read what it does.</p>';
-  const why=eqBlock(it);
+function eqInfo(it,askWhy){
+  if(!it)return '';
+  const why=askWhy&&EQ?eqBlock(it):'';
   return `<p class="eqd-h"><b>${esc(it.name)}</b> · ${CATL[it.cat]}${it.unique&&it.cat!=='emblem'?' · Unique':''}</p><p>${it.d?esc(it.d).replace(/\n/g,'<br>'):'Basic equipment. Combine two to make advanced equipment.'}</p>${why?`<p class="eqd-no">${esc(why)}</p>`:''}`;
 }
 function renderEq(){
   const u=UB[EQ],eq=eqOf(EQ),max=slotsFor(u),q=$('eqq').value.trim().toLowerCase();
   $('eqt').textContent=`${EQ} · ${eq.length}/${max} equipped`;
   $('eqcats').innerHTML=CATS.map(([k,l])=>`<button class="chip" data-cat="${k}" aria-pressed="${EQCAT===k}">${l}</button>`).join('');
-  $('eqslots').innerHTML=Array.from({length:max},(_,i)=>eq[i]?`<button class="slot full ${eq[i].cat}" data-unq="${i}" aria-label="Remove ${esc(eq[i].name)}"><i class="eqi ${eq[i].cat}" ${eqArt(eq[i])}></i><span>${esc(eq[i].name)}</span><em>remove</em></button>`:`<span class="slot">Empty slot</span>`).join('');
-  if(EQLOAD!==true){$('eqgrid').innerHTML=`<div class="empty" style="grid-column:1/-1">${EQLOAD==='wait'?'Loading equipment…':'Could not load equipment.json. It must sit next to this page.'}</div>`;$('eqd').innerHTML='';return}
+  $('eqslots').innerHTML=Array.from({length:max},(_,i)=>eq[i]?`<button class="slot full ${eq[i].cat}" data-unq="${i}" data-k="${eq[i].k}" aria-label="Remove ${esc(eq[i].name)}"><i class="eqi ${eq[i].cat}" ${eqArt(eq[i])}></i><span>${esc(eq[i].name)}</span><em>remove</em></button>`:`<span class="slot">Empty slot</span>`).join('');
+  if(EQLOAD!==true){$('eqgrid').innerHTML=`<div class="empty" style="grid-column:1/-1">${EQLOAD==='wait'?'Loading equipment…':'Could not load equipment.json. It must sit next to this page.'}</div>`;return}
   const list=ITEMS.filter(x=>(!EQCAT||x.cat===EQCAT)&&(!q||x.name.toLowerCase().includes(q)||(x.trait||'').toLowerCase().includes(q)));
   $('eqgrid').innerHTML=list.length?list.map(x=>`<button class="item ${x.cat}" data-item="${x.k}"${eqBlock(x)?' aria-disabled="true"':''}><i class="eqi" ${eqArt(x)}></i><span>${esc(x.name)}</span></button>`).join(''):'<div class="empty" style="grid-column:1/-1">No equipment matches.</div>';
-  $('eqd').innerHTML=eqInfo(IB[EQHOV]);
 }
-function openEq(n){EQ=n;EQHOV=null;$('eqq').value='';$('eqm').hidden=false;renderEq();$('eqq').focus()}
+function openEq(n){EQ=n;$('eqq').value='';$('eqm').hidden=false;renderEq();$('eqq').focus()}
 function closeEq(){EQ=null;$('eqm').hidden=true}
 $('eqq').oninput=renderEq;
 $('eqm').addEventListener('click',e=>{
@@ -329,12 +328,26 @@ $('eqm').addEventListener('click',e=>{
   const t=e.target;let el;
   if(t===$('eqm')||t.closest('[data-close]'))return closeEq();
   if(el=t.closest('[data-cat]')){EQCAT=el.dataset.cat;return renderEq()}
-  if(el=t.closest('[data-item]')){const it=IB[el.dataset.item];EQHOV=it.k;if(!eqBlock(it)){const a=S.eq[EQ]=(S.eq[EQ]||[]).filter(x=>IB[x]);a.push(it.k);all()}return renderEq()}
+  if(el=t.closest('[data-item]')){const it=IB[el.dataset.item];if(!eqBlock(it)){const a=S.eq[EQ]=(S.eq[EQ]||[]).filter(x=>IB[x]);a.push(it.k);all()}return renderEq()}
   if(el=t.closest('[data-unq]')){S.eq[EQ]=S.eq[EQ].filter(x=>IB[x]);S.eq[EQ].splice(+el.dataset.unq,1);const n=EQ;all();EQ=n;return renderEq()}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&EQ)closeEq()});
-const eqHover=e=>{const el=e.target.closest('[data-item]');if(el&&EQHOV!==el.dataset.item){EQHOV=el.dataset.item;$('eqd').innerHTML=eqInfo(IB[EQHOV])}};
-$('eqgrid').addEventListener('pointerover',eqHover);$('eqgrid').addEventListener('focusin',eqHover);
+// equipment box that follows the cursor: tile squares, equipped slots and the item grid
+const etip=$('etip');
+document.addEventListener('pointermove',e=>{
+  const el=e.pointerType==='mouse'&&!(D&&D.ghost)&&e.target.closest('[data-k],[data-item]');
+  const it=el&&IB[el.dataset.k||el.dataset.item];
+  if(!it){etip.hidden=true;etip.dataset.for='';return}
+  const key=it.k+'|'+(el.dataset.item?'grid':'x')+'|'+(EQ||'')+'|'+(S.eq[EQ]||[]).join();
+  if(etip.dataset.for!==key){etip.dataset.for=key;etip.innerHTML=eqInfo(it,!!el.dataset.item)}
+  etip.hidden=false;
+  const w=etip.offsetWidth,h=etip.offsetHeight;
+  let x=e.clientX+16,y=e.clientY+16;
+  if(x+w>innerWidth-8)x=e.clientX-w-16;
+  if(y+h>innerHeight-8)y=Math.max(8,e.clientY-h-16);
+  etip.style.left=Math.max(8,x)+'px';etip.style.top=y+'px';
+});
+document.addEventListener('pointerdown',()=>{etip.hidden=true;etip.dataset.for=''});
 fetch('equipment.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(j=>{ITEMS=j;IB=Object.fromEntries(j.map(x=>[x.k,x]));EQLOAD=true;all();if(EQ)renderEq()}).catch(()=>{EQLOAD=false;if(EQ)renderEq()});
 
 // additional effects box that follows the cursor
