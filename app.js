@@ -31,8 +31,8 @@ function findArt(key,exts=['png','webp']){
   };
   next();
 }
-const eqArt=it=>{const key='equipment/'+it.id;if(ART[key]===undefined)findArt(key,['webp','png']);const url=typeof ART[key]==='string'?ART[key]:'';return `data-art="${key}"${url?` style="background-image:url('${url}')"`:''}`};
-const artOf=(dir,u)=>{const key=dir+'/'+ID[u.name];if(ART[key]===undefined)findArt(key);const url=typeof ART[key]==='string'?ART[key]:'';return{key,url}};
+const eqArt=it=>{const key='equipment/'+it.id;if(ART[key]===undefined)findArt(key,['webp','png']);const url=(typeof ART[key]==='string'&&ART[key]!=='wait')?ART[key]:'';return `data-art="${key}"${url?` style="background-image:url('${url}')"`:''}`};
+const artOf=(dir,u)=>{const key=dir+'/'+ID[u.name];if(ART[key]===undefined)findArt(key);const url=(typeof ART[key]==='string'&&ART[key]!=='wait')?ART[key]:'';return{key,url}};
 // Merchant Guild: intervals count 3★+ members, not units, and every reached interval stays active.
 Object.assign(T['Astropolis Merchant Guild'],{stack:true,t:[[1, "Gain 1 EXP every time the shop refreshes."], [2, "Gain 1 free shop refresh when entering a new node."], [3, "When entering a new node, an Astropolis Merchant Guild unit appears in the shop."], [4, "Opens the Astropolis vault and choose a reward."], [5, "Obtains an Astropolis Privilege Card, every 15 shop refreshes grants 1 use of the item."], [6, "Units in the shop randomly becomes 2/3/4 stars, can be purchased at base cost."]]});
 // Unit abilities from CW_unit_skill_list.txt. F = Frontline (on-field), B = Backline (off-field), keyed by star level. Aha is keyed by cost.
@@ -67,7 +67,7 @@ const misfit=(u,i)=>(u.role==='N'&&!isFront(i))||(u.role==='F'&&isFront(i));
 
 function unitEl(u,i){
   const bad=misfit(u,i),{key,url}=artOf('character_preview',u),eq=eqOf(u.name),st=starOf(u.name);
-  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha aria-label="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" aria-label="Galaxy Ranger">GR</span>':''}</span><span class="eqcol"><button class="eqb" data-eq="${esc(u.name)}" aria-label="Equipment for ${esc(u.name)}">+</button></span><span class="ini">${ini(u.name)}</span><span class="bot"><span class="nm">${esc(u.name)}</span>${eq.length?`<span class="eqrow">${eq.map(it=>`<i class="eqi ${it.cat}" ${eqArt(it)} aria-label="${esc(it.name)}"></i>`).join('')}</span>`:''}</span></div>`;
+  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha aria-label="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" aria-label="Galaxy Ranger">GR</span>':''}</span><span class="ini">${ini(u.name)}</span><span class="eqrow"><button class="eqb" data-eq="${esc(u.name)}" aria-label="Equipment for ${esc(u.name)}">+</button>${Array.from({length:slotsFor(u)},(_,k)=>eq[k]?`<i class="eqi ${eq[k].cat}" ${eqArt(eq[k])} aria-label="${esc(eq[k].name)}"></i>`:'<i class="eqi open"></i>').join('')}</span><span class="bot"><span class="nm"><span>${esc(u.name)}</span></span></span></div>`;
 }
 const starOf=n=>S.star[n]||1; // units are 1★ unless marked
 function starsEl(n){
@@ -169,7 +169,10 @@ function all(){
   const here=new Set(S.board.filter((n,i)=>n&&usable(i)));for(const k in S.eq)if(!here.has(k)||!S.eq[k].length)delete S.eq[k];
   for(const k in S.star)if(!here.has(k))delete S.star[k];
   if(!grOk())S.gr=null;
-  renderBoard();renderTraits();renderPool();save()}
+  renderBoard();fitNames();renderTraits();renderPool();save()}
+// names longer than the two-line box (Dan Heng • Permansor Terrae) shrink until they fit
+function fitNames(){document.querySelectorAll('#board .u .nm').forEach(n=>{const s=n.firstElementChild;if(!s)return;let f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollHeight>n.clientHeight+1&&f>7){f-=.5;s.style.fontSize=f+'px'}})}
+addEventListener('resize',()=>{document.querySelectorAll('#board .u .nm>span').forEach(s=>s.style.fontSize='');fitNames()});
 
 function place(name,idx,from){
   if(!usable(idx))return;

@@ -62,9 +62,15 @@ button.flip{border:0;cursor:pointer;font-family:var(--display)}
 .u{background-size:cover;background-position:center top;background-repeat:no-repeat}
 .u.art .ini{display:none}
 .u .bot{display:flex;flex-direction:column;align-self:stretch;margin-top:auto;text-align:center}
-.u.art .bot{margin:auto -3px -4px;padding:14px 3px 4px;background:linear-gradient(transparent,rgba(6,10,36,.92) 40%)}
+.u.art .bot{margin:0 -3px -4px;padding:8px 3px 4px;background:linear-gradient(transparent,rgba(6,10,36,.92) 40%)}
 .u.art .bot .nm{margin:0;padding:0;background:none}
-.eqrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;margin-top:3px}
+.u .eqrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;align-self:stretch;margin:auto 0 -6px;position:relative;z-index:1}
+.u .eqrow+.bot{margin-top:0}
+.u .eqrow>*{box-sizing:border-box;width:100%;min-width:0;height:auto;aspect-ratio:1;align-self:start;justify-self:stretch}
+.eqrow .eqb{width:auto;height:auto;aspect-ratio:1;display:grid;place-items:center;font-size:calc(var(--t)*.14)}
+.eqi.open{opacity:.3}
+/* every name gets the two-line box the longest names need; short names sit centred in it */
+.u .bot .nm{height:2.3em;max-height:none;line-height:1.15;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0}
 .u.art .nm{align-self:stretch;margin:auto -3px -4px;padding:14px 3px 4px;background:linear-gradient(transparent,rgba(6,10,36,.92) 55%);max-height:none}
 .u .cost{align-self:flex-start;font-family:var(--display);font-size:10px;background:var(--cc);color:#0a0f2e;padding:0 5px;border-radius:2px;font-weight:700}
 .u .bad{text-shadow:0 0 3px #000;color:var(--warn);font-weight:700;font-size:13px}
