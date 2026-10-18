@@ -376,3 +376,162 @@ $('ftrait').innerHTML='<option value="">All traits</option>'+['F','C','S'].map(k
 $('ftrait').onchange=e=>{F.trait=e.target.value;renderPool()};
 $('reset').onclick=()=>{F.q='';F.cost.clear();F.role.clear();F.trait='';$('q').value='';$('ftrait').value='';renderPool()};
 all();
+
+// ---------- team codes: export, import and saved lineups ----------
+// Code = "CW1-" + base64url of bytes:
+//   [version 1][extra tiles 2 bits | Aha cost index 2 bits | Galaxy Ranger front slot+1 3 bits][13-bit tile mask, 2 bytes]
+//   per filled tile: [character ID, 2 bytes][star-1 2 bits | item count 2 bits] then per item [image ID*2 + privileged, 4 bytes]
+//   [checksum byte]
+const IDN=Object.fromEntries(Object.entries(ID).map(([n,i])=>[i,n]));
+const b64u=bytes=>btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const unb64u=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
+function encodeTeam(){
+  const out=[1],gr=S.gr?S.board.slice(0,4).indexOf(S.gr):-1;
+  out.push((S.extra&3)<<6|(AHAC.indexOf(S.aha)&3)<<4|(gr+1)&7);
+  let mask=0;S.board.forEach((n,i)=>{if(n&&usable(i))mask|=1<<i});
+  out.push(mask>>8,mask&255);
+  S.board.forEach((n,i)=>{
+    if(!(mask&1<<i))return;
+    const id=ID[n],items=eqOf(n).slice(0,3);
+    out.push(id>>8,id&255,(starOf(n)-1)<<2|items.length);
+    items.forEach(it=>{const v=(+it.id)*2+(it.cat==='privileged'?1:0);out.push(v>>>24&255,v>>>16&255,v>>>8&255,v&255)});
+  });
+  out.push(out.reduce((a,x)=>(a*31+x)&255,7));
+  return 'CW1-'+b64u(out);
+}
+function decodeTeam(code){
+  const m=String(code).trim().match(/^CW1-([A-Za-z0-9_-]+)$/);
+  if(!m)throw new Error('That isn\'t a team code. Codes start with CW1-.');
+  let bytes;try{bytes=unb64u(m[1])}catch(e){throw new Error('That team code is damaged.')}
+  const sum=bytes[bytes.length-1],body=[...bytes.slice(0,-1)];
+  if(bytes.length<5||body.reduce((a,x)=>(a*31+x)&255,7)!==sum||body[0]!==1)throw new Error('That team code is damaged or incomplete. Copy the whole code and try again.');
+  let p=1;const take=()=>{if(p>=body.length)throw new Error('That team code is incomplete.');return body[p++]};
+  const h=take(),mask=take()<<8|take();
+  const st={board:Array(13).fill(null),extra:h>>6&3,aha:AHAC[h>>4&3]||3,eq:{},star:{},gr:null},skipped=[];
+  for(let i=0;i<13;i++){
+    if(!(mask&1<<i))continue;
+    const id=take()<<8|take(),f=take(),n=IDN[id],cnt=f&3,items=[];
+    for(let k=0;k<cnt;k++){const v=(take()<<24>>>0)+(take()<<16)+(take()<<8)+take(),iid=String(Math.floor(v/2)),priv=v%2===1;
+      const it=ITEMS.find(x=>x.id===iid&&(priv?x.cat==='privileged':x.cat!=='privileged'));if(it)items.push(it.k);else skipped.push('item '+iid)}
+    if(!n){skipped.push('unit '+id);continue}
+    st.board[i]=n;if((f>>2)+1>1)st.star[n]=(f>>2)+1;if(items.length)st.eq[n]=items;
+  }
+  const g=(h&7)-1;if(g>=0&&st.board[g])st.gr=st.board[g];
+  return {st,skipped};
+}
+// saved lineups live in this browser only
+const LKEY='cw-lineups-v1';
+let LINEUPS=[];try{LINEUPS=JSON.parse(localStorage.getItem(LKEY))||[];if(!Array.isArray(LINEUPS))LINEUPS=[]}catch(e){LINEUPS=[]}
+const saveLineups=()=>{try{localStorage.setItem(LKEY,JSON.stringify(LINEUPS))}catch(e){}};
+const teamSummary=st=>{const u=st.board.filter(Boolean);return u.length?`${u.length} unit${u.length>1?'s':''}: ${u.slice(0,4).join(', ')}${u.length>4?` +${u.length-4}`:''}`:'Empty board'};
+function remember(code,kind,st){
+  const old=LINEUPS.find(l=>l.code===code);
+  if(old){old.kind=kind;old.at=Date.now();LINEUPS=[old,...LINEUPS.filter(l=>l!==old)]}
+  else LINEUPS.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:'Lineup '+(LINEUPS.length+1),code,kind,at:Date.now(),sum:teamSummary(st)});
+  saveLineups();renderLineups();
+}
+const shareMsg=(t,bad)=>{const m=$('sharemsg');m.textContent=t;m.classList.toggle('bad',!!bad)};
+function applyTeam(st){S.board=st.board;S.extra=st.extra;S.aha=st.aha;S.eq=st.eq;S.star=st.star;S.gr=st.gr;closeEq();all()}
+$('exportbtn').onclick=()=>{
+  const code=encodeTeam(),box=$('sharecode');box.value=code;remember(code,'Export',S);
+  const fallback=()=>{box.focus();box.select();shareMsg('Code ready. Press Ctrl+C (or ⌘C) to copy it.')};
+  try{navigator.clipboard.writeText(code).then(()=>shareMsg('Copied to clipboard.'),fallback)}catch(e){fallback()}
+};
+function importCode(code,kind){
+  if(EQLOAD==='wait'){shareMsg('Equipment is still loading. Try again in a moment.',true);return false}
+  try{const {st,skipped}=decodeTeam(code);applyTeam(st);if(kind)remember(code.trim(),kind,st);shareMsg(skipped.length?`Loaded. Skipped ${skipped.length} unknown entr${skipped.length>1?'ies':'y'}.`:'Board loaded.');return true}
+  catch(e){shareMsg(e.message,true);return false}
+}
+$('importbtn').onclick=()=>{const v=$('sharecode').value;if(!v.trim())return shareMsg('Paste a team code into the box first.',true);importCode(v,'Import')};
+$('sharecode').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('importbtn').click()}});
+// saved lineups panel
+let LDEL=null,LREN=null;
+const fmtDate=t=>new Date(t).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+function renderLineups(){
+  $('savedbtn').textContent=`Saved lineups (${LINEUPS.length})`;
+  if($('lum').hidden)return;
+  $('lulist').innerHTML=LINEUPS.length?LINEUPS.map((l,i)=>`<li class="lu" data-lu="${l.id}">
+    <span class="lu-grip" data-grip tabindex="0" role="button" aria-label="Drag to reorder ${esc(l.name)}. Arrow keys also move it." title="">⠿</span>
+    <div class="lu-main">${LREN===l.id?`<input class="lu-name-in" id="lu-ren" value="${esc(l.name)}" aria-label="New name" maxlength="60">`:`<b class="lu-name">${esc(l.name)}</b>`}
+      <span class="lu-meta">${esc(l.sum||'')} · ${l.kind} ${fmtDate(l.at)}</span><code class="lu-code">${esc(l.code)}</code></div>
+    <div class="lu-act">${LDEL===l.id?`<span class="lu-ask">Delete?</span><button class="btn danger" data-la="del-yes">Delete</button><button class="btn" data-la="del-no">Keep</button>`:LREN===l.id?`<button class="btn" data-la="ren-ok">Save</button><button class="btn" data-la="ren-no">Cancel</button>`:
+      `<button class="btn" data-la="load">Load</button><button class="btn" data-la="copy">Copy</button><button class="btn" data-la="ren">Rename</button><button class="btn icon" data-la="del" aria-label="Delete">✕</button>`}</div></li>`).join(''):'<li class="empty">No saved lineups yet. Every Export and Import is saved here.</li>';
+  const r=$('lu-ren');if(r){r.focus();r.select()}
+}
+$('savedbtn').onclick=()=>{LDEL=LREN=null;$('lum').hidden=false;renderLineups()};
+const closeLu=()=>{$('lum').hidden=true};
+$('lum').addEventListener('click',e=>{
+  e.stopPropagation();
+  if(LJUST)return; // the click that ends a drag, even if released outside the box, does nothing
+  const t=e.target;if(t===$('lum')||t.closest('[data-lclose]'))return closeLu();
+  const b=t.closest('[data-la]');if(!b)return;
+  const row=b.closest('[data-lu]'),i=LINEUPS.findIndex(l=>l.id===row.dataset.lu),l=LINEUPS[i],a=b.dataset.la;
+  if(a==='load'){if(importCode(l.code,null)){$('sharecode').value=l.code;closeLu()}return}
+  if(a==='copy'){$('sharecode').value=l.code;try{navigator.clipboard.writeText(l.code).then(()=>shareMsg(`Copied “${l.name}”.`),()=>shareMsg('Code is in the box above. Copy it from there.'))}catch(err){shareMsg('Code is in the box above. Copy it from there.')}return}
+  if(a==='del')LDEL=l.id;
+  if(a==='del-yes'){LINEUPS.splice(i,1);LDEL=null}
+  if(a==='del-no')LDEL=null;
+  if(a==='ren'){LREN=l.id;LDEL=null}
+  if(a==='ren-ok'){const v=$('lu-ren').value.trim();if(v)l.name=v;LREN=null}
+  if(a==='ren-no')LREN=null;
+  saveLineups();renderLineups();
+});
+$('lum').addEventListener('keydown',e=>{if(e.target.id==='lu-ren'){if(e.key==='Enter'){e.preventDefault();e.target.closest('.lu').querySelector('[data-la="ren-ok"]').click()}if(e.key==='Escape'){e.stopPropagation();LREN=null;renderLineups()}}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('lum').hidden)closeLu()});
+// drag to reorder saved lineups: the row follows the pointer and the others slide out of its way.
+// Grab it by the grip (mouse or touch) or anywhere on the row with a mouse; arrow keys on the grip move it one place.
+let LD=null,LJUST=false;
+const luRows=()=>[...$('lulist').querySelectorAll('.lu')];
+function luFlip(rows,mutate){
+  const before=new Map(rows.map(r=>[r,r.getBoundingClientRect().top]));
+  mutate();
+  rows.forEach(r=>{const d=before.get(r)-r.getBoundingClientRect().top;if(!d)return;r.style.transition='none';r.style.transform=`translateY(${d}px)`;r.offsetHeight;r.style.transition='';r.style.transform=''});
+}
+function luPlace(y){
+  const row=LD.row,list=$('lulist'),top=y-LD.grab;
+  let natural=row.getBoundingClientRect().top-LD.shift;
+  const others=luRows().filter(r=>r!==row),mid=top+row.offsetHeight/2;
+  const next=others.find(r=>{const rc=r.getBoundingClientRect();return mid<rc.top+rc.height/2})||null;
+  if(row.nextElementSibling!==next){luFlip(others,()=>list.insertBefore(row,next));natural=row.getBoundingClientRect().top-LD.shift}
+  // keep the dragged row inside the list's own height so it never makes the list scrollable
+  const first=list.firstElementChild,last=list.lastElementChild,lo=first.offsetTop-row.offsetTop,hi=last.offsetTop+last.offsetHeight-row.offsetHeight-row.offsetTop;
+  LD.shift=Math.min(hi,Math.max(lo,top-natural));row.style.transform=`translateY(${LD.shift}px)`;
+  const lr=list.getBoundingClientRect();
+  if(y<lr.top+30)list.scrollTop-=8;else if(y>lr.bottom-30)list.scrollTop+=8;
+}
+$('lulist').addEventListener('pointerdown',e=>{
+  if(LREN||LDEL||e.button>0)return;
+  const row=e.target.closest('.lu[data-lu]');if(!row)return;
+  const onGrip=!!e.target.closest('[data-grip]');
+  if(!onGrip&&(e.pointerType!=='mouse'||e.target.closest('button,input,a,code')))return;
+  if(onGrip)e.preventDefault();
+  LD={row,y0:e.clientY,started:false,shift:0,grab:0,pid:e.pointerId};
+});
+document.addEventListener('pointermove',e=>{
+  if(!LD||e.pointerId!==LD.pid)return;
+  if(!LD.started){
+    if(Math.abs(e.clientY-LD.y0)<5)return;
+    LD.started=true;LD.grab=LD.y0-LD.row.getBoundingClientRect().top;
+    $('lulist').classList.add('sorting');LD.row.classList.add('dragging');
+  }
+  e.preventDefault();luPlace(e.clientY);
+},{passive:false});
+function luEnd(){
+  if(!LD)return;const d=LD;LD=null;
+  if(!d.started)return;
+  LJUST=true;setTimeout(()=>{LJUST=false},0);
+  d.row.classList.remove('dragging');d.row.style.transform='';   // glides into its slot
+  const order=luRows().map(r=>r.dataset.lu);
+  LINEUPS.sort((a,b)=>order.indexOf(a.id)-order.indexOf(b.id));saveLineups();
+  setTimeout(()=>{$('lulist').classList.remove('sorting');renderLineups()},200);
+}
+document.addEventListener('pointerup',luEnd);document.addEventListener('pointercancel',luEnd);
+$('lulist').addEventListener('keydown',e=>{
+  const g=e.target.closest('[data-grip]');if(!g||(e.key!=='ArrowUp'&&e.key!=='ArrowDown'))return;
+  e.preventDefault();const id=g.closest('.lu').dataset.lu,i=LINEUPS.findIndex(l=>l.id===id),j=i+(e.key==='ArrowUp'?-1:1);
+  if(j<0||j>=LINEUPS.length)return;
+  const rows=luRows();
+  luFlip(rows,()=>{const r=rows[i];j<i?$('lulist').insertBefore(r,rows[j]):$('lulist').insertBefore(r,rows[j].nextElementSibling)});
+  [LINEUPS[i],LINEUPS[j]]=[LINEUPS[j],LINEUPS[i]];saveLineups();g.focus();
+});
+renderLineups();

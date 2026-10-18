@@ -208,3 +208,25 @@ button.flip{border:0;cursor:pointer;font-family:var(--display)}
 .ghost{position:fixed;z-index:50;pointer-events:none;width:74px;aspect-ratio:376/512;transform:translate(-50%,-50%);opacity:.9}
 .ghost .u{--t:74px}
 [hidden]{display:none!important}
+
+/* team code bar and saved lineups */
+.share{display:flex;flex-direction:column;gap:4px;flex:0 1 560px;min-width:0}
+.share-l{font-family:var(--display);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.share-row{display:flex;gap:6px;min-width:0}
+.share-row input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:var(--fg)}
+.share-foot{display:flex;justify-content:space-between;gap:10px;align-items:baseline;min-height:18px;font-size:12px}
+.sharemsg{color:var(--c2)}.sharemsg.bad{color:var(--warn)}
+.share-foot .savedbtn{font-size:12px;white-space:nowrap;padding:3px 10px}
+.lulist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;overflow-y:auto;min-height:0}
+.lu{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border:1px solid var(--line-soft);background:var(--panel2);border-radius:4px;padding:8px 10px}
+.lu-main{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 240px}
+.lu-name{font-weight:600}
+.lu-name-in{background:var(--bg);border:1px solid var(--accent);border-radius:3px;padding:3px 6px;font-weight:600}
+.lu-meta{font-size:11.5px;color:var(--muted)}
+.lu-code{font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.lu-act{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.lu-act .btn{padding:4px 9px;font-size:12px}
+.lu-act .btn.icon{padding:4px 7px}
+.lu-act .btn:disabled{opacity:.35;cursor:default}
+.lu-ask{color:var(--warn);font-size:12px}
+.btn.danger{border-color:var(--warn);color:var(--warn)}

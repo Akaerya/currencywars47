@@ -8,6 +8,15 @@
       <h1>Currency Wars <span>Team Builder</span></h1>
       <p class="sub">Drag units onto the board, or click one to drop it in the first open tile. Click a placed unit to send it back. Use a tile's + button to equip items and Emblems.</p>
     </div>
+    <div class="share">
+      <label class="share-l" for="sharecode">Team code</label>
+      <div class="share-row">
+        <input id="sharecode" type="text" spellcheck="false" autocomplete="off" placeholder="Export to get a code, or paste one and Import">
+        <button class="btn" id="exportbtn">Export</button>
+        <button class="btn" id="importbtn">Import</button>
+      </div>
+      <div class="share-foot"><span id="sharemsg" class="sharemsg" aria-live="polite"></span><button class="btn savedbtn" id="savedbtn">Saved lineups (0)</button></div>
+    </div>
   </header>
 
   <div class="top">
@@ -48,6 +57,12 @@
 <div id="tip" class="tip" hidden></div>
 <div id="utip" class="utip" hidden></div>
 <div id="etip" class="etip" hidden></div>
+<div id="lum" class="modal" hidden>
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="luh">
+    <div class="phead"><div><h2 id="luh">Saved lineups</h2><span class="tools">Saved in this browser. Every Export and Import lands here.</span></div><button class="btn" data-lclose>Close</button></div>
+    <ul class="lulist" id="lulist"></ul>
+  </div>
+</div>
 <div id="eqm" class="modal" hidden>
   <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="eqh">
     <div class="phead"><div><h2 id="eqh">Equipment</h2><span class="tools" id="eqt"></span></div><button class="btn" data-close>Close</button></div>
