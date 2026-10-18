@@ -455,7 +455,7 @@ function renderLineups(){
     <div class="lu-main">${LREN===l.id?`<input class="lu-name-in" id="lu-ren" value="${esc(l.name)}" aria-label="New name" maxlength="60">`:`<b class="lu-name">${esc(l.name)}</b>`}
       <span class="lu-meta">${esc(l.sum||'')} · ${l.kind} ${fmtDate(l.at)}</span><code class="lu-code">${esc(l.code)}</code></div>
     <div class="lu-act">${LDEL===l.id?`<span class="lu-ask">Delete?</span><button class="btn danger" data-la="del-yes">Delete</button><button class="btn" data-la="del-no">Keep</button>`:LREN===l.id?`<button class="btn" data-la="ren-ok">Save</button><button class="btn" data-la="ren-no">Cancel</button>`:
-      `<button class="btn" data-la="load">Load</button><button class="btn" data-la="copy">Copy</button><button class="btn" data-la="ren">Rename</button><button class="btn icon" data-la="del" aria-label="Delete">✕</button>`}</div></li>`).join(''):'<li class="empty">No saved lineups yet. Every Export and Import is saved here.</li>';
+      `<button class="btn" data-la="load">Load</button><button class="btn" data-la="copy">Copy</button><button class="btn" data-la="ren">Rename</button><button class="btn icon" data-la="del" aria-label="Delete">✕</button>`}</div></li>`).join(''):'<li class="empty">No saved lineups yet.</li>';
   const r=$('lu-ren');if(r){r.focus();r.select()}
 }
 $('savedbtn').onclick=()=>{LDEL=LREN=null;$('lum').hidden=false;renderLineups()};
