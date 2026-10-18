@@ -272,22 +272,6 @@
   "unique": false
  },
  {
-  "k": "a35030306",
-  "id": "35030306",
-  "name": "Adaptive Exoskeleton",
-  "cat": "advanced",
-  "d": "At the start of combat, if the wearer is on-field, they gain 25% DMG Mitigation and have a higher chance to be attacked.\nIf the wearer is off-field, their Off-Field Strength increases by 20% and SPD Amplification increases by 20%.",
-  "unique": false
- },
- {
-  "k": "p35030306",
-  "id": "35030306",
-  "name": "Adaptive Exoskeleton: Privilege",
-  "cat": "privileged",
-  "d": "At the start of combat, if the wearer is on-field, they gain 50% DMG Mitigation and have a higher chance to be attacked.\nIf the wearer is off-field, their Off-Field Strength increases by 40% and SPD Amplification increases by 40%.",
-  "unique": false
- },
- {
   "k": "a35030307",
   "id": "35030307",
   "name": "Decapitation Operation",
@@ -349,22 +333,6 @@
   "name": "Fist of Fury: Privilege",
   "cat": "privileged",
   "d": "While the wearer's Max HP exceeds 5000, every 1000 HP increases Lucky Strike Rate by 4%, up to 100%.",
-  "unique": false
- },
- {
-  "k": "a35030406",
-  "id": "35030406",
-  "name": "Chassis of Retribution",
-  "cat": "advanced",
-  "d": "At the start of combat, all on-field allies gain a Shield equal to 300% of the wearer's DEF. When the wearer is attacked, deals Physical DMG to the attacker equal to 250% of the Shield Effect before the attack. This DMG cannot defeat enemy targets.",
-  "unique": false
- },
- {
-  "k": "p35030406",
-  "id": "35030406",
-  "name": "Chassis of Retribution: Privilege",
-  "cat": "privileged",
-  "d": "At the start of combat, all on-field allies gain a Shield equal to 600% of the wearer's DEF. When the wearer is attacked, deals Physical DMG to the attacker equal to 500% of the Shield Effect before the attack. This DMG cannot defeat enemy targets.",
   "unique": false
  },
  {
