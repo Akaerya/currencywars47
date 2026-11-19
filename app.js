@@ -2,7 +2,7 @@ const R={B:'On/Off-Field',N:'On-Field',F:'Off-Field'};
 const U=[
 ["Welt",1,"B","Trailblaze Silver Rail","AoE ATK"],["Topaz & Numby",1,"B","Astropolis Merchant Guild","Follow-Up ATK"],["Jing Yuan",1,"B","High-Cloud Quintet","Summon"],["Guinaifen",1,"B","Xianzhou Fleet","DoT"],["Lingsha",1,"B","Xianzhou Fleet","AoE ATK","Heal"],["March 7th Hunt",1,"F","Trailblaze Silver Rail","Follow-Up ATK"],["Fugue",1,"B","Galactic Voyager","Break"],["Black Swan",1,"F","Intertwined Dreamscapes","DoT"],["Boothill",1,"N","Galactic Voyager","Break"],["Anaxa",1,"N","Beast Garden","Combo"],["Cerydra",1,"F","Little Giant","Combo"],["Evernight",1,"B","Beast Garden","Intertwined Dreamscapes","Summon"],["Sparxie",1,"B","Phantasmoon Games","Girls Band","Elation"],["Pearl",1,"F","Phantasmoon Games","Astropolis Merchant Guild","Protection"],
 ["Natasha",2,"F","Galactic Voyager","DoT","Heal"],["Bailu",2,"F","High-Cloud Quintet","Combo","Heal"],["Yunli",2,"B","Xianzhou Fleet","Counter"],["Sparkle",2,"N","Little Giant","Intertwined Dreamscapes","Elation"],["Robin",2,"N","Girls Band","Follow-Up ATK"],["Firefly",2,"N","Stellaron Hunters","Break"],["Sunday",2,"B","Phantasmoon Games","Trailblaze Silver Rail","Combo"],["The Herta",2,"N","Galactic Voyager","AoE ATK"],["Mydei",2,"B","Beast Garden","The Grand Restaurant","Counter"],["Hysilens",2,"B","Beast Garden","DoT"],["Evanescia",2,"B","Phantasmoon Games","Energy"],["Robin • Summeretto",2,"B","Astropolis Merchant Guild","Summon","Energy"],
-["Luocha",3,"B","Galactic Voyager","Heal"],["Fu Xuan",3,"F","Little Giant","Counter","Protection"],["Jingliu",3,"B","High-Cloud Quintet","Combo"],["Jiaoqiu",3,"N","Xianzhou Fleet","DoT"],["Feixiao",3,"N","Xianzhou Fleet","Follow-Up ATK"],["Rappa",3,"F","Girls Band","Break"],["The Dahlia",3,"B","Intertwined Dreamscapes","Break"],["Cipher",3,"F","Beast Garden","AoE ATK"],["Castorice",3,"B","The Grand Restaurant","Summon"],["Yao Guang",3,"F","Astropolis Merchant Guild","Elation"],["Silver Wolf LV.999",3,"N","Phantasmoon Games","Stellaron Hunters","Elation"],["Aeon ★ Aha",3,"N","Elation","Master of Phantasia"],["Trailblazer: Elation",3,"B","Trailblaze Silver Rail","Stellaron Hunters","Energy"],
+["Luocha",3,"B","Galactic Voyager","Heal"],["Fu Xuan",3,"F","Little Giant","Counter","Protection"],["Jingliu",3,"B","High-Cloud Quintet","Combo"],["Jiaoqiu",3,"N","Xianzhou Fleet","DoT"],["Feixiao",3,"N","Xianzhou Fleet","Follow-Up ATK"],["Rappa",3,"F","Girls Band","Break"],["The Dahlia",3,"B","Intertwined Dreamscapes","Break"],["Cipher",3,"F","Beast Garden","AoE ATK"],["Castorice",3,"B","The Grand Restaurant","Summon"],["Yao Guang",3,"F","Astropolis Merchant Guild","Elation"],["Silver Wolf LV.999",3,"N","Phantasmoon Games","Stellaron Hunters","Elation"],["Aeon ★ Aha",4,"N","Elation","Master of Phantasia"],["Trailblazer: Elation",3,"B","Trailblaze Silver Rail","Stellaron Hunters","Energy"],
 ["Serval",4,"N","Girls Band","DoT"],["Blade",4,"B","High-Cloud Quintet","Counter"],["Hanya",4,"F","Xianzhou Fleet","Combo"],["Huohuo",4,"F","Little Giant","Energy","Heal"],["Aventurine",4,"B","Galactic Voyager","Follow-Up ATK","Protection"],["Acheron",4,"N","Intertwined Dreamscapes","AoE ATK"],["Tribbie",4,"B","Little Giant","Follow-Up ATK"],["Hyacine",4,"B","Beast Garden","Summon","Heal"],["Cyrene",4,"N","The Grand Restaurant","Summon"],["Mortenax Blade",4,"B","Phantasmoon Games","Stellaron Hunters","AoE ATK"],["Himeko • Nova",4,"N","Trailblaze Silver Rail","Energy"],["Aventurine • Waveflair",4,"N","Astropolis Merchant Guild","Elation"],
 ["Kafka",5,"N","Stellaron Hunters","DoT"],["Clara",5,"B","Galactic Voyager","Counter","Ingenious Artificer"],["Dan Heng • Imbibitor Lunae",5,"N","Trailblaze Silver Rail","High-Cloud Quintet","Twin Dragons' Call"],["Xueyi",5,"N","Xianzhou Fleet","Break"],["Jade",5,"F","Astropolis Merchant Guild","AoE ATK","Black Market Manager"],["Aglaea",5,"N","Beast Garden","Combo"],["Phainon",5,"B","The Grand Restaurant","Flame Reaver"],["Dan Heng • Permansor Terrae",5,"F","Twin Dragons' Call"],["Ashveil",5,"F","Phantasmoon Games","Follow-Up ATK","Galaxy Ranger"]
 ].map(a=>({name:a[0],cost:a[1],role:a[2],traits:a.slice(3)})).sort((a,b)=>a.name.localeCompare(b.name));
@@ -52,8 +52,9 @@ const GVM=[1,1.2,1.4,1.7,2,2.4,2.9,3.5];
 const TN=Object.keys(T);
 
 const KEY='cw-team-v1';
-let S={board:Array(13).fill(null),extra:0,aha:3,eq:{},gr:null,star:{}};
-const AHA='Aeon ★ Aha',AHAC=[3,4,5,7];
+let S={board:Array(13).fill(null),extra:0,aha:4,eq:{},gr:null,star:{}};
+const AHA='Aeon ★ Aha',AHAC=[4,5,7]; // her costs; 4 is the base
+const AHA_CODE=[3,4,5,7]; // fixed 2-bit table used inside team codes, so older codes still read correctly
 const costOf=u=>u.name===AHA?S.aha:u.cost;
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.board)&&s.board.length===13){S.board=s.board.map(n=>n==='March 7th'?'March 7th Hunt':n).map(n=>UB[n]?n:null);S.extra=Math.min(3,Math.max(0,s.extra|0));if(AHAC.includes(s.aha))S.aha=s.aha;if(s.eq)for(const k in s.eq)if(UB[k]&&Array.isArray(s.eq[k]))S.eq[k]=s.eq[k].filter(x=>typeof x==='string').slice(0,3);if(UB[s.gr])S.gr=s.gr;if(s.star)for(const k in s.star)if(UB[k]&&[2,3,4].includes(s.star[k]))S.star[k]=s.star[k]}}catch(e){}
 const F={q:'',cost:new Set(),role:new Set(),trait:''};
@@ -67,7 +68,7 @@ const misfit=(u,i)=>(u.role==='N'&&!isFront(i))||(u.role==='F'&&isFront(i));
 
 function unitEl(u,i){
   const bad=misfit(u,i),{key,url}=artOf('character_preview',u),eq=eqOf(u.name),st=starOf(u.name);
-  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha aria-label="Change Aha's cost (3, 4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" aria-label="Galaxy Ranger">GR</span>':''}</span><span class="ini">${ini(u.name)}</span><span class="eqrow"><button class="eqb" data-eq="${esc(u.name)}" aria-label="Equipment for ${esc(u.name)}">+</button>${Array.from({length:slotsFor(u)},(_,k)=>eq[k]?`<i class="eqi ${eq[k].cat}" data-k="${eq[k].k}" ${eqArt(eq[k])} aria-label="${esc(eq[k].name)}"></i>`:'<i class="eqi open"></i>').join('')}</span><span class="bot"><span class="nm"><span>${esc(u.name)}</span></span></span></div>`;
+  return `<div class="u${url?' art':''}" data-art="${key}" data-unit="${esc(u.name)}" data-from="${i}" style="--cc:var(--c${costOf(u)})${url?`;background-image:url('${url}')`:''}"><span class="lcol">${u.name===AHA?`<button class="cost flip" data-aha aria-label="Change Aha's cost (4, 5 or 7)">${S.aha} ⟳</button>`:`<span class="cost">${u.cost}</span>`}${bad?'<span class="bad">!</span>':''}${S.gr===u.name&&i<4?'<span class="gr" aria-label="Galaxy Ranger">GR</span>':''}</span><span class="ini">${ini(u.name)}</span><span class="eqrow"><button class="eqb" data-eq="${esc(u.name)}" aria-label="Equipment for ${esc(u.name)}">+</button>${Array.from({length:slotsFor(u)},(_,k)=>eq[k]?`<i class="eqi ${eq[k].cat}" data-k="${eq[k].k}" ${eqArt(eq[k])} aria-label="${esc(eq[k].name)}"></i>`:'<i class="eqi open"></i>').join('')}</span><span class="bot"><span class="nm"><span>${esc(u.name)}</span></span></span></div>`;
 }
 const starOf=n=>S.star[n]||1; // units are 1★ unless marked
 function starsEl(n){
@@ -81,7 +82,7 @@ function tileEl(i){
 function renderBoard(){
   const r=(a)=>a.map(tileEl).join('');
   $('board').innerHTML=
-   `<div class="row"><div class="grp main"><span class="lab">On-Field</span><div class="tiles">${r([0,1,2,3])}</div></div><div class="grp side notes">${onBoard(AHA)?`<p class="ahanote"><b>Aeon ★ Aha</b> starts at 3-cost. Click the cost badge on her tile to switch her to 4, 5 or 7-cost.</p>`:''}${onBoard('Ashveil')?`<p class="ahanote"><b>Ashveil</b> is on the board. Pick a front-row unit as the Galaxy Ranger in the trait list. Its star level sets the size of the bonus.</p>`:''}</div></div>
+   `<div class="row"><div class="grp main"><span class="lab">On-Field</span><div class="tiles">${r([0,1,2,3])}</div></div><div class="grp side notes">${onBoard(AHA)?`<p class="ahanote"><b>Aeon ★ Aha</b> starts at 4-cost. Click the cost badge on her tile to switch her to 5 or 7-cost.</p>`:''}${onBoard('Ashveil')?`<p class="ahanote"><b>Ashveil</b> is on the board. Pick a front-row unit as the Galaxy Ranger in the trait list. Its star level sets the size of the bonus.</p>`:''}</div></div>
     <div class="row"><div class="grp main"><span class="lab">Off-Field</span><div class="tiles">${r([4,5,6,7,8,9])}</div></div>
     <div class="grp side"><span class="lab">Extra tiles</span><div class="tiles">${r([10,11,12])}</div></div></div>`;
   const placed=S.board.filter(Boolean);
@@ -280,7 +281,7 @@ document.addEventListener('click',e=>{
   const t=e.target;let el;
   if(el=t.closest('[data-eq]'))return openEq(el.dataset.eq);
   if(el=t.closest('[data-star]')){const k=+el.dataset.k;if(k>1)S.star[el.dataset.star]=k;else delete S.star[el.dataset.star];return all()}
-  if(el=t.closest('[data-aha]')){S.aha=AHAC[(AHAC.indexOf(S.aha)+1)%4];return all()}
+  if(el=t.closest('[data-aha]')){S.aha=AHAC[(AHAC.indexOf(S.aha)+1)%AHAC.length];return all()}
   if(el=t.closest('.u[data-from]')){S.board[+el.dataset.from]=null;return all()}
   if(el=t.closest('.card')){if(!el.classList.contains('used')&&el.dataset.unit)autoPlace(el.dataset.unit);return}
   if(el=t.closest('[data-x]')){S.extra=+el.dataset.x;for(let i=10+S.extra;i<13;i++)S.board[i]=null;return all()}
@@ -387,7 +388,7 @@ const b64u=bytes=>btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace
 const unb64u=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
 function encodeTeam(){
   const out=[1],gr=S.gr?S.board.slice(0,4).indexOf(S.gr):-1;
-  out.push((S.extra&3)<<6|(AHAC.indexOf(S.aha)&3)<<4|(gr+1)&7);
+  out.push((S.extra&3)<<6|(AHA_CODE.indexOf(S.aha)&3)<<4|(gr+1)&7);
   let mask=0;S.board.forEach((n,i)=>{if(n&&usable(i))mask|=1<<i});
   out.push(mask>>8,mask&255);
   S.board.forEach((n,i)=>{
@@ -407,7 +408,7 @@ function decodeTeam(code){
   if(bytes.length<5||body.reduce((a,x)=>(a*31+x)&255,7)!==sum||body[0]!==1)throw new Error('That team code is damaged or incomplete. Copy the whole code and try again.');
   let p=1;const take=()=>{if(p>=body.length)throw new Error('That team code is incomplete.');return body[p++]};
   const h=take(),mask=take()<<8|take();
-  const st={board:Array(13).fill(null),extra:h>>6&3,aha:AHAC[h>>4&3]||3,eq:{},star:{},gr:null},skipped=[];
+  const st={board:Array(13).fill(null),extra:h>>6&3,aha:Math.max(4,AHA_CODE[h>>4&3]||4),eq:{},star:{},gr:null},skipped=[];
   for(let i=0;i<13;i++){
     if(!(mask&1<<i))continue;
     const id=take()<<8|take(),f=take(),n=IDN[id],cnt=f&3,items=[];
@@ -455,7 +456,7 @@ function renderLineups(){
     <div class="lu-main">${LREN===l.id?`<input class="lu-name-in" id="lu-ren" value="${esc(l.name)}" aria-label="New name" maxlength="60">`:`<b class="lu-name">${esc(l.name)}</b>`}
       <span class="lu-meta">${esc(l.sum||'')} · ${l.kind} ${fmtDate(l.at)}</span><code class="lu-code">${esc(l.code)}</code></div>
     <div class="lu-act">${LDEL===l.id?`<span class="lu-ask">Delete?</span><button class="btn danger" data-la="del-yes">Delete</button><button class="btn" data-la="del-no">Keep</button>`:LREN===l.id?`<button class="btn" data-la="ren-ok">Save</button><button class="btn" data-la="ren-no">Cancel</button>`:
-      `<button class="btn" data-la="load">Load</button><button class="btn" data-la="copy">Copy</button><button class="btn" data-la="ren">Rename</button><button class="btn icon" data-la="del" aria-label="Delete">✕</button>`}</div></li>`).join(''):'<li class="empty">No saved lineups yet.</li>';
+      `<button class="btn" data-la="load">Load</button><button class="btn" data-la="copy">Copy</button><button class="btn" data-la="ren">Rename</button><button class="btn icon" data-la="del" aria-label="Delete">✕</button>`}</div></li>`).join(''):'<li class="empty">No saved lineups yet. Every Export and Import is saved here.</li>';
   const r=$('lu-ren');if(r){r.focus();r.select()}
 }
 $('savedbtn').onclick=()=>{LDEL=LREN=null;$('lum').hidden=false;renderLineups()};
